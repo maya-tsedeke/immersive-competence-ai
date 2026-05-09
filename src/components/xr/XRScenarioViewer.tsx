@@ -7,6 +7,7 @@ import {
   BarChart3,
   BookOpen,
   ChartPie,
+  Check,
   Footprints,
   Glasses,
   Home,
@@ -59,7 +60,7 @@ const MC_OPTIONS = [
 ];
 
 const GUIDED_STEPS = [
-  "Swipe or drag to look around the 360° hotspot-based learning scene.",
+  "Explore the warehouse scene below and find each learning hotspot in order.",
   "Tap a hotspot — labels show Hazard, Action, AI Hint, and Reflection.",
   "Answer the question: what is the safest action in this scene?",
   "Write your reflection and submit for teacher review.",
@@ -93,45 +94,110 @@ function newLogEntry(
   };
 }
 
+type HotspotVisualState = "inactive" | "current" | "completed" | "blocked" | "optional";
+
+function computeHotspotVisualState(
+  hs: XRHotspotDefinition,
+  guidedMobile: boolean,
+  guidedScenarioStarted: boolean,
+  guidedStep: number,
+  visited: Set<XRHotspotId>,
+): HotspotVisualState {
+  if (hs.id === "ai-hint") {
+    return visited.has(hs.id) ? "completed" : "optional";
+  }
+  if (!guidedMobile || !guidedScenarioStarted) {
+    return visited.has(hs.id) ? "completed" : "inactive";
+  }
+  if (visited.has(hs.id)) return "completed";
+  const order = REQUIRED_HOTSPOT_ORDER;
+  const stepToHotspot: Record<number, XRHotspotId> = {
+    1: "hazard",
+    2: "action",
+    3: "justify",
+    4: "reflection",
+  };
+  const need = stepToHotspot[guidedStep];
+  if (!need) return "inactive";
+  const idx = order.indexOf(hs.id as (typeof order)[number]);
+  const needIdx = order.indexOf(need);
+  if (hs.id === need) return "current";
+  if (idx > needIdx) return "blocked";
+  return "inactive";
+}
+
 function HotspotMarker({
   hs,
   selected,
-  visited,
   variant,
   pulse,
+  visualState,
+  useMobilePosition,
   onSelect,
 }: {
   hs: XRHotspotDefinition;
   selected: boolean;
-  visited: boolean;
   variant: XRViewerVariant;
   pulse?: boolean;
+  visualState: HotspotVisualState;
+  useMobilePosition: boolean;
   onSelect: () => void;
 }) {
-  const HotspotIcon = hs.icon === "hazard" ? Zap : hs.icon === "action" ? BookOpen : hs.icon === "justify" ? PenLine : hs.icon === "reflect" ? Target : Sparkles;
-  const size =
+  const HotspotIcon =
+    hs.icon === "hazard"
+      ? Zap
+      : hs.icon === "action"
+        ? BookOpen
+        : hs.icon === "justify"
+          ? PenLine
+          : hs.icon === "reflect"
+            ? Target
+            : Sparkles;
+  const left = useMobilePosition && hs.leftPctMobile != null ? hs.leftPctMobile : hs.leftPct;
+  const top = useMobilePosition && hs.topPctMobile != null ? hs.topPctMobile : hs.topPct;
+  const sizeClass =
     variant === "hero"
-      ? "h-10 w-10 min-h-[44px] min-w-[44px] text-[9px]"
-      : "h-12 w-12 min-h-[48px] min-w-[48px] text-[10px]";
+      ? "h-12 w-12 min-h-[48px] min-w-[48px] text-[10px] sm:h-11 sm:w-11 sm:min-h-[44px] sm:min-w-[44px]"
+      : "h-[52px] w-[52px] min-h-[52px] min-w-[52px] text-[10px] sm:h-12 sm:w-12 sm:min-h-[48px] sm:min-w-[48px]";
+  const blocked = visualState === "blocked";
+  const completed = visualState === "completed";
+  const current = visualState === "current";
+
   return (
     <button
       type="button"
+      tabIndex={0}
       onClick={onSelect}
       onPointerDown={(e) => e.stopPropagation()}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          if (!blocked) onSelect();
+        }
+      }}
+      disabled={blocked}
       className={cn(
-        "absolute z-20 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full font-bold text-white shadow-xl ring-2 transition hover:scale-105 focus:outline-none focus-visible:ring-4 focus-visible:ring-indigo-300",
+        "pointer-events-auto touch-manipulation absolute z-[45] flex -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full font-bold text-white shadow-xl ring-2 transition hover:scale-[1.04] focus:outline-none focus-visible:ring-4 focus-visible:ring-offset-2 focus-visible:ring-offset-black/20 focus-visible:ring-indigo-300",
         hs.ringClass,
-        size,
-        visited && !selected && "opacity-85 ring-emerald-200",
-        selected && "z-30 ring-4 ring-white",
-        pulse && "ring-4 ring-amber-200 animate-[pulse_1.1s_ease-in-out_infinite]",
+        sizeClass,
+        blocked && "cursor-not-allowed opacity-40 grayscale",
+        completed && !selected && "opacity-95 ring-emerald-200",
+        selected && "z-[50] scale-105 ring-4 ring-white",
+        current && !blocked && "ring-amber-100 shadow-lg shadow-amber-900/30",
+        pulse && "z-[48] ring-4 ring-sky-300 animate-[pulse_1.05s_ease-in-out_infinite]",
+        visualState === "optional" && !completed && "ring-violet-200/90",
       )}
-      style={{ left: `${hs.leftPct}%`, top: `${hs.topPct}%` }}
-      aria-label={`Hotspot ${hs.label}, pathway ${hs.pathwayStep}`}
+      style={{ left: `${left}%`, top: `${top}%` }}
+      aria-label={`Hotspot ${hs.label}, pathway ${hs.pathwayStep}${blocked ? " — complete previous step first" : ""}`}
       aria-pressed={selected}
+      aria-current={current ? "step" : undefined}
     >
-      <HotspotIcon className="mb-0.5 h-3.5 w-3.5" aria-hidden />
-      {hs.label}
+      {completed ? (
+        <Check className="mb-0.5 h-4 w-4 shrink-0 sm:h-3.5 sm:w-3.5" aria-hidden />
+      ) : (
+        <HotspotIcon className="mb-0.5 h-4 w-4 shrink-0 sm:h-3.5 sm:w-3.5" aria-hidden />
+      )}
+      <span className="max-w-[3.5rem] truncate text-center leading-none">{hs.label}</span>
     </button>
   );
 }
@@ -197,6 +263,8 @@ export function XRScenarioViewer({
 }) {
   const titleId = useId();
   const viewportRef = useRef<HTMLDivElement>(null);
+  /** Fullscreen / CSS-expand target: toolbar + scene (not pathway), so controls stay usable. */
+  const viewerSceneShellRef = useRef<HTMLDivElement>(null);
   const [panPx, setPanPx] = useState(0);
   const drag = useRef<{ active: boolean; startX: number; startPan: number }>({
     active: false,
@@ -231,6 +299,7 @@ export function XRScenarioViewer({
   const [reflectTapped, setReflectTapped] = useState(false);
   const [cssFullscreen, setCssFullscreen] = useState(false);
   const [scanHighlightId, setScanHighlightId] = useState<XRHotspotId | null>(null);
+  const [sceneScanActive, setSceneScanActive] = useState(false);
 
   useEffect(() => {
     const lid = scenarioLearnerId ?? getActivePreviewLearnerId();
@@ -377,7 +446,8 @@ export function XRScenarioViewer({
   }, []);
 
   const runSceneScan = useCallback(() => {
-    setOrderWarning("Scanning the scene for learning hotspots…");
+    setSceneScanActive(true);
+    setOrderWarning("Scanning learning hotspots…");
     const seq = REQUIRED_HOTSPOT_ORDER;
     let i = 0;
     const tick = () => {
@@ -387,6 +457,7 @@ export function XRScenarioViewer({
         window.setTimeout(tick, 720);
       } else {
         setScanHighlightId(null);
+        setSceneScanActive(false);
         setOrderWarning("Scan complete. Start by tapping the Hazard hotspot.");
         pushDemoEvent({ eventType: "scene_scan", step: "Observe", hotspot: "scan" });
         appendDemoActivity(activeLid, `${activeLid} completed scene scan`);
@@ -578,7 +649,7 @@ export function XRScenarioViewer({
   }, []);
 
   const requestImmersiveViewport = () => {
-    const el = viewportRef.current;
+    const el = viewerSceneShellRef.current;
     appendLog({
       hotspotId: "ui",
       hotspotLabel: "Immersive UI",
@@ -608,6 +679,23 @@ export function XRScenarioViewer({
   const teacherPanel = Boolean(guidedPreview && variant === "mobile" && previewTab === "teacher");
   const mobileGuidedLearner =
     Boolean(guidedPreview && variant === "mobile" && (previewTab === "mobile360" || previewTab === "teacher"));
+  const immersiveMinimal = Boolean(variant === "mobile" && !webxrOnly && (immersiveUi || cssFullscreen));
+
+  const nextStepInstruction = (() => {
+    if (webxrOnly) return "Check device support below. Hotspots stay large and tappable in Mobile 360° mode.";
+    if (guidedMobile && !guidedScenarioStarted) {
+      return "Tap Start Scenario, then open Hazard on the scene to identify the risk.";
+    }
+    if (!guidedMobile) {
+      return "Pan the scene, then follow the pathway: Hazard → Safe Action → Why? → Reflect.";
+    }
+    if (guidedStep === 1) return "Step 1: Tap Hazard on the scene to record your observation.";
+    if (guidedStep === 2) return "Step 2: Tap Safe Action, then choose the safest response in the card below.";
+    if (guidedStep === 3) return "Step 3: Tap Why? on the scene, then write your justification below.";
+    if (guidedStep === 4) return "Step 4: Tap Reflect on the scene, then submit your reflection.";
+    if (guidedStep === 5) return "Submitted — open the dashboard as a teacher to run AI analysis.";
+    return "Use the scene hotspots together with the steps below.";
+  })();
 
   const viewerHeight =
     isHero
@@ -615,6 +703,8 @@ export function XRScenarioViewer({
       : variant === "desktop"
         ? "min-h-[340px] lg:min-h-[420px]"
         : "min-h-[48vh] sm:min-h-[52vh]";
+
+  const useMobileHotspotCoords = variant !== "desktop";
 
   const panoramaStrip = (
     <div
@@ -629,31 +719,46 @@ export function XRScenarioViewer({
           src={XR_PANORAMA_URL}
           alt="Wide panoramic warehouse for 360° workplace safety training"
           fill
-          className="object-cover object-center"
+          className="pointer-events-none object-cover object-center"
           sizes="200vw"
           priority={isHero}
           unoptimized
         />
         <div
           className={cn(
-            "pointer-events-none absolute inset-0 bg-gradient-to-b",
-            isDarkChrome ? "from-slate-950/50 via-transparent to-slate-950/70" : "from-[#0c1f3a]/35 via-transparent to-[#0c1f3a]/45",
+            "pointer-events-none absolute inset-0 z-[5] bg-gradient-to-t",
+            isDarkChrome ? "from-slate-950/45 via-transparent to-transparent" : "from-[#0c1f3a]/35 via-transparent to-transparent",
           )}
         />
-        {XR_HOTSPOTS.map((hs) => (
-          <HotspotMarker
-            key={hs.id}
-            hs={hs}
-            selected={selectedId === hs.id}
-            visited={visited.has(hs.id)}
-            pulse={scanHighlightId === hs.id}
-            variant={variant}
-            onSelect={() => {
-              if (guidedMobile && !guidedScenarioStarted) return;
-              openHotspot(hs);
-            }}
+        {sceneScanActive ? (
+          <div
+            className="pointer-events-none absolute inset-0 z-[12] bg-black/35 transition-opacity duration-300"
+            aria-hidden
           />
-        ))}
+        ) : null}
+        <div className="pointer-events-none absolute inset-0 z-[35]">
+          {XR_HOTSPOTS.map((hs) => (
+            <HotspotMarker
+              key={hs.id}
+              hs={hs}
+              selected={selectedId === hs.id}
+              variant={variant}
+              pulse={scanHighlightId === hs.id}
+              visualState={computeHotspotVisualState(
+                hs,
+                guidedMobile,
+                guidedScenarioStarted,
+                guidedStep,
+                visited,
+              )}
+              useMobilePosition={useMobileHotspotCoords}
+              onSelect={() => {
+                if (guidedMobile && !guidedScenarioStarted) return;
+                openHotspot(hs);
+              }}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );
@@ -694,10 +799,6 @@ export function XRScenarioViewer({
         >
           Close
         </button>
-      </div>
-    ) : selectedHotspot && isHero ? (
-      <div className="pointer-events-none absolute bottom-12 left-3 right-3 z-10 max-w-[95%] rounded-xl border border-white/30 bg-white/90 p-2 text-[11px] text-[#0c1f3a] shadow-lg backdrop-blur-sm sm:bottom-14 sm:left-4">
-        <span className="font-bold text-indigo-700">{selectedHotspot.label}</span> · {selectedHotspot.pathwayStep}
       </div>
     ) : null;
 
@@ -1081,7 +1182,7 @@ export function XRScenarioViewer({
     ) : null;
 
   const guidedModeChrome =
-    guidedPreview && variant === "mobile" ? (
+    guidedPreview && variant === "mobile" && !immersiveMinimal ? (
       <div className="mb-4 space-y-4 overflow-x-hidden">
         <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
           <button
@@ -1148,6 +1249,124 @@ export function XRScenarioViewer({
       </div>
     ) : null;
 
+  const heroInsightCard =
+    isHero ? (
+      <div className="rounded-xl border border-indigo-100 bg-white p-3 text-xs text-slate-800 shadow-sm ring-1 ring-slate-100">
+        <p className="font-bold text-indigo-700">AI-assisted insight</p>
+        <p className="mt-1 leading-relaxed text-slate-700">
+          Observe hotspots first; justify actions with evidence in the mobile demo. Teacher review required — prototype
+          only.
+        </p>
+      </div>
+    ) : null;
+
+  const workspaceHeader =
+    !isHero && !webxrOnly ? (
+      <div id={titleId} className="space-y-1.5 px-0.5 sm:px-0">
+        <h2
+          className={cn(
+            "text-lg font-bold leading-tight sm:text-xl",
+            isDarkChrome ? "text-white" : "text-slate-900",
+          )}
+        >
+          Workplace Safety Simulation
+        </h2>
+        <p className={cn("text-sm leading-snug", isDarkChrome ? "text-slate-300" : "text-slate-600")}>
+          {nextStepInstruction}
+        </p>
+        {variant === "mobile" ? (
+          <p className="text-xs leading-snug text-slate-500">
+            Swipe or drag <strong className="font-semibold text-slate-400">on the scene picture</strong> below to pan —
+            not on this text.
+          </p>
+        ) : null}
+      </div>
+    ) : isHero ? (
+      <span id={titleId} className="sr-only">
+        Workplace Safety Simulation
+      </span>
+    ) : null;
+
+  /** Toolbar sits outside the pannable surface so hotspots and pan gestures are never blocked. */
+  const sceneToolbar =
+    !isHero && !webxrOnly ? (
+      <div
+        className={cn(
+          "flex flex-wrap items-center justify-end gap-2 border-b px-2 py-2 sm:px-3",
+          isDarkChrome ? "border-white/10 bg-slate-900/95" : "border-slate-200 bg-slate-100",
+        )}
+        role="toolbar"
+        aria-label="Scene controls"
+        onPointerDown={(e) => e.stopPropagation()}
+      >
+        {variant === "desktop" && !guidedPreview && xrSupported === true ? (
+          <button
+            type="button"
+            onClick={() => void enterXR()}
+            className="inline-flex min-h-[44px] items-center rounded-xl bg-indigo-600 px-3 py-2 text-[11px] font-bold text-white shadow-md"
+            title="Enter WebXR"
+          >
+            XR
+          </button>
+        ) : null}
+        {!guidedPreview && variant === "mobile" && xrSupported !== true ? (
+          <span
+            className="rounded-md bg-slate-800/90 px-2 py-1 text-[10px] font-semibold text-slate-200 ring-1 ring-white/15"
+            title="Pan the scene horizontally"
+          >
+            360° pan
+          </span>
+        ) : null}
+        {variant === "mobile" && !webxrOnly && guidedMobile ? (
+          <button
+            type="button"
+            onClick={runSceneScan}
+            className="inline-flex min-h-[44px] items-center gap-2 rounded-xl bg-sky-600 px-3 py-2 text-xs font-bold text-white shadow-md"
+            title="Scan scene — highlights each hotspot in order"
+            aria-label="Scan scene for learning hotspots"
+          >
+            <ScanLine className="h-4 w-4 shrink-0" aria-hidden />
+            Scan scene
+          </button>
+        ) : null}
+        {!webxrOnly ? (
+          immersiveUi || cssFullscreen ? (
+            <button
+              type="button"
+              onClick={exitImmersiveViewport}
+              className={cn(
+                "inline-flex min-h-[44px] items-center gap-2 rounded-xl px-3 py-2 text-xs font-bold shadow-md",
+                isDarkChrome
+                  ? "border border-white/35 bg-black/50 text-white"
+                  : "border border-slate-300 bg-white text-slate-900",
+              )}
+              title="Exit full screen"
+              aria-label="Exit full screen"
+            >
+              <X className="h-4 w-4 shrink-0" aria-hidden />
+              Exit full screen
+            </button>
+          ) : (
+            <button
+              type="button"
+              onClick={requestImmersiveViewport}
+              className={cn(
+                "inline-flex min-h-[44px] items-center gap-2 rounded-xl px-3 py-2 text-xs font-bold shadow-md",
+                isDarkChrome
+                  ? "bg-white/95 text-slate-900 ring-1 ring-white/20"
+                  : "bg-white text-slate-900 ring-1 ring-slate-200",
+              )}
+              title="Full screen workspace"
+              aria-label="Full screen workspace"
+            >
+              <Maximize2 className="h-4 w-4 shrink-0" aria-hidden />
+              Full screen
+            </button>
+          )
+        ) : null}
+      </div>
+    ) : null;
+
   const viewerCard = (
     <div
       className={cn(
@@ -1157,105 +1376,34 @@ export function XRScenarioViewer({
         cssFullscreen && variant === "mobile" && "fixed inset-0 z-[280] max-h-[100dvh] rounded-none ring-0",
       )}
     >
-      <div
-        id={titleId}
-        className={cn(
-          "relative cursor-grab select-none overflow-hidden touch-none active:cursor-grabbing",
-          viewerHeight,
-        )}
-        ref={viewportRef}
-        onPointerDown={onPointerDownPan}
-        onPointerMove={onPointerMovePan}
-        onPointerUp={endPan}
-        onPointerCancel={endPan}
-        onTouchStart={onTouchStart}
-        onTouchMove={onTouchMove}
-        onTouchEnd={onTouchEnd}
-        role="region"
-        aria-labelledby={titleId}
-      >
-        {panoramaStrip}
-        <div className="pointer-events-none absolute inset-x-0 top-0 z-10 bg-gradient-to-b from-black/50 to-transparent p-3 sm:p-4">
-          <div className="pointer-events-auto flex max-w-full flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
-            <div>
-              <p className="text-[10px] font-bold uppercase tracking-wider text-white/90">
-                {guidedPreview ? "XR-style mobile learning view" : "360° / XR-style learning scene"}
-              </p>
-              <p className="text-base font-bold text-white">Workplace Safety Simulation</p>
-              <p className="text-[11px] text-white/80">
-                {guidedPreview
-                  ? "360° hotspot-based learning scene — swipe or drag to pan. Prototype only — not real ThingLink telemetry."
-                  : "Drag horizontally to look around the panoramic frame (prototype)."}
-              </p>
-            </div>
-            {!isHero ? (
-              <div className="flex flex-wrap gap-2">
-                {!guidedPreview && xrSupported === true ? (
-                  <button
-                    type="button"
-                    onClick={() => void enterXR()}
-                    className="min-h-[44px] rounded-xl bg-indigo-600 px-3 py-2 text-xs font-semibold text-white shadow-lg"
-                  >
-                    Enter XR Mode
-                  </button>
-                ) : null}
-                {!guidedPreview && xrSupported !== true ? (
-                  <span className="flex min-h-[44px] items-center rounded-xl bg-white/10 px-3 text-xs font-semibold text-white ring-1 ring-white/20">
-                    360° Mobile View
-                  </span>
-                ) : null}
-                {guidedPreview && variant === "mobile" && previewTab === "mobile360" ? (
-                  <span className="flex min-h-[44px] max-w-[14rem] items-center rounded-xl bg-emerald-500/20 px-3 text-[10px] font-semibold leading-snug text-emerald-100 ring-1 ring-emerald-400/40 sm:max-w-none sm:text-xs">
-                    Default: Mobile 360° on iPhone &amp; typical browsers — not headset WebXR
-                  </span>
-                ) : null}
-                {variant === "mobile" && !webxrOnly && guidedMobile ? (
-                  <button
-                    type="button"
-                    onClick={runSceneScan}
-                    className="inline-flex min-h-[44px] items-center gap-1.5 rounded-xl bg-sky-600 px-3 py-2 text-xs font-bold text-white shadow-lg"
-                  >
-                    <ScanLine className="h-3.5 w-3.5" aria-hidden />
-                    Scan scene
-                  </button>
-                ) : null}
-                {variant === "mobile" && !webxrOnly ? (
-                  <button
-                    type="button"
-                    onClick={requestImmersiveViewport}
-                    className="inline-flex min-h-[44px] items-center gap-1.5 rounded-xl bg-white px-3 py-2 text-xs font-bold text-slate-900 shadow-lg"
-                  >
-                    <Maximize2 className="h-3.5 w-3.5" aria-hidden />
-                    Full screen
-                  </button>
-                ) : null}
-                {variant === "mobile" && !webxrOnly && (immersiveUi || cssFullscreen) ? (
-                  <button
-                    type="button"
-                    onClick={exitImmersiveViewport}
-                    className="inline-flex min-h-[44px] items-center gap-1.5 rounded-xl border border-white/40 bg-black/40 px-3 py-2 text-xs font-bold text-white shadow-lg"
-                  >
-                    <X className="h-3.5 w-3.5" aria-hidden />
-                    Exit full screen
-                  </button>
-                ) : null}
-              </div>
-            ) : null}
-          </div>
+      <div ref={viewerSceneShellRef} className={cn("relative overflow-hidden", !isHero && !webxrOnly && "ring-0")}>
+        {sceneToolbar}
+        <div
+          className={cn(
+            "relative cursor-grab select-none overflow-hidden overscroll-x-contain active:cursor-grabbing",
+            "touch-pan-x",
+            viewerHeight,
+          )}
+          ref={viewportRef}
+          onPointerDown={onPointerDownPan}
+          onPointerMove={onPointerMovePan}
+          onPointerUp={endPan}
+          onPointerCancel={endPan}
+          onTouchStart={onTouchStart}
+          onTouchMove={onTouchMove}
+          onTouchEnd={onTouchEnd}
+          role="region"
+          aria-label="Learning scene — drag or swipe horizontally on this area to pan. Hotspots are round markers."
+        >
+          {panoramaStrip}
         </div>
-        {isHero ? popover : null}
-        {isHero ? (
-          <div className="pointer-events-none absolute bottom-3 left-3 right-3 z-10 max-w-[95%] sm:left-4 sm:max-w-sm">
-            <div className="rounded-xl border border-indigo-100 bg-white/95 p-3 text-xs text-[#0c1f3a] shadow-lg backdrop-blur-sm ring-1 ring-slate-100">
-              <p className="font-bold text-indigo-700">AI insight bubble</p>
-              <p className="mt-1 text-slate-700">
-                Cohort signal: observe hotspots first; justify actions with evidence in the mobile demo. Teacher review
-                required — prototype only.
-              </p>
-            </div>
-          </div>
-        ) : null}
       </div>
+      {isHero && selectedHotspot ? (
+        <div className="border-b border-slate-200 bg-slate-50 px-3 py-2 text-left text-xs text-slate-800">
+          <span className="font-bold text-indigo-700">{selectedHotspot.label}</span>
+          <span className="text-slate-600"> · {selectedHotspot.pathwayStep}</span>
+        </div>
+      ) : null}
       <div
         className={cn(
           "flex flex-col gap-2 border-t px-3 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-4",
@@ -1348,6 +1496,7 @@ export function XRScenarioViewer({
   const mainContent = (
     <div className={cn("flex flex-col gap-4", variant === "desktop" && "lg:col-span-3")}>
       {variant === "mobile" && guidedPreview ? guidedModeChrome : null}
+      {workspaceHeader}
 
       {!webxrOnly ? (
         <div className={cn(variant === "desktop" && "relative")}>
@@ -1355,6 +1504,8 @@ export function XRScenarioViewer({
           {!isHero && variant === "desktop" ? popover : null}
         </div>
       ) : null}
+
+      {isHero ? heroInsightCard : null}
 
       {webxrOnly ? webxrModePanel : null}
 

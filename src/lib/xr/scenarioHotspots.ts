@@ -15,6 +15,9 @@ export interface XRHotspotDefinition {
   /** Position on panoramic strip (percent of wide canvas) */
   leftPct: number;
   topPct: number;
+  /** Optional position on narrow / mobile viewports (keeps markers away from corner controls) */
+  leftPctMobile?: number;
+  topPctMobile?: number;
   ringClass: string;
   icon: "hazard" | "action" | "reflect" | "ai" | "justify";
 }
@@ -33,6 +36,8 @@ export const XR_HOTSPOTS: XRHotspotDefinition[] = [
     pathwayIndex: 0,
     leftPct: 14,
     topPct: 26,
+    leftPctMobile: 20,
+    topPctMobile: 34,
     ringClass: "bg-orange-500 ring-orange-100",
     icon: "hazard",
   },
@@ -43,6 +48,8 @@ export const XR_HOTSPOTS: XRHotspotDefinition[] = [
     pathwayIndex: 1,
     leftPct: 34,
     topPct: 36,
+    leftPctMobile: 38,
+    topPctMobile: 40,
     ringClass: "bg-sky-500 ring-sky-100",
     icon: "action",
   },
@@ -53,6 +60,8 @@ export const XR_HOTSPOTS: XRHotspotDefinition[] = [
     pathwayIndex: 2,
     leftPct: 50,
     topPct: 30,
+    leftPctMobile: 52,
+    topPctMobile: 36,
     ringClass: "bg-amber-500 ring-amber-100",
     icon: "justify",
   },
@@ -63,6 +72,8 @@ export const XR_HOTSPOTS: XRHotspotDefinition[] = [
     pathwayIndex: 2,
     leftPct: 63,
     topPct: 22,
+    leftPctMobile: 58,
+    topPctMobile: 30,
     ringClass: "bg-violet-600 ring-violet-100",
     icon: "ai",
   },
@@ -73,6 +84,8 @@ export const XR_HOTSPOTS: XRHotspotDefinition[] = [
     pathwayIndex: 3,
     leftPct: 76,
     topPct: 42,
+    leftPctMobile: 72,
+    topPctMobile: 44,
     ringClass: "bg-emerald-500 ring-emerald-100",
     icon: "reflect",
   },
