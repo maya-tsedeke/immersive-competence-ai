@@ -1,16 +1,19 @@
+import { Suspense } from "react";
 import { PreviewLearnerShell } from "@/components/preview/PreviewLearnerShell";
-import { XRScenarioViewer } from "@/components/xr/XRScenarioViewer";
+import { PreviewScenarioWithQuery } from "@/components/preview/PreviewScenarioWithQuery";
 
-export default async function PreviewPage({
-  searchParams,
-}: {
-  searchParams?: Promise<{ learner?: string }>;
-}) {
-  const q = searchParams ? await searchParams : {};
-  const learnerId = q.learner?.trim();
+export default function PreviewPage() {
   return (
     <PreviewLearnerShell>
-      <XRScenarioViewer variant="mobile" guidedPreview scenarioLearnerId={learnerId} />
+      <Suspense
+        fallback={
+          <div className="mt-4 flex min-h-[240px] items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-sm text-slate-400">
+            Loading scenario…
+          </div>
+        }
+      >
+        <PreviewScenarioWithQuery />
+      </Suspense>
     </PreviewLearnerShell>
   );
 }
