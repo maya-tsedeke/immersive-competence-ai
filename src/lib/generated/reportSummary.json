@@ -1,0 +1,36 @@
+{
+  "title": "Competence Analytics Report (baseline)",
+  "scenarioName": "Public dataset prototype (OULAD + dialogue mapping)",
+  "learnerCount": 80,
+  "classSummary": "Sample of 80 learners ranked by prototype at-risk score. Not validated on real ThingLink telemetry.",
+  "atRiskLearners": [
+    "L-1107",
+    "L-F77C",
+    "L-E3AD",
+    "L-95E5",
+    "L-959C",
+    "L-3C53",
+    "L-EBA3",
+    "L-6A27",
+    "L-4B3D",
+    "L-7C6A",
+    "L-7ACB",
+    "L-6FC0",
+    "L-52DE",
+    "L-58C8",
+    "L-E68C",
+    "L-85A6",
+    "L-3D22",
+    "L-AF57",
+    "L-96AB",
+    "L-AB26"
+  ],
+  "misconceptions": [
+    "Heuristic confusion cues in dialogue excerpts",
+    "Early vs late assessment engagement (OULAD baseline)"
+  ],
+  "recommendedActions": [
+    "Review the Model information / limitations card with stakeholders",
+    "Plan anonymised ThingLink export for real-world validation"
+  ]
+}

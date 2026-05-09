@@ -1,0 +1,930 @@
+[
+  {
+    "learnerId": "L-1107",
+    "sourceStudentId": "1107bc831bc8ccf3",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Low VLE click volume",
+      "Few active learning days"
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-F77C",
+    "sourceStudentId": "f77cb777cba91af3",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Below-average assessment score (risk indicator)",
+      "Low VLE click volume",
+      "Few active learning days"
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-E3AD",
+    "sourceStudentId": "e3ad795e6c0bdb2b",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Low VLE click volume",
+      "Few active learning days"
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-95E5",
+    "sourceStudentId": "95e5500a356b34b3",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Review activity and assessment trajectory for this learner-module pair."
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-959C",
+    "sourceStudentId": "959c79542d66258b",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Low VLE click volume",
+      "Few active learning days"
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-3C53",
+    "sourceStudentId": "3c53a537118e1ca0",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Review activity and assessment trajectory for this learner-module pair."
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-EBA3",
+    "sourceStudentId": "eba3d5b7c50a1436",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Low VLE click volume",
+      "Few active learning days"
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-6A27",
+    "sourceStudentId": "6a279bbb70fb38f8",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Low VLE click volume",
+      "Few active learning days"
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-4B3D",
+    "sourceStudentId": "4b3d09d4b984b47f",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Below-average assessment score (risk indicator)"
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-7C6A",
+    "sourceStudentId": "7c6a61087866fa2e",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Low VLE click volume",
+      "Few active learning days"
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-7ACB",
+    "sourceStudentId": "7acbf4d1b17445fe",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Low VLE click volume"
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-6FC0",
+    "sourceStudentId": "6fc0fd6831f813c2",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Low VLE click volume",
+      "Few active learning days"
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-52DE",
+    "sourceStudentId": "52de599a0eb42201",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Low VLE click volume",
+      "Few active learning days"
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-58C8",
+    "sourceStudentId": "58c849a0ba5d83fa",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Below-average assessment score (risk indicator)",
+      "Low VLE click volume",
+      "Few active learning days"
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-E68C",
+    "sourceStudentId": "e68c9a8afc80f112",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Review activity and assessment trajectory for this learner-module pair."
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-85A6",
+    "sourceStudentId": "85a6fe1275140252",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Low VLE click volume",
+      "Few active learning days"
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-3D22",
+    "sourceStudentId": "3d22121e8472473a",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Low VLE click volume",
+      "Few active learning days"
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-AF57",
+    "sourceStudentId": "af57f7bdc328dceb",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Low VLE click volume",
+      "Few active learning days"
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-96AB",
+    "sourceStudentId": "96ab00f9dd2aee42",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Review activity and assessment trajectory for this learner-module pair."
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-AB26",
+    "sourceStudentId": "ab26c6c4e39cbc62",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Review activity and assessment trajectory for this learner-module pair."
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-3D33",
+    "sourceStudentId": "3d33c679719a40dc",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Low VLE click volume",
+      "Few active learning days"
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-9198",
+    "sourceStudentId": "9198e45bc6d2b197",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Low VLE click volume",
+      "Few active learning days"
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-BD41",
+    "sourceStudentId": "bd41dcc0a46995da",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Below-average assessment score (risk indicator)"
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-E2D7",
+    "sourceStudentId": "e2d7598a11baaadd",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Low VLE click volume",
+      "Few active learning days"
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-04EC",
+    "sourceStudentId": "04ec5aeae80bbdaf",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Few active learning days"
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-34BF",
+    "sourceStudentId": "34bf85b995b3773b",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Few active learning days"
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-77C1",
+    "sourceStudentId": "77c1321b2b4045d0",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Low VLE click volume",
+      "Few active learning days"
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-2C0B",
+    "sourceStudentId": "2c0b5cb6f40b3463",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Low VLE click volume",
+      "Few active learning days"
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-83D5",
+    "sourceStudentId": "83d5084ec97d174f",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Review activity and assessment trajectory for this learner-module pair."
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-FC57",
+    "sourceStudentId": "fc57fdcf81bc2c44",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Review activity and assessment trajectory for this learner-module pair."
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-18D1",
+    "sourceStudentId": "18d1aaea8ad2d3ae",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Low VLE click volume",
+      "Few active learning days"
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-D1DF",
+    "sourceStudentId": "d1dfa524a0f05a45",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Review activity and assessment trajectory for this learner-module pair."
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-0A6B",
+    "sourceStudentId": "0a6b7c97e3e6fe9c",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Below-average assessment score (risk indicator)",
+      "Low VLE click volume",
+      "Few active learning days"
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-797C",
+    "sourceStudentId": "797cdf92019e8326",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Low VLE click volume",
+      "Few active learning days"
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-B3A3",
+    "sourceStudentId": "b3a39da0bf5affe9",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Low VLE click volume",
+      "Few active learning days"
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-A1D9",
+    "sourceStudentId": "a1d92b5bdfeeb8b4",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Low VLE click volume",
+      "Few active learning days"
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-E90C",
+    "sourceStudentId": "e90c138b96be5d59",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Low VLE click volume",
+      "Few active learning days"
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-390C",
+    "sourceStudentId": "390cd8f6d3914519",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Review activity and assessment trajectory for this learner-module pair."
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-5DFE",
+    "sourceStudentId": "5dfef1533e1a9371",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Low VLE click volume",
+      "Few active learning days"
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-355E",
+    "sourceStudentId": "355ee0baf5d43896",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Few active learning days"
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-F023",
+    "sourceStudentId": "f023b1ec3a2f57e5",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Low VLE click volume",
+      "Few active learning days"
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-DDFD",
+    "sourceStudentId": "ddfd3329d68ea5d8",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Review activity and assessment trajectory for this learner-module pair."
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-72FF",
+    "sourceStudentId": "72ffe7bb482e50ef",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Review activity and assessment trajectory for this learner-module pair."
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-0C75",
+    "sourceStudentId": "0c7522cb9feee2b0",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Low VLE click volume",
+      "Few active learning days"
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-7833",
+    "sourceStudentId": "783373ad6a8bd1e4",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Low VLE click volume",
+      "Few active learning days"
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-FDDE",
+    "sourceStudentId": "fddeca94cc777d83",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Few active learning days"
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-F7D3",
+    "sourceStudentId": "f7d3a80a06d6dc8f",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Low VLE click volume",
+      "Few active learning days"
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-12A6",
+    "sourceStudentId": "12a68c5e7c8e00bb",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Review activity and assessment trajectory for this learner-module pair."
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-7908",
+    "sourceStudentId": "7908a8d82c283dd2",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Low VLE click volume",
+      "Few active learning days"
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-F27F",
+    "sourceStudentId": "f27ffcc8029777bd",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Review activity and assessment trajectory for this learner-module pair."
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-4971",
+    "sourceStudentId": "4971d0d5a1323bc5",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Low VLE click volume",
+      "Few active learning days"
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-DC99",
+    "sourceStudentId": "dc99dac3a310fcb7",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Low VLE click volume",
+      "Few active learning days"
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-B3F1",
+    "sourceStudentId": "b3f162391fc23d42",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Review activity and assessment trajectory for this learner-module pair."
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-9583",
+    "sourceStudentId": "9583d09725b580bb",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Review activity and assessment trajectory for this learner-module pair."
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-4AC4",
+    "sourceStudentId": "4ac44ad93cba7f04",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Low VLE click volume",
+      "Few active learning days"
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-A25E",
+    "sourceStudentId": "a25e51d26d86c710",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Low VLE click volume"
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-7D40",
+    "sourceStudentId": "7d4075c1b0d23669",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Below-average assessment score (risk indicator)",
+      "Low VLE click volume",
+      "Few active learning days"
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-B69D",
+    "sourceStudentId": "b69d9e40e8869804",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Review activity and assessment trajectory for this learner-module pair."
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-C5C3",
+    "sourceStudentId": "c5c3528e7427c940",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Review activity and assessment trajectory for this learner-module pair."
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-981F",
+    "sourceStudentId": "981f0cdac7270efb",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Low VLE click volume",
+      "Few active learning days"
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-7DCD",
+    "sourceStudentId": "7dcd6a7d1e221db1",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Low VLE click volume",
+      "Few active learning days"
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-3A9C",
+    "sourceStudentId": "3a9cfce4d238d1ca",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Review activity and assessment trajectory for this learner-module pair."
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-91B7",
+    "sourceStudentId": "91b7f42efd7ccb0b",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Review activity and assessment trajectory for this learner-module pair."
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-2823",
+    "sourceStudentId": "2823304e3e4a8644",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Review activity and assessment trajectory for this learner-module pair."
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-376A",
+    "sourceStudentId": "376ad62c4c34ae66",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Review activity and assessment trajectory for this learner-module pair."
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-0A0E",
+    "sourceStudentId": "0a0e1798feb06462",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Low VLE click volume",
+      "Few active learning days"
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-1D5A",
+    "sourceStudentId": "1d5a27ac0329e999",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Low VLE click volume"
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-ADBD",
+    "sourceStudentId": "adbd947480cf0e66",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Low VLE click volume",
+      "Few active learning days"
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-0CC4",
+    "sourceStudentId": "0cc4b114558c2f3a",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Few active learning days"
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-EEFC",
+    "sourceStudentId": "eefc6b7b8edc064e",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Low VLE click volume",
+      "Few active learning days"
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-A796",
+    "sourceStudentId": "a796d100c0996da2",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Few active learning days"
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-98EF",
+    "sourceStudentId": "98ef7c0c7293c789",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Review activity and assessment trajectory for this learner-module pair."
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-FC8E",
+    "sourceStudentId": "fc8e54655ac363e3",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Few active learning days"
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-CE35",
+    "sourceStudentId": "ce35f38c2d96f2c4",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Low VLE click volume",
+      "Few active learning days"
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-7B4C",
+    "sourceStudentId": "7b4c13ffcddc0e32",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Review activity and assessment trajectory for this learner-module pair."
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-3B5E",
+    "sourceStudentId": "3b5e77eec197bbb2",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Below-average assessment score (risk indicator)"
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-F628",
+    "sourceStudentId": "f62818680e29786e",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Review activity and assessment trajectory for this learner-module pair."
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-4209",
+    "sourceStudentId": "42096880cfdf1862",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Below-average assessment score (risk indicator)",
+      "Low VLE click volume",
+      "Few active learning days"
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-9246",
+    "sourceStudentId": "92466e169ab41c7a",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Review activity and assessment trajectory for this learner-module pair."
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  },
+  {
+    "learnerId": "L-40A6",
+    "sourceStudentId": "40a6e7de86074e7a",
+    "riskScore": 0.9999,
+    "riskLevel": "At risk",
+    "predictedOutcome": "Fail or Withdrawn",
+    "keyFactors": [
+      "Low VLE click volume",
+      "Few active learning days",
+      "Limited early submitted assessments"
+    ],
+    "teacherRecommendation": "Suggested teacher action: offer a short check-in and targeted feedback before the next summative step. Treat this as AI-assisted insight from a public-dataset prototype — not a sole basis for grading or placement."
+  }
+]

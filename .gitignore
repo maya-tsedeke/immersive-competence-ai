@@ -1,0 +1,17 @@
+node_modules/ 
+.next/ 
+out/ 
+.vercel/ 
+.env 
+.env.local 
+.DS_Store 
+ml/data/raw/ 
+ml/data/processed/ 
+ml/outputs/ 
+ml/models/ 
+ml/reports/figures/ 
+ml/reports/tables/ 
+*.zip 
+*.xlsx 
+*.csv 
+.git-backup-before-reset/ 

@@ -1,0 +1,20 @@
+[
+  {
+    "id": "1",
+    "title": "AI-assisted class insight (baseline)",
+    "body": "Public OULAD + dialogue prototypes suggest reviewing justification depth relative to raw click volume — use as a risk indicator for discussion with learners, not as a sole basis for high-stakes decisions.",
+    "confidence": "Medium · prototype"
+  },
+  {
+    "id": "2",
+    "title": "Heuristic dialogue pattern",
+    "body": "Confusion heuristics align with shorter reflective turns in the education dialogue sample (labels are not validated ground truth).",
+    "confidence": "Prototype confidence"
+  },
+  {
+    "id": "3",
+    "title": "Suggested teacher action",
+    "body": "Add structured rationale scaffolds after decision points; reinforce safe-to-fail reflection prompts.",
+    "confidence": "Pedagogical suggestion"
+  }
+]

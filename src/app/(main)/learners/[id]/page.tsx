@@ -1,0 +1,163 @@
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { AIReasoningSummaryCard } from "@/components/learners/AIReasoningSummaryCard";
+import { InteractionTimeline } from "@/components/analytics/InteractionTimeline";
+import { LearnerDetailHeader } from "@/components/learners/LearnerDetailHeader";
+import { MisconceptionCard } from "@/components/learners/MisconceptionCard";
+import { RubricCard } from "@/components/learners/RubricCard";
+import { TeacherRecommendationCard } from "@/components/learners/TeacherRecommendationCard";
+import { getLogForLearner } from "@/lib/data/interactionLogs";
+import { getRubricForLearner } from "@/lib/data/rubricScores";
+import {
+  getDialogueInsightForLearner,
+  getInteractionLogForLearner,
+  getLearnerById,
+  getLearners,
+  getRiskPredictionForLearner,
+  getRubricForLearnerGenerated,
+  usingGeneratedData,
+} from "@/lib/dataset";
+import { LearnerAiPanel } from "@/components/learners/LearnerAiPanel";
+
+/** Pre-render all learner detail routes for `next build` with `output: "export"`. */
+export async function generateStaticParams() {
+  const learners = getLearners();
+  return learners.map((l) => ({ id: l.id }));
+}
+
+const b221Copy = {
+  aiSummary:
+    "The learner identified the main hazard but initially selected an incomplete safety response. Their reflection shows partial understanding of risk prevention, but they need support connecting observation to correct action.",
+  misconception: "Confuses hazard recognition with risk control.",
+  actions: [
+    "Ask the learner to explain why the selected action reduces risk.",
+    "Provide one example comparing hazard identification and preventive action.",
+  ],
+};
+
+export default async function LearnerDetailPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+  const learner = getLearnerById(id);
+  if (!learner) notFound();
+
+  const log = getInteractionLogForLearner(learner.id) ?? getLogForLearner(learner.id);
+  const rubric = getRubricForLearnerGenerated(learner.id) ?? getRubricForLearner(learner.id);
+  const dialogue = getDialogueInsightForLearner(learner.id);
+  const risk = getRiskPredictionForLearner(learner.id);
+
+  const aiBody =
+    dialogue?.aiReasoningSummary ??
+    (learner.id === "B221"
+      ? b221Copy.aiSummary
+      : `Prototype narrative for ${learner.id}: indicators align with ${learner.status} in the demonstration layer.`);
+
+  const misconception =
+    dialogue?.misconception ??
+    (learner.id === "B221"
+      ? b221Copy.misconception
+      : "No persistent misconception flagged in this synthetic excerpt.");
+
+  const factors = risk?.keyFactors?.length ? risk.keyFactors : [];
+  const actions = [
+    ...(risk?.teacherRecommendation ? [risk.teacherRecommendation] : []),
+    ...(dialogue?.teacherFeedbackSuggestion ? [dialogue.teacherFeedbackSuggestion] : []),
+    ...factors.slice(0, 4),
+    ...(learner.id === "B221" ? b221Copy.actions : []),
+  ];
+  const uniqueActions = Array.from(new Set(actions.filter(Boolean)));
+
+  const teacherAiSuggestion =
+    dialogue?.teacherFeedbackSuggestion?.trim() ||
+    risk?.teacherRecommendation?.trim() ||
+    "Ask the learner to compare two possible safety actions and explain which one reduces risk more effectively.";
+
+  const gen = usingGeneratedData();
+  const interactionLog =
+    log && log.events
+      ? { learnerId: learner.id, events: log.events }
+      : null;
+
+  return (
+    <div className="mx-auto max-w-5xl space-y-6">
+      <Link
+        href="/learners"
+        className="inline-flex min-h-[44px] items-center text-sm font-semibold text-indigo-600 hover:underline"
+      >
+        ← Back to learners
+      </Link>
+
+      <div className="rounded-2xl border border-indigo-100 bg-indigo-50/80 p-4 text-sm leading-relaxed text-indigo-950 shadow-sm">
+        <strong>AI-assisted insight, not final assessment.</strong> Signals combine public-dataset baselines and heuristic
+        dialogue labels. The teacher remains responsible for interpretation; this is not validated on live ThingLink
+        telemetry.
+      </div>
+
+      <LearnerDetailHeader learner={learner} />
+
+      <LearnerAiPanel
+        learner={learner}
+        dialogue={dialogue ?? null}
+        risk={risk ?? null}
+        log={interactionLog}
+        usingGeneratedJson={gen}
+        teacherSuggestionFallback={teacherAiSuggestion}
+      />
+
+      {risk ? (
+        <div className="rounded-2xl border border-[var(--border)] bg-white p-5 shadow-[var(--shadow)]">
+          <p className="text-sm font-semibold text-slate-900">Risk model output</p>
+          <p className="mt-1 text-xs text-[var(--muted)]">From learnerRiskPredictions.json when generated</p>
+          <dl className="mt-4 grid gap-3 text-sm sm:grid-cols-2">
+            <div>
+              <dt className="text-[var(--muted)]">Risk score</dt>
+              <dd className="text-lg font-semibold text-slate-900">{risk.riskScore.toFixed(4)}</dd>
+            </div>
+            <div>
+              <dt className="text-[var(--muted)]">Level · Outcome proxy</dt>
+              <dd className="font-semibold text-slate-900">
+                {risk.riskLevel} · {risk.predictedOutcome}
+              </dd>
+            </div>
+          </dl>
+          {factors.length ? (
+            <div className="mt-4">
+              <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted)]">Key factors</p>
+              <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-slate-700">
+                {factors.map((f) => (
+                  <li key={f}>{f}</li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
+        </div>
+      ) : null}
+
+      {dialogue?.labelDisclaimer ? (
+        <p className="rounded-lg border border-slate-100 bg-slate-50 px-3 py-2 text-xs text-slate-600">
+          {dialogue.labelDisclaimer}
+        </p>
+      ) : null}
+
+      <div className="grid gap-4 lg:grid-cols-2">
+        <InteractionTimeline events={log?.events ?? []} />
+        <div className="space-y-4">
+          <AIReasoningSummaryCard body={aiBody} />
+          <MisconceptionCard text={misconception} />
+          <TeacherRecommendationCard
+            items={
+              uniqueActions.length
+                ? uniqueActions
+                : ["Review hotspot sequence with the learner.", "Reinforce rubric cues for justification."]
+            }
+          />
+        </div>
+      </div>
+
+      <RubricCard rows={rubric} />
+    </div>
+  );
+}

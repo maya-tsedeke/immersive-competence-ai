@@ -1,0 +1,2322 @@
+[
+  {
+    "learnerId": "L-1107",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day -3",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~134 clicks)",
+        "at": "Day 12",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 19",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 42",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-F77C",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day 2",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~352 clicks)",
+        "at": "Day 23",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 33",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 65",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-E3AD",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day -11",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~478 clicks)",
+        "at": "Day 1",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 7",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 26",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-95E5",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day -6",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~519 clicks)",
+        "at": "Day 16",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 27",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 60",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-959C",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day -17",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~115 clicks)",
+        "at": "Day 10",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 23",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 64",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-3C53",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day -18",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~1268 clicks)",
+        "at": "Day 5",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 17",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 52",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-EBA3",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day -18",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~355 clicks)",
+        "at": "Day 3",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 14",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 46",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-6A27",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day -18",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~14 clicks)",
+        "at": "Day -18",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day -18",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day -18",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-4B3D",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day 16",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~792 clicks)",
+        "at": "Day 36",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 47",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 78",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-7C6A",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day -16",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~131 clicks)",
+        "at": "Day 1",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 10",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 36",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-7ACB",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day -13",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~443 clicks)",
+        "at": "Day 8",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 19",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 52",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-6FC0",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day 0",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~0 clicks)",
+        "at": "Day 66",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 100",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 200",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-52DE",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day -18",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~225 clicks)",
+        "at": "Day -1",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 8",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 35",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-58C8",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day -17",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~227 clicks)",
+        "at": "Day -4",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 3",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 23",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-E68C",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day -16",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~681 clicks)",
+        "at": "Day 6",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 17",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 51",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-85A6",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day 3",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~213 clicks)",
+        "at": "Day 17",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 25",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 47",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-3D22",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day -18",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~412 clicks)",
+        "at": "Day 0",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 9",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 37",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-AF57",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day 0",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~304 clicks)",
+        "at": "Day 15",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 23",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 46",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-96AB",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day -18",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~826 clicks)",
+        "at": "Day 2",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 12",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 42",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-AB26",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day -18",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~535 clicks)",
+        "at": "Day -1",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 7",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 33",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-3D33",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day 4",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~138 clicks)",
+        "at": "Day 10",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 13",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 23",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-9198",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day 5",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~296 clicks)",
+        "at": "Day 23",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 32",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 59",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-BD41",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day 2",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~755 clicks)",
+        "at": "Day 23",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 34",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 67",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-E2D7",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day 11",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~64 clicks)",
+        "at": "Day 14",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 16",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 21",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-04EC",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day -13",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~669 clicks)",
+        "at": "Day 2",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 9",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 32",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-34BF",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day -13",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~602 clicks)",
+        "at": "Day 22",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 39",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 92",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-77C1",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day -18",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~222 clicks)",
+        "at": "Day -5",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 2",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 23",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-2C0B",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day -18",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~205 clicks)",
+        "at": "Day 3",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 14",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 46",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-83D5",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day -16",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~666 clicks)",
+        "at": "Day 5",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 15",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 47",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-FC57",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day 0",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~618 clicks)",
+        "at": "Day 22",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 33",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 67",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-18D1",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day -17",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~13 clicks)",
+        "at": "Day -9",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day -5",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 7",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-D1DF",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day -18",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~622 clicks)",
+        "at": "Day -1",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 7",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 33",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-0A6B",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day 0",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~18 clicks)",
+        "at": "Day 1",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 2",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 5",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-797C",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day -17",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~495 clicks)",
+        "at": "Day 7",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 20",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 57",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-B3A3",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day -3",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~320 clicks)",
+        "at": "Day 5",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 9",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 21",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-A1D9",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day 10",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~391 clicks)",
+        "at": "Day 18",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 22",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 34",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-E90C",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day -17",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~99 clicks)",
+        "at": "Day 5",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 16",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 50",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-390C",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day -18",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~602 clicks)",
+        "at": "Day 3",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 14",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 47",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-5DFE",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day 3",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~105 clicks)",
+        "at": "Day 25",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 37",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 71",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-355E",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day 0",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~501 clicks)",
+        "at": "Day 19",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 29",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 59",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-F023",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day -18",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~352 clicks)",
+        "at": "Day -4",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 3",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 24",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-DDFD",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day 0",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~519 clicks)",
+        "at": "Day 24",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 36",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 73",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-72FF",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day -17",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~743 clicks)",
+        "at": "Day 8",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 21",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 59",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-0C75",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day -10",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~224 clicks)",
+        "at": "Day 14",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 27",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 64",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-7833",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day -18",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~260 clicks)",
+        "at": "Day -2",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 6",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 30",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-FDDE",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day -4",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~560 clicks)",
+        "at": "Day 17",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 27",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 59",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-F7D3",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day 9",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~1 clicks)",
+        "at": "Day 9",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 9",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 9",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-12A6",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day -5",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~624 clicks)",
+        "at": "Day 10",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 18",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 41",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-7908",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day 6",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~277 clicks)",
+        "at": "Day 14",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 18",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 31",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-F27F",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day -9",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~932 clicks)",
+        "at": "Day 8",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 17",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 44",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-4971",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day 3",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~265 clicks)",
+        "at": "Day 20",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 28",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 54",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-DC99",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day -13",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~276 clicks)",
+        "at": "Day 13",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 26",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 66",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-B3F1",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day -4",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~2476 clicks)",
+        "at": "Day 12",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 20",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 45",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-9583",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day 0",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~0 clicks)",
+        "at": "Day 66",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 100",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 200",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-4AC4",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day 21",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~315 clicks)",
+        "at": "Day 28",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 32",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 43",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-A25E",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day -9",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~485 clicks)",
+        "at": "Day 4",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 10",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 30",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-7D40",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day -18",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~205 clicks)",
+        "at": "Day 3",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 14",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 47",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-B69D",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day -9",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~607 clicks)",
+        "at": "Day 8",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 17",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 43",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-C5C3",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day -18",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~505 clicks)",
+        "at": "Day 3",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 14",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 46",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-981F",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day -14",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~141 clicks)",
+        "at": "Day 5",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 15",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 44",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-7DCD",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day -18",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~220 clicks)",
+        "at": "Day -4",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 4",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 26",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-3A9C",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day -15",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~1698 clicks)",
+        "at": "Day 8",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 20",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 55",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-91B7",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day 0",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~821 clicks)",
+        "at": "Day 18",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 27",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 54",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-2823",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day -18",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~1166 clicks)",
+        "at": "Day 1",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 10",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 39",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-376A",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day 8",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~1023 clicks)",
+        "at": "Day 22",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 29",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 51",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-0A0E",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day -17",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~339 clicks)",
+        "at": "Day 4",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 15",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 47",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-1D5A",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day -2",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~421 clicks)",
+        "at": "Day 58",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 88",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 178",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-ADBD",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day -17",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~280 clicks)",
+        "at": "Day 5",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 16",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 50",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-0CC4",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day -13",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~895 clicks)",
+        "at": "Day 8",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 19",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 51",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-EEFC",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day -11",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~74 clicks)",
+        "at": "Day 12",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 23",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 58",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-A796",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day -18",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~589 clicks)",
+        "at": "Day -1",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 7",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 33",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-98EF",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day -9",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~653 clicks)",
+        "at": "Day 6",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 14",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 37",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-FC8E",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day -13",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~548 clicks)",
+        "at": "Day 34",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 58",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 130",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-CE35",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day -18",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~399 clicks)",
+        "at": "Day 13",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 28",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 75",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-7B4C",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day -9",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~598 clicks)",
+        "at": "Day 11",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 22",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 53",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-3B5E",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day -18",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~561 clicks)",
+        "at": "Day 10",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 24",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 66",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-F628",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day -18",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~1092 clicks)",
+        "at": "Day 16",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 34",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 86",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-4209",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day -17",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~541 clicks)",
+        "at": "Day 31",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 55",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 127",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-9246",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day -13",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~572 clicks)",
+        "at": "Day 3",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day 12",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 37",
+        "tone": "success"
+      }
+    ]
+  },
+  {
+    "learnerId": "L-40A6",
+    "events": [
+      {
+        "id": "t1",
+        "label": "Scenario engagement start (VLE proxy)",
+        "at": "Day -18",
+        "tone": "default"
+      },
+      {
+        "id": "t2",
+        "label": "Resource / hotspot intensity (~424 clicks)",
+        "at": "Day -7",
+        "tone": "success"
+      },
+      {
+        "id": "t3",
+        "label": "Assessment-related activity (OULAD proxy)",
+        "at": "Day -2",
+        "tone": "warning"
+      },
+      {
+        "id": "t4",
+        "label": "Reflection / dialogue (public dataset proxy)",
+        "at": "Day 15",
+        "tone": "success"
+      }
+    ]
+  }
+]

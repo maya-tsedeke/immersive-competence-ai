@@ -1,0 +1,115 @@
+{
+  "scenarioInteractionEvents": [
+    {
+      "id": "t1",
+      "label": "Cohort VLE activity begins",
+      "at": "T+0",
+      "tone": "default"
+    },
+    {
+      "id": "t2",
+      "label": "Hotspot / resource traffic builds",
+      "at": "T+25pct module",
+      "tone": "success"
+    },
+    {
+      "id": "t3",
+      "label": "Assessment clustering window",
+      "at": "T+50pct module",
+      "tone": "warning"
+    },
+    {
+      "id": "t4",
+      "label": "Dialogue-style reflection activity",
+      "at": "T+75pct module",
+      "tone": "success"
+    }
+  ],
+  "learningPathway": "Observe → Decide → Justify → Reflect",
+  "hotspotCompletion": [
+    {
+      "id": "h1",
+      "label": "Observe / resource clicks",
+      "percent": 88
+    },
+    {
+      "id": "h2",
+      "label": "Decide / mixed activity types",
+      "percent": 72
+    },
+    {
+      "id": "h3",
+      "label": "Assess / explain (score proxy)",
+      "percent": 64
+    },
+    {
+      "id": "h4",
+      "label": "Reflect (dialogue proxy)",
+      "percent": 58
+    }
+  ],
+  "engagementDistribution": [
+    {
+      "label": "High",
+      "percent": 33,
+      "color": "#16a34a"
+    },
+    {
+      "label": "Medium",
+      "percent": 45,
+      "color": "#f59e0b"
+    },
+    {
+      "label": "Low",
+      "percent": 22,
+      "color": "#f87171"
+    }
+  ],
+  "competenceTrend": [
+    {
+      "date": "Week 1",
+      "score": 58
+    },
+    {
+      "date": "Week 2",
+      "score": 62
+    },
+    {
+      "date": "Week 3",
+      "score": 66
+    },
+    {
+      "date": "Week 4",
+      "score": 70
+    },
+    {
+      "date": "Week 5",
+      "score": 73
+    }
+  ],
+  "completionDonut": [
+    {
+      "name": "On track",
+      "value": 68,
+      "color": "#6366f1"
+    },
+    {
+      "name": "Developing",
+      "value": 22,
+      "color": "#38bdf8"
+    },
+    {
+      "name": "Monitor",
+      "value": 10,
+      "color": "#cbd5f5"
+    }
+  ],
+  "keyInsight": "Prototype mapping: higher at-risk indicators cluster with lower early assessment engagement in OULAD — treat as a research indicator only.",
+  "kpi": {
+    "avgScorePct": 68,
+    "learnersAtRiskCount": 80,
+    "avgEngagementMin": 2.2,
+    "reflectionLabel": "Medium–High"
+  },
+  "mappingNote": "OULAD activity → ThingLink-style timeline and hotspots; dialogue corpus → reflection / AI chat proxy."
+}

@@ -1,0 +1,1442 @@
+{
+  "L-1107": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Developing"
+    }
+  ],
+  "L-F77C": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Needs support"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Developing"
+    }
+  ],
+  "L-E3AD": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Needs support"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Developing"
+    }
+  ],
+  "L-95E5": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Needs support"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Good"
+    }
+  ],
+  "L-959C": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Developing"
+    }
+  ],
+  "L-3C53": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Needs support"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Developing"
+    }
+  ],
+  "L-EBA3": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Needs support"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Developing"
+    }
+  ],
+  "L-6A27": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Needs support"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Developing"
+    }
+  ],
+  "L-4B3D": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Developing"
+    }
+  ],
+  "L-7C6A": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Developing"
+    }
+  ],
+  "L-7ACB": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Developing"
+    }
+  ],
+  "L-6FC0": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Needs support"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Developing"
+    }
+  ],
+  "L-52DE": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Needs support"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Developing"
+    }
+  ],
+  "L-58C8": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Good"
+    }
+  ],
+  "L-E68C": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Needs support"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Developing"
+    }
+  ],
+  "L-85A6": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Needs support"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Developing"
+    }
+  ],
+  "L-3D22": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Developing"
+    }
+  ],
+  "L-AF57": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Good"
+    }
+  ],
+  "L-96AB": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Developing"
+    }
+  ],
+  "L-AB26": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Developing"
+    }
+  ],
+  "L-3D33": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Good"
+    }
+  ],
+  "L-9198": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Needs support"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Developing"
+    }
+  ],
+  "L-BD41": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Needs support"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Developing"
+    }
+  ],
+  "L-E2D7": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Needs support"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Developing"
+    }
+  ],
+  "L-04EC": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Needs support"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Developing"
+    }
+  ],
+  "L-34BF": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Needs support"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Developing"
+    }
+  ],
+  "L-77C1": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Needs support"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Good"
+    }
+  ],
+  "L-2C0B": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Developing"
+    }
+  ],
+  "L-83D5": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Needs support"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Developing"
+    }
+  ],
+  "L-FC57": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Needs support"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Developing"
+    }
+  ],
+  "L-18D1": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Needs support"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Developing"
+    }
+  ],
+  "L-D1DF": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Good"
+    }
+  ],
+  "L-0A6B": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Needs support"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Good"
+    }
+  ],
+  "L-797C": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Developing"
+    }
+  ],
+  "L-B3A3": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Needs support"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Developing"
+    }
+  ],
+  "L-A1D9": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Needs support"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Developing"
+    }
+  ],
+  "L-E90C": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Needs support"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Good"
+    }
+  ],
+  "L-390C": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Good"
+    }
+  ],
+  "L-5DFE": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Needs support"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Developing"
+    }
+  ],
+  "L-355E": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Needs support"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Developing"
+    }
+  ],
+  "L-F023": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Needs support"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Developing"
+    }
+  ],
+  "L-DDFD": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Needs support"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Good"
+    }
+  ],
+  "L-72FF": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Developing"
+    }
+  ],
+  "L-0C75": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Developing"
+    }
+  ],
+  "L-7833": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Needs support"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Developing"
+    }
+  ],
+  "L-FDDE": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Needs support"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Developing"
+    }
+  ],
+  "L-F7D3": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Needs support"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Good"
+    }
+  ],
+  "L-12A6": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Needs support"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Good"
+    }
+  ],
+  "L-7908": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Good"
+    }
+  ],
+  "L-F27F": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Needs support"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Good"
+    }
+  ],
+  "L-4971": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Developing"
+    }
+  ],
+  "L-DC99": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Needs support"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Developing"
+    }
+  ],
+  "L-B3F1": [
+    {
+      "criterion": "Observation",
+      "rating": "Good"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Good"
+    }
+  ],
+  "L-9583": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Developing"
+    }
+  ],
+  "L-4AC4": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Developing"
+    }
+  ],
+  "L-A25E": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Needs support"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Developing"
+    }
+  ],
+  "L-7D40": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Needs support"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Developing"
+    }
+  ],
+  "L-B69D": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Developing"
+    }
+  ],
+  "L-C5C3": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Needs support"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Developing"
+    }
+  ],
+  "L-981F": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Developing"
+    }
+  ],
+  "L-7DCD": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Needs support"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Developing"
+    }
+  ],
+  "L-3A9C": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Needs support"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Developing"
+    }
+  ],
+  "L-91B7": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Needs support"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Developing"
+    }
+  ],
+  "L-2823": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Developing"
+    }
+  ],
+  "L-376A": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Needs support"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Developing"
+    }
+  ],
+  "L-0A0E": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Needs support"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Developing"
+    }
+  ],
+  "L-1D5A": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Needs support"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Developing"
+    }
+  ],
+  "L-ADBD": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Needs support"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Developing"
+    }
+  ],
+  "L-0CC4": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Needs support"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Developing"
+    }
+  ],
+  "L-EEFC": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Needs support"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Developing"
+    }
+  ],
+  "L-A796": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Needs support"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Developing"
+    }
+  ],
+  "L-98EF": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Needs support"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Developing"
+    }
+  ],
+  "L-FC8E": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Needs support"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Developing"
+    }
+  ],
+  "L-CE35": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Needs support"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Developing"
+    }
+  ],
+  "L-7B4C": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Needs support"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Good"
+    }
+  ],
+  "L-3B5E": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Developing"
+    }
+  ],
+  "L-F628": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Good"
+    }
+  ],
+  "L-4209": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Needs support"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Developing"
+    }
+  ],
+  "L-9246": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Needs support"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Developing"
+    }
+  ],
+  "L-40A6": [
+    {
+      "criterion": "Observation",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Decision-making",
+      "rating": "Developing"
+    },
+    {
+      "criterion": "Justification",
+      "rating": "Needs support"
+    },
+    {
+      "criterion": "Reflection",
+      "rating": "Developing"
+    }
+  ]
+}
