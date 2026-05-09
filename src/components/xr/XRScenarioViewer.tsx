@@ -281,7 +281,8 @@ export function XRScenarioViewer({
   const [reflection, setReflection] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [xrSupported, setXrSupported] = useState<boolean | null>(null);
-  const [immersiveUi, setImmersiveUi] = useState(variant === "mobile");
+  /** Start “expanded” only for non-guided mobile; guided /preview flows keep chrome visible until user chooses full screen. */
+  const [immersiveUi, setImmersiveUi] = useState(() => variant === "mobile" && !guidedPreview);
   const [previewTab, setPreviewTab] = useState<XRPreviewTab>("mobile360");
   const [webXrChecked, setWebXrChecked] = useState(false);
   const [supportsImmersiveVr, setSupportsImmersiveVr] = useState(false);
@@ -1260,44 +1261,59 @@ export function XRScenarioViewer({
       </div>
     ) : null;
 
-  const workspaceHeader =
+  /** Sits above the panning image (opaque strip), not on the warehouse scene. */
+  const workspaceTitleStrip =
     !isHero && !webxrOnly ? (
-      <div id={titleId} className="space-y-1.5 px-0.5 sm:px-0">
+      <div
+        id={titleId}
+        className={cn(
+          "relative z-30 shrink-0 border-b px-3 py-3 sm:px-4",
+          isDarkChrome ? "border-white/10 bg-slate-950" : "border-slate-200 bg-slate-50",
+        )}
+      >
+        <p
+          className={cn(
+            "text-[10px] font-bold uppercase tracking-wide",
+            isDarkChrome ? "text-sky-200/90" : "text-slate-500",
+          )}
+        >
+          Learning scene
+        </p>
         <h2
           className={cn(
-            "text-lg font-bold leading-tight sm:text-xl",
+            "mt-1 text-lg font-bold leading-tight sm:text-xl",
             isDarkChrome ? "text-white" : "text-slate-900",
           )}
         >
           Workplace Safety Simulation
         </h2>
-        <p className={cn("text-sm leading-snug", isDarkChrome ? "text-slate-300" : "text-slate-600")}>
+        <p className={cn("mt-2 text-sm leading-snug", isDarkChrome ? "text-slate-300" : "text-slate-600")}>
           {nextStepInstruction}
         </p>
         {variant === "mobile" ? (
-          <p className="text-xs leading-snug text-slate-500">
-            Swipe or drag <strong className="font-semibold text-slate-400">on the scene picture</strong> below to pan —
-            not on this text.
+          <p className={cn("mt-2 text-xs leading-snug", isDarkChrome ? "text-slate-500" : "text-slate-500")}>
+            Pan by dragging <strong className={cn("font-semibold", isDarkChrome ? "text-slate-300" : "text-slate-700")}>only the picture area</strong> under this strip — not the text or buttons above it.
           </p>
         ) : null}
       </div>
-    ) : isHero ? (
-      <span id={titleId} className="sr-only">
-        Workplace Safety Simulation
-      </span>
     ) : null;
+
+  const heroTitleSrOnly = isHero ? (
+    <span id={titleId} className="sr-only">
+      Workplace Safety Simulation
+    </span>
+  ) : null;
 
   /** Toolbar sits outside the pannable surface so hotspots and pan gestures are never blocked. */
   const sceneToolbar =
     !isHero && !webxrOnly ? (
       <div
         className={cn(
-          "flex flex-wrap items-center justify-end gap-2 border-b px-2 py-2 sm:px-3",
+          "relative z-30 flex flex-wrap items-center justify-end gap-2 border-b px-2 py-2 sm:px-3",
           isDarkChrome ? "border-white/10 bg-slate-900/95" : "border-slate-200 bg-slate-100",
         )}
         role="toolbar"
         aria-label="Scene controls"
-        onPointerDown={(e) => e.stopPropagation()}
       >
         {variant === "desktop" && !guidedPreview && xrSupported === true ? (
           <button
@@ -1373,16 +1389,27 @@ export function XRScenarioViewer({
         "relative overflow-hidden rounded-2xl ring-1",
         isHero ? "ring-slate-200" : "ring-white/10",
         immersiveUi && variant === "mobile" && "rounded-none ring-0 sm:rounded-2xl",
-        cssFullscreen && variant === "mobile" && "fixed inset-0 z-[280] max-h-[100dvh] rounded-none ring-0",
+        cssFullscreen &&
+          variant === "mobile" &&
+          "fixed inset-0 z-[280] flex max-h-[100dvh] flex-col overflow-hidden rounded-none ring-0",
       )}
     >
-      <div ref={viewerSceneShellRef} className={cn("relative overflow-hidden", !isHero && !webxrOnly && "ring-0")}>
+      <div
+        ref={viewerSceneShellRef}
+        className={cn(
+          "relative flex min-h-0 flex-col overflow-hidden",
+          cssFullscreen && variant === "mobile" && "min-h-0 flex-1",
+          !isHero && !webxrOnly && "ring-0",
+        )}
+      >
+        {workspaceTitleStrip}
         {sceneToolbar}
         <div
           className={cn(
-            "relative cursor-grab select-none overflow-hidden overscroll-x-contain active:cursor-grabbing",
-            "touch-pan-x",
-            viewerHeight,
+            "relative z-0 min-h-0 w-full cursor-grab select-none overflow-hidden overscroll-x-contain active:cursor-grabbing",
+            /* Custom pan — prevent the browser from taking horizontal swipes on the image. */
+            "touch-none",
+            cssFullscreen && variant === "mobile" ? "flex-1" : viewerHeight,
           )}
           ref={viewportRef}
           onPointerDown={onPointerDownPan}
@@ -1496,7 +1523,7 @@ export function XRScenarioViewer({
   const mainContent = (
     <div className={cn("flex flex-col gap-4", variant === "desktop" && "lg:col-span-3")}>
       {variant === "mobile" && guidedPreview ? guidedModeChrome : null}
-      {workspaceHeader}
+      {heroTitleSrOnly}
 
       {!webxrOnly ? (
         <div className={cn(variant === "desktop" && "relative")}>
