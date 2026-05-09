@@ -1,8 +1,11 @@
 "use client";
 
+import { useCallback, useEffect, useState } from "react";
 import { demoAlert } from "@/lib/utils";
 import { ReportPreviewCard } from "@/components/reports/ReportPreviewCard";
 import { ProvenanceBadge } from "@/components/ai/ProvenanceBadge";
+import { DEMO_LEARNERS_CHANGE_EVENT, listDemoLearnerRecords } from "@/lib/learnerDemo/demoLearnersStore";
+import { WORKFLOW_CHANGE_EVENT, getLearnerWorkflowState } from "@/lib/workflow/teacherWorkflowStorage";
 
 import type { ReportSummary } from "@/lib/types";
 
@@ -35,6 +38,97 @@ function reportToCsv(report: ReportSummary): string {
   return lines.join("\n");
 }
 
+function DemoOperationalReportsPanel() {
+  const [, bump] = useState(0);
+  const refresh = useCallback(() => bump((n) => n + 1), []);
+  useEffect(() => {
+    const h = () => refresh();
+    window.addEventListener(DEMO_LEARNERS_CHANGE_EVENT, h);
+    window.addEventListener(WORKFLOW_CHANGE_EVENT, h);
+    window.addEventListener("storage", h);
+    return () => {
+      window.removeEventListener(DEMO_LEARNERS_CHANGE_EVENT, h);
+      window.removeEventListener(WORKFLOW_CHANGE_EVENT, h);
+      window.removeEventListener("storage", h);
+    };
+  }, [refresh]);
+
+  const records = listDemoLearnerRecords();
+  let localSubmissions = 0;
+  let aiAnalysesRun = 0;
+  let teacherDecisions = 0;
+  let attemptTotal = 0;
+  const statusLines: string[] = [];
+
+  for (const r of records) {
+    attemptTotal += r.attempts.length;
+    const hasSub = r.attempts.some((a) => a.submittedAt);
+    if (hasSub) localSubmissions++;
+    const w = getLearnerWorkflowState(r.id);
+    if (w.aiAnalysisComplete) aiAnalysesRun++;
+    if (w.teacherDecision) teacherDecisions++;
+    statusLines.push(`${r.id}: ${r.learningStatus} · attempts ${r.attempts.length}`);
+  }
+
+  const lastRec = records[0];
+  const lastBundle = lastRec ? getLearnerWorkflowState(lastRec.id).aiResultBundle : undefined;
+  const recommendationSummary =
+    lastBundle?.suggestedTeacherAction ?? "Run AI analysis on a submitted demo learner to populate recommendations.";
+
+  return (
+    <div className="rounded-2xl border border-indigo-100 bg-indigo-50/50 p-5 shadow-[var(--shadow)]">
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <h2 className="text-sm font-semibold text-slate-900">Local demo cohort (browser)</h2>
+        <ProvenanceBadge kind="learner_demo" compact />
+      </div>
+      <p className="mt-1 text-xs text-[var(--muted)]">
+        Counts from <span className="font-mono">immersive_competence_ai_demo_learners</span> and teacher workflow
+        storage in this browser.
+      </p>
+      <dl className="mt-4 grid gap-3 text-sm sm:grid-cols-2">
+        <div className="rounded-xl bg-white/90 px-3 py-2 ring-1 ring-indigo-100">
+          <dt className="text-xs font-bold uppercase text-[var(--muted)]">Demo learners</dt>
+          <dd className="text-lg font-semibold text-slate-900">{records.length}</dd>
+        </div>
+        <div className="rounded-xl bg-white/90 px-3 py-2 ring-1 ring-indigo-100">
+          <dt className="text-xs font-bold uppercase text-[var(--muted)]">Submitted attempts</dt>
+          <dd className="text-lg font-semibold text-slate-900">{localSubmissions}</dd>
+        </div>
+        <div className="rounded-xl bg-white/90 px-3 py-2 ring-1 ring-indigo-100">
+          <dt className="text-xs font-bold uppercase text-[var(--muted)]">AI analyses completed</dt>
+          <dd className="text-lg font-semibold text-slate-900">{aiAnalysesRun}</dd>
+        </div>
+        <div className="rounded-xl bg-white/90 px-3 py-2 ring-1 ring-indigo-100">
+          <dt className="text-xs font-bold uppercase text-[var(--muted)]">Teacher decisions saved</dt>
+          <dd className="text-lg font-semibold text-slate-900">{teacherDecisions}</dd>
+        </div>
+        <div className="rounded-xl bg-white/90 px-3 py-2 ring-1 ring-indigo-100 sm:col-span-2">
+          <dt className="text-xs font-bold uppercase text-[var(--muted)]">Total attempts (incl. resubmissions)</dt>
+          <dd className="font-semibold text-slate-900">{attemptTotal}</dd>
+        </div>
+        <div className="rounded-xl bg-white/90 px-3 py-2 ring-1 ring-indigo-100 sm:col-span-2">
+          <dt className="text-xs font-bold uppercase text-[var(--muted)]">Current learner statuses</dt>
+          <dd className="text-slate-800">
+            {statusLines.length ? (
+              <ul className="mt-1 list-disc space-y-0.5 pl-5">
+                {statusLines.map((s, idx) => (
+                  <li key={`${idx}-${s}`}>{s}</li>
+                ))}
+              </ul>
+            ) : (
+              "—"
+            )}
+          </dd>
+        </div>
+        <div className="rounded-xl bg-white/90 px-3 py-2 ring-1 ring-indigo-100 sm:col-span-2">
+          <dt className="text-xs font-bold uppercase text-[var(--muted)]">Recommendation summary (latest AI)</dt>
+          <dd className="text-slate-800">{recommendationSummary}</dd>
+        </div>
+      </dl>
+    </div>
+  );
+}
+
 export function ReportsClient({
   report,
   analyzedCount,
@@ -64,6 +158,8 @@ export function ReportsClient({
           present. Exports below download placeholder files; PDF remains a prototype alert.
         </p>
       </div>
+
+      <DemoOperationalReportsPanel />
 
       <div className="rounded-2xl border border-[var(--border)] bg-white p-5 shadow-[var(--shadow)]">
         <div className="flex flex-wrap items-center justify-between gap-2">

@@ -2,10 +2,11 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { buildAiAnalysisBundle } from "@/lib/ai/buildAiAnalysis";
+import { buildDemoScenarioAiBundle } from "@/lib/ai/demoScenarioAi";
 import { getDataProvenance } from "@/lib/ai/provenance";
 import { AIEvidenceCard } from "@/components/ai/AIEvidenceCard";
-import { DEMO_MOBILE_LEARNER_ID } from "@/lib/learnerDemo/constants";
-import { readLearnerDemoState } from "@/lib/learnerDemo/storage";
+import { appendDemoActivity, getDemoLearner } from "@/lib/learnerDemo/demoLearnersStore";
+import { learnerDemoSubmitted, readLearnerDemoState } from "@/lib/learnerDemo/storage";
 import { persistAiAnalysisResult } from "@/lib/workflow/teacherWorkflowStorage";
 import type { AiAnalysisBundle, DialogueInsight, InteractionLog, Learner, LearnerRiskPrediction } from "@/lib/types";
 import { cn } from "@/lib/utils";
@@ -39,24 +40,38 @@ export function RunAiAnalysisButton({
   }, [initialBundle]);
 
   const run = useCallback(() => {
+    const rec = getDemoLearner(learner.id);
+    const lastAttempt = rec?.attempts?.length ? rec.attempts[rec.attempts.length - 1] : null;
+
+    if (learner.isLocalDemo && (!rec || !lastAttempt?.submittedAt)) {
+      return;
+    }
+
     setBusy(true);
     window.setTimeout(() => {
-      const demo = readLearnerDemoState();
-      const isDemoLearner = learner.id === DEMO_MOBILE_LEARNER_ID;
-      const hasDemo = Boolean(demo?.submittedAt && isDemoLearner);
-      const b = buildAiAnalysisBundle({
-        learner,
-        dialogue,
-        risk,
-        log,
-        demoJustification: hasDemo ? demo!.justification : undefined,
-        demoReflection: hasDemo ? demo!.reflection : undefined,
-        demoMcLabel: hasDemo ? demo!.selectedAction : undefined,
-        demoHotspotClicked: hasDemo ? "Hazard" : undefined,
-        demoTimeSpentSec: hasDemo ? demo!.timeSpentSec : undefined,
-        demoEventCount: hasDemo ? demo!.events.length : undefined,
-        usingGeneratedJson,
-      });
+      let b: AiAnalysisBundle;
+
+      if (learner.isLocalDemo && lastAttempt && rec) {
+        b = buildDemoScenarioAiBundle(learner, lastAttempt);
+        appendDemoActivity(learner.id, `Teacher ran AI analysis`);
+      } else {
+        const demo = readLearnerDemoState();
+        const hasLegacyDemo = Boolean(demo?.submittedAt && demo.learnerId === learner.id);
+        b = buildAiAnalysisBundle({
+          learner,
+          dialogue,
+          risk,
+          log,
+          demoJustification: hasLegacyDemo ? demo!.justification : undefined,
+          demoReflection: hasLegacyDemo ? demo!.reflection : undefined,
+          demoMcLabel: hasLegacyDemo ? demo!.selectedAction : undefined,
+          demoHotspotClicked: hasLegacyDemo ? "Hazard" : undefined,
+          demoTimeSpentSec: hasLegacyDemo ? demo!.timeSpentSec : undefined,
+          demoEventCount: hasLegacyDemo ? demo!.events.length : undefined,
+          usingGeneratedJson,
+        });
+      }
+
       setBundle(b);
       persistAiAnalysisResult(learner.id, b);
       onComplete?.(b);
@@ -66,20 +81,30 @@ export function RunAiAnalysisButton({
 
   const provenBy = getDataProvenance("ai_result", {
     usingGeneratedJson,
-    hasLearnerDemo: Boolean(readLearnerDemoState()?.submittedAt && learner.id === DEMO_MOBILE_LEARNER_ID),
+    hasLearnerDemo: learner.isLocalDemo && learnerDemoSubmitted(learner.id),
     isHeuristic: Boolean(dialogue),
   });
+
+  const rec = typeof window !== "undefined" ? getDemoLearner(learner.id) : null;
+  const lastAttempt = rec?.attempts?.length ? rec.attempts[rec.attempts.length - 1] : null;
+  const demoBlocked = Boolean(learner.isLocalDemo && (!rec || !lastAttempt?.submittedAt));
 
   return (
     <div className={cn("space-y-4", className)}>
       <button
         type="button"
         onClick={run}
-        disabled={busy}
+        disabled={busy || demoBlocked}
         className="inline-flex min-h-[48px] items-center justify-center rounded-xl bg-indigo-600 px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-70"
       >
         {busy ? "Analyzing…" : "Run AI Analysis"}
       </button>
+
+      {demoBlocked ? (
+        <p className="rounded-xl border border-amber-100 bg-amber-50/80 px-4 py-3 text-sm text-amber-950">
+          Submit scenario evidence for <strong>{learner.id}</strong> first — then run AI analysis for that learner.
+        </p>
+      ) : null}
 
       {busy ? (
         <p className="rounded-xl border border-indigo-100 bg-indigo-50/80 px-4 py-3 text-sm text-indigo-950">

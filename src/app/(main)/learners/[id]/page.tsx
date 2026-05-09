@@ -2,10 +2,10 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { AIReasoningSummaryCard } from "@/components/learners/AIReasoningSummaryCard";
 import { InteractionTimeline } from "@/components/analytics/InteractionTimeline";
-import { LearnerDetailHeader } from "@/components/learners/LearnerDetailHeader";
 import { MisconceptionCard } from "@/components/learners/MisconceptionCard";
 import { RubricCard } from "@/components/learners/RubricCard";
 import { TeacherRecommendationCard } from "@/components/learners/TeacherRecommendationCard";
+import { LearnerDetailClientSection } from "@/components/learners/LearnerDetailClientSection";
 import { getLogForLearner } from "@/lib/data/interactionLogs";
 import { getRubricForLearner } from "@/lib/data/rubricScores";
 import {
@@ -17,12 +17,17 @@ import {
   getRubricForLearnerGenerated,
   usingGeneratedData,
 } from "@/lib/dataset";
-import { LearnerAiPanel } from "@/components/learners/LearnerAiPanel";
+import { isDemoStaticLearnerId, placeholderDemoLearner } from "@/lib/learnerDemo/placeholderLearner";
 
-/** Pre-render all learner detail routes for `next build` with `output: "export"`. */
+/** Pre-render learner detail routes for `next build` with `output: "export"`. */
 export async function generateStaticParams() {
   const learners = getLearners();
-  return learners.map((l) => ({ id: l.id }));
+  const demo = Array.from({ length: 99 }, (_, i) => ({
+    id: `Demo-${String(i + 1).padStart(3, "0")}`,
+  }));
+  const demoSet = new Set(demo.map((d) => d.id));
+  const rest = learners.filter((l) => !demoSet.has(l.id)).map((l) => ({ id: l.id }));
+  return [...demo, ...rest];
 }
 
 const b221Copy = {
@@ -41,9 +46,10 @@ export default async function LearnerDetailPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const learner = getLearnerById(id);
+  const learner = getLearnerById(id) ?? (isDemoStaticLearnerId(id) ? placeholderDemoLearner(id) : undefined);
   if (!learner) notFound();
 
+  const baseCohort = getLearners();
   const log = getInteractionLogForLearner(learner.id) ?? getLogForLearner(learner.id);
   const rubric = getRubricForLearnerGenerated(learner.id) ?? getRubricForLearner(learner.id);
   const dialogue = getDialogueInsightForLearner(learner.id);
@@ -96,10 +102,10 @@ export default async function LearnerDetailPage({
         telemetry.
       </div>
 
-      <LearnerDetailHeader learner={learner} />
-
-      <LearnerAiPanel
-        learner={learner}
+      <LearnerDetailClientSection
+        id={id}
+        initialLearner={learner}
+        baseCohort={baseCohort}
         dialogue={dialogue ?? null}
         risk={risk ?? null}
         log={interactionLog}

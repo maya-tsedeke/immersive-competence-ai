@@ -26,6 +26,21 @@ export interface Learner {
   predictedOutcome?: string;
   /** When riskScore exists, threshold-based UI status for filters (0.65 / 0.35 cuts). */
   displayStatus?: LearnerStatus;
+  /** Browser demo learners merged client-side */
+  isLocalDemo?: boolean;
+  scenarioTitle?: string;
+  demoDisplayName?: string;
+  /** 0–100 for operational demo UI */
+  demoProgressPct?: number;
+  demoLearningStatusLabel?: string;
+  /** Human-readable activity status for demo tables (e.g. Submitted, Reviewed) */
+  demoLearningActivityStatus?: string;
+  demoAiAnalysisLabel?: string;
+  /** Risk / outcome summary from last AI run */
+  demoAiResultLabel?: string;
+  demoAiConfidence?: number;
+  demoTeacherDecisionLabel?: string;
+  demoActionRequired?: string;
 }
 
 export interface TimelineEvent {
@@ -180,7 +195,9 @@ export type TeacherDecisionStatus =
   | "edited_feedback"
   | "follow_up_required"
   | "resubmission_requested"
-  | "reviewed";
+  | "reviewed"
+  | "teacher_override"
+  | "feedback_sent";
 
 export type LearnerWorkflowPersisted = {
   aiAnalysisComplete: boolean;

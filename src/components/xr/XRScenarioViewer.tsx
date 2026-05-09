@@ -13,14 +13,18 @@ import {
   LayoutDashboard,
   Maximize2,
   Mic,
+  PenLine,
+  ScanLine,
   ShieldAlert,
   Sparkles,
   Target,
+  X,
   Zap,
 } from "lucide-react";
 import {
   PATHWAY_STEPS,
   type PathwayStep,
+  REQUIRED_HOTSPOT_ORDER,
   XR_HOTSPOTS,
   XR_PANORAMA_URL,
   XR_PANORAMA_WIDTH_MULT,
@@ -30,7 +34,9 @@ import {
 import { cn } from "@/lib/utils";
 import { DEMO_MOBILE_LEARNER_ID } from "@/lib/learnerDemo/constants";
 import type { LearnerDemoEvent } from "@/lib/learnerDemo/storage";
+import { appendDemoActivity, getActivePreviewLearnerId, setActivePreviewLearnerId } from "@/lib/learnerDemo/demoLearnersStore";
 import { saveLearnerDemoSubmission } from "@/lib/learnerDemo/storage";
+import { analyzeAttemptFlags } from "@/lib/ai/demoScenarioAi";
 
 export type XRViewerVariant = "hero" | "mobile" | "desktop";
 
@@ -92,16 +98,17 @@ function HotspotMarker({
   selected,
   visited,
   variant,
+  pulse,
   onSelect,
 }: {
   hs: XRHotspotDefinition;
   selected: boolean;
   visited: boolean;
   variant: XRViewerVariant;
+  pulse?: boolean;
   onSelect: () => void;
 }) {
-  const Icon =
-    hs.icon === "hazard" ? Zap : hs.icon === "action" ? BookOpen : hs.icon === "reflect" ? Target : Sparkles;
+  const HotspotIcon = hs.icon === "hazard" ? Zap : hs.icon === "action" ? BookOpen : hs.icon === "justify" ? PenLine : hs.icon === "reflect" ? Target : Sparkles;
   const size =
     variant === "hero"
       ? "h-10 w-10 min-h-[44px] min-w-[44px] text-[9px]"
@@ -117,12 +124,13 @@ function HotspotMarker({
         size,
         visited && !selected && "opacity-85 ring-emerald-200",
         selected && "z-30 ring-4 ring-white",
+        pulse && "ring-4 ring-amber-200 animate-[pulse_1.1s_ease-in-out_infinite]",
       )}
       style={{ left: `${hs.leftPct}%`, top: `${hs.topPct}%` }}
       aria-label={`Hotspot ${hs.label}, pathway ${hs.pathwayStep}`}
       aria-pressed={selected}
     >
-      <Icon className="mb-0.5 h-3.5 w-3.5" aria-hidden />
+      <HotspotIcon className="mb-0.5 h-3.5 w-3.5" aria-hidden />
       {hs.label}
     </button>
   );
@@ -179,10 +187,13 @@ export function XRScenarioViewer({
   variant,
   className,
   guidedPreview = false,
+  scenarioLearnerId,
 }: {
   variant: XRViewerVariant;
   className?: string;
   guidedPreview?: boolean;
+  /** When set, evidence is stored under this learner id (demo store). */
+  scenarioLearnerId?: string;
 }) {
   const titleId = useId();
   const viewportRef = useRef<HTMLDivElement>(null);
@@ -214,6 +225,28 @@ export function XRScenarioViewer({
   const [justification, setJustification] = useState("");
   const [demoEvents, setDemoEvents] = useState<LearnerDemoEvent[]>([]);
   const guidedStartMsRef = useRef<number | null>(null);
+  const [activeLid, setActiveLid] = useState<string>(DEMO_MOBILE_LEARNER_ID);
+  const [orderWarning, setOrderWarning] = useState("");
+  const [justifyTapped, setJustifyTapped] = useState(false);
+  const [reflectTapped, setReflectTapped] = useState(false);
+  const [cssFullscreen, setCssFullscreen] = useState(false);
+  const [scanHighlightId, setScanHighlightId] = useState<XRHotspotId | null>(null);
+
+  useEffect(() => {
+    const lid = scenarioLearnerId ?? getActivePreviewLearnerId();
+    setActiveLid(lid);
+    if (scenarioLearnerId) setActivePreviewLearnerId(scenarioLearnerId);
+  }, [scenarioLearnerId]);
+
+  useEffect(() => {
+    const onFs = () => {
+      if (typeof document !== "undefined" && !document.fullscreenElement) {
+        setCssFullscreen(false);
+      }
+    };
+    document.addEventListener("fullscreenchange", onFs);
+    return () => document.removeEventListener("fullscreenchange", onFs);
+  }, []);
 
   const touchDrag = useRef<{ active: boolean; startX: number; startPan: number }>({
     active: false,
@@ -245,6 +278,8 @@ export function XRScenarioViewer({
     setReflection("");
     setDemoEvents([]);
     setShowTask(false);
+    setJustifyTapped(false);
+    setReflectTapped(false);
   }, []);
 
   const clampPan = useCallback((next: number, width: number) => {
@@ -341,10 +376,60 @@ export function XRScenarioViewer({
     }
   }, []);
 
+  const runSceneScan = useCallback(() => {
+    setOrderWarning("Scanning the scene for learning hotspots…");
+    const seq = REQUIRED_HOTSPOT_ORDER;
+    let i = 0;
+    const tick = () => {
+      if (i < seq.length) {
+        setScanHighlightId(seq[i]);
+        i += 1;
+        window.setTimeout(tick, 720);
+      } else {
+        setScanHighlightId(null);
+        setOrderWarning("Scan complete. Start by tapping the Hazard hotspot.");
+        pushDemoEvent({ eventType: "scene_scan", step: "Observe", hotspot: "scan" });
+        appendDemoActivity(activeLid, `${activeLid} completed scene scan`);
+        window.setTimeout(() => setOrderWarning(""), 7000);
+      }
+    };
+    window.setTimeout(tick, 400);
+  }, [activeLid, pushDemoEvent]);
+
   const openHotspot = (hs: XRHotspotDefinition) => {
+    if (guidedMobile && guidedScenarioStarted) {
+      if (hs.id === "ai-hint") {
+        pushDemoEvent({ eventType: "ai_hint_viewed", step: "Justify", hotspot: "Hint" });
+        appendDemoActivity(activeLid, `${activeLid} viewed hint scaffold`);
+        setSelectedId(hs.id);
+        setVisited((prev) => new Set(prev).add(hs.id));
+        return;
+      }
+      if (hs.id === "action" && !visited.has("hazard")) {
+        setOrderWarning("Before choosing an action, first identify the hazard.");
+        window.setTimeout(() => setOrderWarning(""), 6000);
+        return;
+      }
+      if (hs.id === "justify" && guidedStep < 3) {
+        setOrderWarning("Select an action before writing justification.");
+        window.setTimeout(() => setOrderWarning(""), 6000);
+        return;
+      }
+      if (hs.id === "reflection" && guidedStep < 4) {
+        setOrderWarning("Write your justification before reflection.");
+        window.setTimeout(() => setOrderWarning(""), 6000);
+        return;
+      }
+    }
+
     setSelectedId(hs.id);
     setVisited((prev) => new Set(prev).add(hs.id));
     setPathwayIndex((idx) => Math.max(idx, hs.pathwayIndex));
+    if (guidedMobile && guidedScenarioStarted) {
+      if (hs.id === "justify") setJustifyTapped(true);
+      if (hs.id === "reflection") setReflectTapped(true);
+    }
+
     const isGuidedHazardClick =
       guidedMobile && guidedScenarioStarted && guidedStep === 1 && hs.id === "hazard";
     appendLog({
@@ -355,6 +440,7 @@ export function XRScenarioViewer({
     });
     if (isGuidedHazardClick) {
       pushDemoEvent({ eventType: "hotspot_click", step: "Observe", hotspot: "Hazard" });
+      appendDemoActivity(activeLid, `${activeLid} clicked Hazard`);
       setGuidedStep(2);
     }
 
@@ -369,7 +455,7 @@ export function XRScenarioViewer({
 
     if (variant === "hero") {
       setShowTask(false);
-    } else if (hs.id === "action" || hs.id === "reflection") {
+    } else if (hs.id === "action" || hs.id === "reflection" || hs.id === "justify") {
       setShowTask(true);
       setSubmitted(false);
     } else {
@@ -400,13 +486,25 @@ export function XRScenarioViewer({
       at: new Date().toISOString(),
     };
     const mergedEvents = [...demoEvents, reflectionEvent];
+    const flags = analyzeAttemptFlags({
+      mcChoiceIndex: mcChoice,
+      justification: justification.trim(),
+      reflection: reflection.trim(),
+      justifyTapped,
+      reflectTapped,
+    });
     saveLearnerDemoSubmission({
+      learnerId: activeLid,
       submittedAt: new Date().toISOString(),
       events: mergedEvents,
       selectedAction: sel,
       justification: justification.trim(),
       reflection: reflection.trim(),
       timeSpentSec: elapsedSec,
+      mcChoiceIndex: mcChoice,
+      wrongActionChoice: flags.wrongActionChoice,
+      shortJustification: flags.shortJustification,
+      skippedSteps: flags.skippedSteps,
     });
     setDemoEvents(mergedEvents);
     appendLog({
@@ -417,6 +515,7 @@ export function XRScenarioViewer({
     });
     setSubmitted(true);
     setGuidedStep(5);
+    appendDemoActivity(activeLid, `${activeLid} submitted reflection`);
   };
 
   const advanceGuidedDecide = () => {
@@ -430,6 +529,7 @@ export function XRScenarioViewer({
       eventType: "decision_answer",
     });
     setGuidedStep(3);
+    setJustifyTapped(false);
   };
 
   const enterXR = async () => {
@@ -469,6 +569,14 @@ export function XRScenarioViewer({
     }
   };
 
+  const exitImmersiveViewport = useCallback(() => {
+    setCssFullscreen(false);
+    setImmersiveUi(false);
+    if (typeof document !== "undefined" && document.fullscreenElement) {
+      void document.exitFullscreen().catch(() => {});
+    }
+  }, []);
+
   const requestImmersiveViewport = () => {
     const el = viewportRef.current;
     appendLog({
@@ -478,10 +586,20 @@ export function XRScenarioViewer({
       eventType: "immersive_toggle",
     });
     if (!el?.requestFullscreen) {
+      setCssFullscreen(true);
       setImmersiveUi(true);
       return;
     }
-    el.requestFullscreen().then(() => setImmersiveUi(true)).catch(() => setImmersiveUi(true));
+    el
+      .requestFullscreen()
+      .then(() => {
+        setImmersiveUi(true);
+        setCssFullscreen(false);
+      })
+      .catch(() => {
+        setCssFullscreen(true);
+        setImmersiveUi(true);
+      });
   };
 
   const isHero = variant === "hero";
@@ -528,6 +646,7 @@ export function XRScenarioViewer({
             hs={hs}
             selected={selectedId === hs.id}
             visited={visited.has(hs.id)}
+            pulse={scanHighlightId === hs.id}
             variant={variant}
             onSelect={() => {
               if (guidedMobile && !guidedScenarioStarted) return;
@@ -559,10 +678,14 @@ export function XRScenarioViewer({
           {selectedHotspot.id === "hazard"
             ? "Scan the aisle for instability and blocked egress — observation anchors the scenario."
             : selectedHotspot.id === "action"
-              ? "Choose the safest operational response; you will justify it in the next step."
-              : selectedHotspot.id === "ai-hint"
-                ? "AI-assisted hint (prototype): connect hazard evidence to the control you select."
-                : "Capture a short reflection; teacher review is required before any interpretation."}
+              ? "Choose the safest operational response; then use the Why? hotspot to justify it."
+              : selectedHotspot.id === "justify"
+                ? "Explain why your action reduces risk — causal reasoning matters for competence evidence."
+                : selectedHotspot.id === "ai-hint"
+                  ? "Hint (scaffold): first identify the risk, then explain how the action reduces that risk."
+                  : selectedHotspot.id === "reflection"
+                    ? "Summarize what you learned; teacher review interprets this evidence in context."
+                    : "Continue the learning pathway."}
         </p>
         <button
           type="button"
@@ -649,6 +772,11 @@ export function XRScenarioViewer({
   const guidedLearnerTask =
     guidedMobile && !webxrOnly && !isHero ? (
       <div className="mt-4 space-y-3">
+        {orderWarning ? (
+          <div className="rounded-xl border border-amber-400/50 bg-amber-950/60 px-3 py-3 text-sm text-amber-50 shadow-md">
+            {orderWarning}
+          </div>
+        ) : null}
         {!guidedScenarioStarted ? (
           <div className="rounded-2xl border border-white/15 bg-slate-900/75 p-4 text-center text-white shadow-lg ring-1 ring-white/10">
             <p className="text-xs font-bold uppercase tracking-wide text-sky-200">Step 1 · Observe</p>
@@ -679,7 +807,11 @@ export function XRScenarioViewer({
           <div className="space-y-3 rounded-2xl border border-white/10 bg-slate-900/85 p-4 text-white shadow-lg">
             <div>
               <p className="text-xs font-bold uppercase tracking-wide text-indigo-200">Step 2 · Decide</p>
-              <p className="mt-2 text-sm font-semibold">What is the safest action in this scene?</p>
+              <p className="mt-2 leading-relaxed text-slate-200">
+                Tap the <strong className="text-white">Safe Action</strong> hotspot on the scene if you have not yet, then
+                choose the safest response below.
+              </p>
+              <p className="mt-3 text-sm font-semibold">What is the safest action in this scene?</p>
             </div>
             <ul className="space-y-2">
               {MC_OPTIONS.map((opt, i) => (
@@ -714,52 +846,72 @@ export function XRScenarioViewer({
         ) : null}
 
         {guidedScenarioStarted && guidedStep === 3 && !submitted ? (
-          <div className="space-y-3 rounded-2xl border border-emerald-500/25 bg-slate-900/85 p-4 text-white shadow-lg">
-            <p className="text-xs font-bold uppercase tracking-wide text-emerald-200">Step 3 · Justify</p>
-            <p className="text-sm text-slate-200">Why does this action reduce risk?</p>
-            <textarea
-              value={justification}
-              onChange={(e) => setJustification(e.target.value)}
-              rows={4}
-              className="w-full resize-none rounded-xl border border-white/15 bg-black/30 px-3 py-2 text-sm text-white placeholder:text-slate-500"
-              placeholder="Short written justification…"
-            />
-            <button
-              type="button"
-              disabled={!justification.trim()}
-              onClick={() => {
-                const text = justification.trim();
-                if (!text) return;
-                pushDemoEvent({ eventType: "justification_text", step: "Justify", text });
-                setGuidedStep(4);
-              }}
-              className="w-full min-h-[48px] rounded-xl bg-emerald-600 py-3 text-sm font-semibold text-white transition enabled:hover:bg-emerald-500 disabled:cursor-not-allowed disabled:bg-slate-600"
-            >
-              Continue
-            </button>
-          </div>
+          justifyTapped ? (
+            <div className="space-y-3 rounded-2xl border border-emerald-500/25 bg-slate-900/85 p-4 text-white shadow-lg">
+              <p className="text-xs font-bold uppercase tracking-wide text-emerald-200">Step 3 · Justify</p>
+              <p className="text-sm text-slate-200">Why does this action reduce risk?</p>
+              <textarea
+                value={justification}
+                onChange={(e) => setJustification(e.target.value)}
+                rows={4}
+                className="w-full resize-none rounded-xl border border-white/15 bg-black/30 px-3 py-2 text-sm text-white placeholder:text-slate-500"
+                placeholder="Short written justification…"
+              />
+              <button
+                type="button"
+                disabled={!justification.trim()}
+                onClick={() => {
+                  const text = justification.trim();
+                  if (!text) return;
+                  pushDemoEvent({ eventType: "justification_text", step: "Justify", text });
+                  setReflectTapped(false);
+                  setGuidedStep(4);
+                }}
+                className="w-full min-h-[48px] rounded-xl bg-emerald-600 py-3 text-sm font-semibold text-white transition enabled:hover:bg-emerald-500 disabled:cursor-not-allowed disabled:bg-slate-600"
+              >
+                Continue
+              </button>
+            </div>
+          ) : (
+            <div className="rounded-2xl border border-amber-500/30 bg-slate-900/80 p-4 text-sm text-white shadow-lg">
+              <p className="text-xs font-bold uppercase tracking-wide text-amber-200">Step 3 · Justify</p>
+              <p className="mt-2 leading-relaxed text-slate-200">
+                Tap the <strong className="text-white">Why?</strong> hotspot on the warehouse scene to unlock the
+                justification prompt.
+              </p>
+            </div>
+          )
         ) : null}
 
         {guidedScenarioStarted && guidedStep === 4 && !submitted ? (
-          <div className="space-y-3 rounded-2xl border border-violet-500/25 bg-slate-900/85 p-4 text-white shadow-lg">
-            <p className="text-xs font-bold uppercase tracking-wide text-violet-200">Step 4 · Reflect</p>
-            <p className="text-sm text-slate-200">What did you learn from this scenario?</p>
-            <textarea
-              value={reflection}
-              onChange={(e) => setReflection(e.target.value)}
-              rows={4}
-              className="w-full resize-none rounded-xl border border-white/15 bg-black/30 px-3 py-2 text-sm text-white placeholder:text-slate-500"
-              placeholder="Reflection for your teacher…"
-            />
-            <button
-              type="button"
-              disabled={!reflection.trim()}
-              onClick={submitGuidedLearnerTask}
-              className="w-full min-h-[48px] rounded-xl bg-violet-600 py-3 text-sm font-semibold text-white transition enabled:hover:bg-violet-500 disabled:cursor-not-allowed disabled:bg-slate-600"
-            >
-              Submit for Teacher Review
-            </button>
-          </div>
+          reflectTapped ? (
+            <div className="space-y-3 rounded-2xl border border-violet-500/25 bg-slate-900/85 p-4 text-white shadow-lg">
+              <p className="text-xs font-bold uppercase tracking-wide text-violet-200">Step 4 · Reflect</p>
+              <p className="text-sm text-slate-200">What did you learn from this scenario?</p>
+              <textarea
+                value={reflection}
+                onChange={(e) => setReflection(e.target.value)}
+                rows={4}
+                className="w-full resize-none rounded-xl border border-white/15 bg-black/30 px-3 py-2 text-sm text-white placeholder:text-slate-500"
+                placeholder="Reflection for your teacher…"
+              />
+              <button
+                type="button"
+                disabled={!reflection.trim()}
+                onClick={submitGuidedLearnerTask}
+                className="w-full min-h-[48px] rounded-xl bg-violet-600 py-3 text-sm font-semibold text-white transition enabled:hover:bg-violet-500 disabled:cursor-not-allowed disabled:bg-slate-600"
+              >
+                Submit for Teacher Review
+              </button>
+            </div>
+          ) : (
+            <div className="rounded-2xl border border-violet-500/30 bg-slate-900/80 p-4 text-sm text-white shadow-lg">
+              <p className="text-xs font-bold uppercase tracking-wide text-violet-200">Step 4 · Reflect</p>
+              <p className="mt-2 leading-relaxed text-slate-200">
+                Tap the <strong className="text-white">Reflect</strong> hotspot on the scene to unlock your reflection.
+              </p>
+            </div>
+          )
         ) : null}
 
         {guidedMobile && submitted ? (
@@ -791,7 +943,7 @@ export function XRScenarioViewer({
                 Open AI Learning Workflow
               </Link>
               <Link
-                href={`/learners/${DEMO_MOBILE_LEARNER_ID}`}
+                href={`/learners/${activeLid}`}
                 className="inline-flex min-h-[48px] items-center justify-center rounded-xl border border-white/30 bg-white/5 px-4 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
               >
                 View demo learner detail
@@ -1002,6 +1154,7 @@ export function XRScenarioViewer({
         "relative overflow-hidden rounded-2xl ring-1",
         isHero ? "ring-slate-200" : "ring-white/10",
         immersiveUi && variant === "mobile" && "rounded-none ring-0 sm:rounded-2xl",
+        cssFullscreen && variant === "mobile" && "fixed inset-0 z-[280] max-h-[100dvh] rounded-none ring-0",
       )}
     >
       <div
@@ -1056,6 +1209,16 @@ export function XRScenarioViewer({
                     Default: Mobile 360° on iPhone &amp; typical browsers — not headset WebXR
                   </span>
                 ) : null}
+                {variant === "mobile" && !webxrOnly && guidedMobile ? (
+                  <button
+                    type="button"
+                    onClick={runSceneScan}
+                    className="inline-flex min-h-[44px] items-center gap-1.5 rounded-xl bg-sky-600 px-3 py-2 text-xs font-bold text-white shadow-lg"
+                  >
+                    <ScanLine className="h-3.5 w-3.5" aria-hidden />
+                    Scan scene
+                  </button>
+                ) : null}
                 {variant === "mobile" && !webxrOnly ? (
                   <button
                     type="button"
@@ -1064,6 +1227,16 @@ export function XRScenarioViewer({
                   >
                     <Maximize2 className="h-3.5 w-3.5" aria-hidden />
                     Full screen
+                  </button>
+                ) : null}
+                {variant === "mobile" && !webxrOnly && (immersiveUi || cssFullscreen) ? (
+                  <button
+                    type="button"
+                    onClick={exitImmersiveViewport}
+                    className="inline-flex min-h-[44px] items-center gap-1.5 rounded-xl border border-white/40 bg-black/40 px-3 py-2 text-xs font-bold text-white shadow-lg"
+                  >
+                    <X className="h-3.5 w-3.5" aria-hidden />
+                    Exit full screen
                   </button>
                 ) : null}
               </div>

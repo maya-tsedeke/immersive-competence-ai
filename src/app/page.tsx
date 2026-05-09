@@ -14,6 +14,7 @@ import {
   Workflow,
 } from "lucide-react";
 import { PrototypeBadge } from "@/components/layout/PrototypeBadge";
+import { AddLearnerActivityButton } from "@/components/learners/AddLearnerActivityModal";
 import { XRScenarioViewer } from "@/components/xr/XRScenarioViewer";
 import { usingGeneratedData } from "@/lib/dataset";
 
@@ -212,6 +213,9 @@ export default function LandingPage() {
           {/* XR-style immersive preview (shared learner canvas) */}
           <div className="flex min-w-0 flex-col justify-center lg:pl-2">
             <XRScenarioViewer variant="hero" />
+            <div className="mt-4 flex justify-center">
+              <AddLearnerActivityButton className="w-full max-w-md sm:w-auto" />
+            </div>
             <p className="mt-3 text-center text-[11px] text-slate-500">
               360° / XR-style learning scene · ThingLink-inspired · research demonstration only
             </p>

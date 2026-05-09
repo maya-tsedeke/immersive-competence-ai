@@ -11,7 +11,12 @@ export function AIEvidenceCard({
   return (
     <div className="rounded-2xl border border-[var(--border)] bg-white p-5 shadow-[var(--shadow)]">
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <p className="text-sm font-semibold text-slate-900">AI evidence &amp; method</p>
+        <div>
+          <p className="text-sm font-semibold text-slate-900">AI evidence &amp; method</p>
+          <p className="mt-1 text-xs text-[var(--muted)]">
+            Learner ID: <span className="font-mono font-semibold text-slate-800">{bundle.learnerId}</span>
+          </p>
+        </div>
         <ProvenanceBadge kind={provenance} />
       </div>
 

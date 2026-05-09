@@ -4,9 +4,11 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import type { EngagementLevel, Learner, LearnerStatus } from "@/lib/types";
 import { LearnerCard } from "@/components/learners/LearnerCard";
 import { LearnerTable } from "@/components/learners/LearnerTable";
-import { DEMO_MOBILE_LEARNER_ID } from "@/lib/learnerDemo/constants";
-import { readLearnerDemoState } from "@/lib/learnerDemo/storage";
+import { learnerDemoSubmitted } from "@/lib/learnerDemo/storage";
 import { WORKFLOW_CHANGE_EVENT, getLearnerWorkflowState } from "@/lib/workflow/teacherWorkflowStorage";
+import { mergeDemoLearnersIntoCohort } from "@/lib/learnerDemo/mergeCohort";
+import { DEMO_LEARNERS_CHANGE_EVENT } from "@/lib/learnerDemo/demoLearnersStore";
+import { AddLearnerActivityButton } from "@/components/learners/AddLearnerActivityModal";
 import { cn } from "@/lib/utils";
 
 export type PredictionCohortCounts = {
@@ -77,36 +79,37 @@ export function LearnersView({
     const t = window.setInterval(refreshWf, 1300);
     const h = () => refreshWf();
     window.addEventListener(WORKFLOW_CHANGE_EVENT, h);
+    window.addEventListener(DEMO_LEARNERS_CHANGE_EVENT, h);
     window.addEventListener("storage", h);
     return () => {
       window.clearInterval(t);
       window.removeEventListener(WORKFLOW_CHANGE_EVENT, h);
+      window.removeEventListener(DEMO_LEARNERS_CHANGE_EVENT, h);
       window.removeEventListener("storage", h);
     };
   }, [refreshWf]);
 
-  const demoPipeline = useMemo(() => {
+  const mergedLearners = useMemo(() => {
     void wfTick;
-    const d = readLearnerDemoState();
-    const w = getLearnerWorkflowState(DEMO_MOBILE_LEARNER_ID);
-    return {
-      submitted: Boolean(d?.submittedAt),
-      aiDone: w.aiAnalysisComplete,
-      teacherDone: Boolean(w.teacherDecision),
-    };
-  }, [wfTick]);
+    return mergeDemoLearnersIntoCohort(learners);
+  }, [learners, wfTick]);
+
   const chipLabels = useMemo(() => {
-    const countLocal = (s: LearnerStatus) => learners.filter((l) => rowStatus(l) === s).length;
-    const all = learners.length;
+    const countLocal = (s: LearnerStatus) => mergedLearners.filter((l) => rowStatus(l) === s).length;
+    const all = mergedLearners.length;
     const atRisk = cohortCounts.total > 0 ? cohortCounts.atRisk : countLocal("At risk");
     const needs = cohortCounts.total > 0 ? cohortCounts.needsFeedback : countLocal("Needs feedback");
     const strong = cohortCounts.total > 0 ? cohortCounts.strong : countLocal("Strong");
-    const waitingAi =
-      learners.filter(
-        (l) => l.id === DEMO_MOBILE_LEARNER_ID && demoPipeline.submitted && !demoPipeline.aiDone,
-      ).length;
-    const teacherRev =
-      learners.filter((l) => l.id === DEMO_MOBILE_LEARNER_ID && demoPipeline.teacherDone).length;
+    const waitingAi = mergedLearners.filter((l) => {
+      if (!l.isLocalDemo) return false;
+      const w = getLearnerWorkflowState(l.id);
+      return learnerDemoSubmitted(l.id) && !w.aiAnalysisComplete;
+    }).length;
+    const teacherRev = mergedLearners.filter((l) => {
+      if (!l.isLocalDemo) return false;
+      if (!learnerDemoSubmitted(l.id)) return false;
+      return Boolean(getLearnerWorkflowState(l.id).teacherDecision);
+    }).length;
     return {
       all: `All (${all})`,
       atRisk: `At risk (${atRisk})`,
@@ -119,22 +122,23 @@ export function LearnersView({
           ? "Filter counts use full learnerRiskPredictions.json where available."
           : "Filter counts use visible learner rows (mock or dashboard list).",
     };
-  }, [learners, cohortCounts, demoPipeline.submitted, demoPipeline.aiDone, demoPipeline.teacherDone]);
+  }, [mergedLearners, cohortCounts]);
 
   const filtered = useMemo(() => {
-    let rows = learners.filter((l) => {
+    let rows = mergedLearners.filter((l) => {
       const q = query.trim().toLowerCase();
       const matchesQuery = !q || l.id.toLowerCase().includes(q);
       let matchesChip = true;
       if (filter === "all") matchesChip = true;
       else if (filter === "high_engagement") matchesChip = l.engagement === "High";
       else if (filter === "low_engagement") matchesChip = l.engagement === "Low";
-      else if (filter === "waiting_ai")
-        matchesChip =
-          l.id === DEMO_MOBILE_LEARNER_ID && demoPipeline.submitted && !demoPipeline.aiDone;
-      else if (filter === "teacher_reviewed")
-        matchesChip = l.id === DEMO_MOBILE_LEARNER_ID && demoPipeline.teacherDone;
-      else matchesChip = rowStatus(l) === filter;      return matchesQuery && matchesChip;
+      else if (filter === "waiting_ai") {
+        const w = getLearnerWorkflowState(l.id);
+        matchesChip = Boolean(l.isLocalDemo && learnerDemoSubmitted(l.id) && !w.aiAnalysisComplete);
+      } else if (filter === "teacher_reviewed") {
+        matchesChip = Boolean(l.isLocalDemo && learnerDemoSubmitted(l.id) && getLearnerWorkflowState(l.id).teacherDecision);
+      } else matchesChip = rowStatus(l) === filter;
+      return matchesQuery && matchesChip;
     });
 
     rows = [...rows].sort((a, b) => {
@@ -146,7 +150,7 @@ export function LearnersView({
     });
 
     return rows;
-  }, [learners, query, filter, sort, demoPipeline.submitted, demoPipeline.aiDone, demoPipeline.teacherDone]);
+  }, [mergedLearners, query, filter, sort]);
 
   return (
     <div className="mx-auto max-w-6xl space-y-6">
@@ -158,10 +162,9 @@ export function LearnersView({
           both exist. Status chips prioritize threshold-mapped <strong>risk indicators</strong> when predictions exist.
           Teachers remain responsible for interpretation — AI-assisted insight only.
         </p>
-        <p className="mt-2 text-xs text-[var(--muted)]">
-          {chipLabels.topNote} Risk bands when predictions exist: score ≥ 0.65 → At risk; ≥ 0.35 → Needs feedback;
-          else Strong. “Waiting for AI” / “Teacher reviewed” follow the browser demo learner workflow.
-        </p>
+        <div className="mt-4 flex flex-wrap items-center gap-3">
+          <AddLearnerActivityButton />
+        </div>
       </div>
 
       <div className="flex flex-col gap-4">

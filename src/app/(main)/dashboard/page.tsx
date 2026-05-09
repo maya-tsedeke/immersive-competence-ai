@@ -18,6 +18,8 @@ import { MobileScenarioPreview } from "@/components/dashboard/MobileScenarioPrev
 import { QuickActionCard } from "@/components/dashboard/QuickActionCard";
 import { RiskDistributionChart } from "@/components/dashboard/RiskDistributionChart";
 import { TeacherActionQueue } from "@/components/dashboard/TeacherActionQueue";
+import { RecentLearnerActivity } from "@/components/dashboard/RecentLearnerActivity";
+import { AddLearnerActivityButton } from "@/components/learners/AddLearnerActivityModal";
 import { ProvenanceBadge } from "@/components/ai/ProvenanceBadge";
 import {
   computeDynamicKpi,
@@ -202,14 +204,23 @@ export default function DashboardPage() {
         </p>
       </div>
 
+      <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+        <AddLearnerActivityButton className="w-full sm:w-auto" />
+        <p className="text-xs text-slate-600 sm:max-w-md">
+          Add a browser-only demo learner with its own evidence, AI result, and teacher workflow.
+        </p>
+      </div>
+
       <ModelInfoCard />
 
       <TeacherActionQueue cohort={learners.map((l) => ({ id: l.id, displayStatus: l.displayStatus }))} />
 
       <div className="grid gap-4 lg:grid-cols-2">
-        <AiObjectiveCard />
+        <RecentLearnerActivity />
         <WorkflowHelpPanel />
       </div>
+
+      <AiObjectiveCard />
 
       <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_320px] lg:items-start lg:gap-6">
         <div className="space-y-6">

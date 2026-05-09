@@ -8,14 +8,17 @@ import {
   getLearnerWorkflowState,
   persistTeacherDecision,
 } from "@/lib/workflow/teacherWorkflowStorage";
+import { syncDemoLearnerAfterTeacherDecision } from "@/lib/learnerDemo/demoTeacherSync";
 import { cn } from "@/lib/utils";
 
 const decisionLabels: Record<TeacherDecisionStatus, string> = {
-  accepted_ai_suggestion: "Accepted AI suggestion",
-  edited_feedback: "Edited feedback",
+  accepted_ai_suggestion: "Accepted AI suggestion (Reviewed)",
+  edited_feedback: "Edited feedback (Feedback sent)",
   follow_up_required: "Follow-up required",
   resubmission_requested: "Resubmission requested",
-  reviewed: "Marked as reviewed",
+  reviewed: "Marked as reviewed (Reviewed)",
+  teacher_override: "Teacher overrode AI",
+  feedback_sent: "Feedback sent",
 };
 
 export function TeacherDecisionCard({
@@ -28,7 +31,7 @@ export function TeacherDecisionCard({
   suggestedActionFallback: string;
   className?: string;
 }) {
-  const [note, setNote] = useState("");
+  const [note, setNote] = useState(() => getLearnerWorkflowState(learnerId).teacherDecision?.note ?? "");
   const [wf, setWf] = useState(() => getLearnerWorkflowState(learnerId));
 
   const refresh = useCallback(() => setWf(getLearnerWorkflowState(learnerId)), [learnerId]);
@@ -40,12 +43,17 @@ export function TeacherDecisionCard({
     return () => window.removeEventListener(WORKFLOW_CHANGE_EVENT, h);
   }, [refresh]);
 
+  useEffect(() => {
+    setNote(getLearnerWorkflowState(learnerId).teacherDecision?.note ?? "");
+  }, [learnerId]);
+
   const aiReady = wf.aiAnalysisComplete && wf.aiResultBundle;
   const suggestion = wf.aiResultBundle?.suggestedTeacherAction ?? suggestedActionFallback;
   const decision = wf.teacherDecision;
 
   const save = (status: TeacherDecisionStatus) => {
     persistTeacherDecision(learnerId, status, note);
+    syncDemoLearnerAfterTeacherDecision(learnerId, status);
     refresh();
   };
 
@@ -104,6 +112,22 @@ export function TeacherDecisionCard({
               className="inline-flex min-h-[44px] flex-1 items-center justify-center rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-900 hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50"
             >
               Edit feedback
+            </button>
+            <button
+              type="button"
+              disabled={!aiReady}
+              onClick={() => save("feedback_sent")}
+              className="inline-flex min-h-[44px] flex-1 items-center justify-center rounded-xl border border-sky-200 bg-sky-50 px-3 py-2 text-sm font-semibold text-sky-950 hover:bg-sky-100 disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              Send feedback
+            </button>
+            <button
+              type="button"
+              disabled={!aiReady}
+              onClick={() => save("teacher_override")}
+              className="inline-flex min-h-[44px] flex-1 items-center justify-center rounded-xl border border-slate-300 bg-slate-100 px-3 py-2 text-sm font-semibold text-slate-900 hover:bg-slate-200 disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              Reject AI suggestion
             </button>
             <button
               type="button"

@@ -4,25 +4,41 @@ import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { Brain, ClipboardCheck, FileSearch, Loader2, Send, UserRound } from "lucide-react";
 import type { LearnerStatus } from "@/lib/types";
-import { DEMO_MOBILE_LEARNER_ID } from "@/lib/learnerDemo/constants";
-import { readLearnerDemoState } from "@/lib/learnerDemo/storage";
+import {
+  DEMO_LEARNERS_CHANGE_EVENT,
+  listDemoLearnerRecords,
+} from "@/lib/learnerDemo/demoLearnersStore";
 import { WORKFLOW_CHANGE_EVENT, getLearnerWorkflowState } from "@/lib/workflow/teacherWorkflowStorage";
 import { cn } from "@/lib/utils";
 
 export type TeacherQueueLearner = { id: string; displayStatus?: LearnerStatus };
 
-function summarizeDemo() {
-  const d = readLearnerDemoState();
-  const submitted = Boolean(d?.submittedAt);
-  const wf = getLearnerWorkflowState(DEMO_MOBILE_LEARNER_ID);
-  const aiDone = wf.aiAnalysisComplete;
-  const teacherDone = Boolean(wf.teacherDecision);
-  let lane: "submitted" | "ai_pending" | "review_pending" | "feedback_sent" | "idle" = "idle";
-  if (!submitted) lane = "idle";
-  else if (!aiDone) lane = "ai_pending";
-  else if (!teacherDone) lane = "review_pending";
-  else lane = "feedback_sent";
-  return { submitted, aiDone, teacherDone, lane, wf };
+function summarizeAllDemos() {
+  const records = listDemoLearnerRecords();
+  let submittedCount = 0;
+  let aiPending = 0;
+  let reviewPending = 0;
+  let teacherClosed = 0;
+  const lanes: Array<{ id: string; label: string }> = [];
+
+  for (const r of records) {
+    const last = r.attempts.length ? r.attempts[r.attempts.length - 1] : null;
+    const submitted = Boolean(last?.submittedAt);
+    if (submitted) submittedCount++;
+    const wf = getLearnerWorkflowState(r.id);
+    if (submitted && !wf.aiAnalysisComplete) aiPending++;
+    if (submitted && wf.aiAnalysisComplete && !wf.teacherDecision) reviewPending++;
+    if (submitted && wf.teacherDecision) teacherClosed++;
+
+    let lane = "idle";
+    if (!submitted) lane = "no submission";
+    else if (!wf.aiAnalysisComplete) lane = "ai pending";
+    else if (!wf.teacherDecision) lane = "review pending";
+    else lane = "teacher decided";
+    lanes.push({ id: r.id, label: lane });
+  }
+
+  return { records, submittedCount, aiPending, reviewPending, teacherClosed, lanes };
 }
 
 export function TeacherActionQueue({ cohort }: { cohort: TeacherQueueLearner[] }) {
@@ -33,47 +49,44 @@ export function TeacherActionQueue({ cohort }: { cohort: TeacherQueueLearner[] }
     const t = window.setInterval(refresh, 1500);
     const h = () => refresh();
     window.addEventListener(WORKFLOW_CHANGE_EVENT, h);
+    window.addEventListener(DEMO_LEARNERS_CHANGE_EVENT, h);
     window.addEventListener("storage", h);
     return () => {
       window.clearInterval(t);
       window.removeEventListener(WORKFLOW_CHANGE_EVENT, h);
+      window.removeEventListener(DEMO_LEARNERS_CHANGE_EVENT, h);
       window.removeEventListener("storage", h);
     };
   }, [refresh]);
 
-  const demo = summarizeDemo();
-
-  const submittedCount = demo.submitted ? 1 : 0;
-  const aiPending = demo.submitted && !demo.aiDone ? 1 : 0;
-  const reviewPending = demo.submitted && demo.aiDone && !demo.teacherDone ? 1 : 0;
-  const feedbackSent = demo.teacherDone ? 1 : 0;
+  const demo = summarizeAllDemos();
 
   const cards = [
     {
       title: "Submitted learner activity",
-      value: submittedCount,
-      detail: "Evidence saved from mobile scenario (this browser)",
+      value: demo.submittedCount,
+      detail: "Demo learners with at least one submitted attempt (this browser)",
       icon: FileSearch,
       tone: "border-sky-200 bg-sky-50/80",
     },
     {
       title: "AI analysis pending",
-      value: aiPending,
-      detail: "Run AI analysis on learner detail or workflow",
+      value: demo.aiPending,
+      detail: "Submitted — run AI analysis on learner detail or workflow",
       icon: Loader2,
       tone: "border-amber-200 bg-amber-50/80",
     },
     {
       title: "Teacher review pending",
-      value: reviewPending,
-      detail: "AI result ready — teacher decision needed",
+      value: demo.reviewPending,
+      detail: "AI complete — teacher decision needed",
       icon: ClipboardCheck,
       tone: "border-violet-200 bg-violet-50/80",
     },
     {
-      title: "Feedback sent",
-      value: feedbackSent,
-      detail: "Teacher decision saved locally",
+      title: "Teacher actions saved",
+      value: demo.teacherClosed,
+      detail: "Decisions recorded locally for submitted learners",
       icon: Send,
       tone: "border-emerald-200 bg-emerald-50/80",
     },
@@ -85,8 +98,8 @@ export function TeacherActionQueue({ cohort }: { cohort: TeacherQueueLearner[] }
         <div>
           <p className="text-sm font-semibold text-slate-900">Teacher action queue</p>
           <p className="text-xs text-[var(--muted)]">
-            Learner activity → AI detection → teacher decision → action. This panel tracks the{" "}
-            <strong>mobile scenario learner</strong> stored in your browser.
+            Learner activity → AI detection → teacher decision. Tracks all <strong>browser demo learners</strong> in
+            this session.
           </p>
         </div>
         <Link
@@ -112,56 +125,53 @@ export function TeacherActionQueue({ cohort }: { cohort: TeacherQueueLearner[] }
       </div>
 
       <div className="mt-4 min-w-0 rounded-xl border border-slate-100 bg-slate-50/80 p-4">
-        <p className="text-xs font-bold uppercase tracking-wide text-[var(--muted)]">Demo learner row</p>
-        <div className="mt-3 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-          <div className="flex min-w-0 items-start gap-2">
-            <UserRound className="mt-0.5 h-4 w-4 shrink-0 text-slate-600" aria-hidden />
-            <div className="min-w-0">
-              <p className="font-mono text-sm font-semibold text-slate-900">{DEMO_MOBILE_LEARNER_ID}</p>
-              <p className="text-xs text-slate-600">
-                {demo.lane === "idle"
-                  ? "No submission in this browser yet — complete the mobile scenario first."
-                  : `Lane: ${demo.lane.replace(/_/g, " ")} · AI: ${demo.aiDone ? "complete" : "pending"} · Teacher: ${demo.teacherDone ? "decision saved" : "pending"}`}
-              </p>
-            </div>
-          </div>
-          <div className="flex flex-wrap gap-2">
-            <Link
-              href="/preview"
-              className="inline-flex min-h-[40px] items-center justify-center rounded-lg bg-white px-3 text-xs font-semibold text-slate-800 ring-1 ring-slate-200 hover:bg-slate-50"
-            >
-              View evidence
-            </Link>
-            <Link
-              href={`/learners/${DEMO_MOBILE_LEARNER_ID}`}
-              className="inline-flex min-h-[40px] items-center justify-center rounded-lg bg-indigo-600 px-3 text-xs font-semibold text-white hover:bg-indigo-700"
-            >
-              Run AI analysis
-            </Link>
-            <Link
-              href={`/learners/${DEMO_MOBILE_LEARNER_ID}`}
-              className="inline-flex min-h-[40px] items-center justify-center rounded-lg bg-white px-3 text-xs font-semibold text-slate-800 ring-1 ring-slate-200 hover:bg-slate-50"
-            >
-              Review AI result
-            </Link>
-            <Link
-              href={`/learners/${DEMO_MOBILE_LEARNER_ID}`}
-              className="inline-flex min-h-[40px] items-center justify-center rounded-lg bg-white px-3 text-xs font-semibold text-slate-800 ring-1 ring-slate-200 hover:bg-slate-50"
-            >
-              Decide action
-            </Link>
-            <Link
-              href={`/learners/${DEMO_MOBILE_LEARNER_ID}`}
-              className="inline-flex min-h-[40px] items-center justify-center rounded-lg bg-white px-3 text-xs font-semibold text-slate-800 ring-1 ring-slate-200 hover:bg-slate-50"
-            >
-              Send feedback
-            </Link>
-          </div>
+        <p className="text-xs font-bold uppercase tracking-wide text-[var(--muted)]">Demo learner rows</p>
+        <div className="mt-3 space-y-2">
+          {demo.records.length ? (
+            demo.records.map((r) => {
+              const wf = getLearnerWorkflowState(r.id);
+              const last = r.attempts.length ? r.attempts[r.attempts.length - 1] : null;
+              const submitted = Boolean(last?.submittedAt);
+              return (
+                <div
+                  key={r.id}
+                  className="flex flex-col gap-3 rounded-xl border border-slate-100 bg-white p-3 sm:flex-row sm:items-center sm:justify-between"
+                >
+                  <div className="flex min-w-0 items-start gap-2">
+                    <UserRound className="mt-0.5 h-4 w-4 shrink-0 text-slate-600" aria-hidden />
+                    <div className="min-w-0">
+                      <p className="font-mono text-sm font-semibold text-slate-900">{r.id}</p>
+                      <p className="text-xs text-slate-600">
+                        {!submitted
+                          ? "No submission yet — open preview and start scenario."
+                          : `AI: ${wf.aiAnalysisComplete ? "complete" : "pending"} · Teacher: ${wf.teacherDecision ? "saved" : "pending"}`}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    <Link
+                      href={`/preview?learner=${encodeURIComponent(r.id)}`}
+                      className="inline-flex min-h-[40px] items-center justify-center rounded-lg bg-white px-3 text-xs font-semibold text-slate-800 ring-1 ring-slate-200 hover:bg-slate-50"
+                    >
+                      Scenario
+                    </Link>
+                    <Link
+                      href={`/learners/${r.id}`}
+                      className="inline-flex min-h-[40px] items-center justify-center rounded-lg bg-indigo-600 px-3 text-xs font-semibold text-white hover:bg-indigo-700"
+                    >
+                      Review / AI
+                    </Link>
+                  </div>
+                </div>
+              );
+            })
+          ) : (
+            <p className="text-sm text-slate-600">No demo learners yet — use &quot;Add New Learner Activity&quot;.</p>
+          )}
         </div>
         <p className="mt-3 text-[11px] leading-relaxed text-slate-500">
-          Cohort list has <strong>{cohort.length}</strong> learner rows for analytics. Threshold-mapped statuses (Strong /
-          Needs feedback / At risk) come from riskScore when predictions exist. The interactive queue above is scoped
-          to the demo learner so reviewers can see the full click-through workflow.
+          Cohort analytics list has <strong>{cohort.length}</strong> generated learner rows. Demo learners above are
+          merged first on the Learners page.
         </p>
       </div>
     </div>

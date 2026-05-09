@@ -11,11 +11,18 @@ import {
   Smartphone,
   UsersRound,
 } from "lucide-react";
-import type { DialogueInsight, Learner, LearnerRiskPrediction } from "@/lib/types";
-import { DEMO_MOBILE_LEARNER_ID } from "@/lib/learnerDemo/constants";
-import { readLearnerDemoState } from "@/lib/learnerDemo/storage";
 import { RunAiAnalysisButton } from "@/components/ai/RunAiAnalysisButton";
 import { TeacherDecisionCard } from "@/components/ai/TeacherDecisionCard";
+import { AddLearnerActivityButton } from "@/components/learners/AddLearnerActivityModal";
+import {
+  DEMO_LEARNERS_CHANGE_EVENT,
+  getActivePreviewLearnerId,
+  listDemoLearnerRecords,
+  setActivePreviewLearnerId,
+} from "@/lib/learnerDemo/demoLearnersStore";
+import { demoLearnerRowFromStore } from "@/lib/learnerDemo/mergeCohort";
+import { readLearnerDemoState } from "@/lib/learnerDemo/storage";
+import type { Learner } from "@/lib/types";
 import {
   WORKFLOW_CHANGE_EVENT,
   getLearnerWorkflowState,
@@ -41,26 +48,30 @@ function StepIcon({ done }: { done: boolean }) {
   );
 }
 
-export function AiWorkflowClient({
-  demoLearner,
-  dialogue,
-  risk,
-  usingGeneratedJson,
-}: {
-  demoLearner: Learner;
-  dialogue: DialogueInsight | null;
-  risk: LearnerRiskPrediction | null;
-  usingGeneratedJson: boolean;
-}) {
+function stubWorkflowLearner(id: string): Learner {
+  return {
+    id,
+    score: 0,
+    engagement: "Low",
+    reflection: "Low",
+    status: "Needs feedback",
+    displayStatus: "Needs feedback",
+    isLocalDemo: true,
+    scenarioTitle: "Workplace Safety Simulation",
+    demoProgressPct: 0,
+  };
+}
+
+export function AiWorkflowClient({ usingGeneratedJson }: { usingGeneratedJson: boolean }) {
   const [role, setRole] = useState<RoleTab>("teacher");
-  const [demo, setDemo] = useState<ReturnType<typeof readLearnerDemoState>>(null);
-  const [wf, setWf] = useState(() => getLearnerWorkflowState(DEMO_MOBILE_LEARNER_ID));
+  const [activeId, setActiveId] = useState(() =>
+    typeof window === "undefined" ? "Demo-001" : getActivePreviewLearnerId(),
+  );
   const [, bump] = useState(0);
 
   const refresh = useCallback(() => {
-    setDemo(readLearnerDemoState());
-    setWf(getLearnerWorkflowState(DEMO_MOBILE_LEARNER_ID));
     bump((n) => n + 1);
+    if (typeof window !== "undefined") setActiveId(getActivePreviewLearnerId());
   }, []);
 
   useEffect(() => {
@@ -68,13 +79,20 @@ export function AiWorkflowClient({
     const t = window.setInterval(refresh, 1200);
     const h = () => refresh();
     window.addEventListener(WORKFLOW_CHANGE_EVENT, h);
+    window.addEventListener(DEMO_LEARNERS_CHANGE_EVENT, h);
     window.addEventListener("storage", h);
     return () => {
       window.clearInterval(t);
       window.removeEventListener(WORKFLOW_CHANGE_EVENT, h);
+      window.removeEventListener(DEMO_LEARNERS_CHANGE_EVENT, h);
       window.removeEventListener("storage", h);
     };
   }, [refresh]);
+
+  const demoList = listDemoLearnerRecords();
+  const workflowLearner = demoLearnerRowFromStore(activeId) ?? stubWorkflowLearner(activeId);
+  const demo = readLearnerDemoState(activeId);
+  const wf = getLearnerWorkflowState(activeId);
 
   const traceHotspot = Boolean(demo?.events?.some((e) => e.eventType === "hotspot_click"));
   const submittedOk = Boolean(demo?.submittedAt);
@@ -83,8 +101,6 @@ export function AiWorkflowClient({
 
   const teacherSuggestion =
     wf.aiResultBundle?.suggestedTeacherAction ??
-    dialogue?.teacherFeedbackSuggestion ??
-    risk?.teacherRecommendation ??
     "Ask the learner to compare two possible safety actions and explain which one better reduces risk.";
 
   const stepDone = useMemo(
@@ -101,12 +117,42 @@ export function AiWorkflowClient({
 
   return (
     <div className="mx-auto max-w-4xl min-w-0 space-y-8 overflow-x-hidden pb-8">
-      <div>
-        <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted)]">Public dataset prototype</p>
-        <h1 className="mt-1 text-3xl font-semibold text-slate-900">AI Learning Workflow</h1>
-        <p className="mt-2 text-sm text-slate-600">
-          Follow how learner actions become AI-assisted teacher insights — learner evidence, analysis, review, and
-          recorded decision.
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted)]">Public dataset prototype</p>
+          <h1 className="mt-1 text-3xl font-semibold text-slate-900">AI Learning Workflow</h1>
+          <p className="mt-2 text-sm text-slate-600">
+            Follow how learner actions become AI-assisted teacher insights — learner evidence, analysis, review, and
+            recorded decision. Select a demo learner to run the pipeline end-to-end.
+          </p>
+        </div>
+        <AddLearnerActivityButton className="shrink-0" />
+      </div>
+
+      <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+        <label className="block text-xs font-bold uppercase tracking-wide text-[var(--muted)]">Workflow learner</label>
+        <select
+          value={activeId}
+          onChange={(e) => {
+            const v = e.target.value;
+            setActivePreviewLearnerId(v);
+            setActiveId(v);
+            refresh();
+          }}
+          className="mt-2 min-h-[48px] w-full rounded-xl border border-[var(--border)] bg-white px-3 py-2 text-sm font-semibold text-slate-900"
+        >
+          {demoList.length ? (
+            demoList.map((r) => (
+              <option key={r.id} value={r.id}>
+                {r.id} — {r.scenarioTitle}
+              </option>
+            ))
+          ) : (
+            <option value={activeId}>{activeId} (create a demo learner first)</option>
+          )}
+        </select>
+        <p className="mt-2 text-xs text-slate-500">
+          Session active learner is stored for the mobile preview; changing it here updates analysis targets.
         </p>
       </div>
 
@@ -174,22 +220,22 @@ export function AiWorkflowClient({
           </p>
           <div className="mt-4 flex flex-col gap-2">
             <Link
-              href="/preview"
+              href={`/preview?learner=${encodeURIComponent(activeId)}`}
               className="inline-flex min-h-[48px] items-center justify-center rounded-xl bg-slate-900 px-4 text-sm font-semibold text-white hover:bg-slate-800"
             >
               Start learner activity
             </Link>
             <Link
-              href="/preview"
+              href={`/preview?learner=${encodeURIComponent(activeId)}`}
               className="inline-flex min-h-[48px] items-center justify-center rounded-xl border border-slate-200 bg-white px-4 text-sm font-semibold text-slate-900 hover:bg-slate-50"
             >
-              Complete learner activity (mobile scenario)
+              Complete learner scenario
             </Link>
             <Link
-              href={`/learners/${DEMO_MOBILE_LEARNER_ID}`}
+              href={`/learners/${activeId}`}
               className="inline-flex min-h-[48px] items-center justify-center rounded-xl border border-indigo-200 bg-indigo-50 px-4 text-sm font-semibold text-indigo-950 hover:bg-indigo-100"
             >
-              Open learner — Run AI analysis
+              Open learner detail
             </Link>
             <button
               type="button"
@@ -217,6 +263,7 @@ export function AiWorkflowClient({
 
       <div className="rounded-2xl border border-[var(--border)] bg-white p-5 shadow-[var(--shadow)]">
         <p className="text-sm font-semibold text-slate-900">Current state</p>
+        <p className="mt-1 font-mono text-xs text-slate-600">{activeId}</p>
         <dl className="mt-4 grid gap-3 text-sm sm:grid-cols-2">
           <div className="rounded-xl bg-slate-50 px-3 py-2">
             <dt className="text-xs font-bold uppercase text-[var(--muted)]">Learner status</dt>
@@ -250,14 +297,14 @@ export function AiWorkflowClient({
         </div>
         {!submittedOk ? (
           <p className="rounded-2xl border border-dashed border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-600">
-            Submit learner evidence from the mobile scenario first — then run analysis to see risk indicator, prototype
+            Submit learner evidence from the scenario first — then run analysis to see risk indicator, prototype
             confidence, reflection quality, reasoning depth, difficulty signal, and suggested teacher action.
           </p>
         ) : (
           <RunAiAnalysisButton
-            learner={demoLearner}
-            dialogue={dialogue}
-            risk={risk}
+            learner={workflowLearner}
+            dialogue={null}
+            risk={null}
             log={null}
             usingGeneratedJson={usingGeneratedJson}
             initialBundle={wf.aiResultBundle ?? null}
@@ -267,7 +314,7 @@ export function AiWorkflowClient({
       </div>
 
       <div id="workflow-teacher-panel" className="scroll-mt-24">
-        <TeacherDecisionCard learnerId={DEMO_MOBILE_LEARNER_ID} suggestedActionFallback={teacherSuggestion} />
+        <TeacherDecisionCard learnerId={activeId} suggestedActionFallback={teacherSuggestion} />
       </div>
 
       <div className="rounded-2xl border border-slate-200 bg-slate-50 p-5 text-sm text-slate-700">
@@ -285,10 +332,7 @@ export function AiWorkflowClient({
             decision.
           </li>
         </ul>
-        <Link
-          href="/dashboard"
-          className="mt-4 inline-flex items-center gap-2 font-semibold text-indigo-700 underline"
-        >
+        <Link href="/dashboard" className="mt-4 inline-flex items-center gap-2 font-semibold text-indigo-700 underline">
           Teacher dashboard
           <ArrowRight className="h-4 w-4" aria-hidden />
         </Link>
