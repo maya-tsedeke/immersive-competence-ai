@@ -454,9 +454,8 @@ export function XRScenarioViewer({
       setXrSupported(false);
       return;
     }
-    xr
-      .isSessionSupported("immersive-vr")
-      .then(setXrSupported)
+    void Promise.all([xr.isSessionSupported("immersive-vr"), xr.isSessionSupported("immersive-ar")])
+      .then(([vr, ar]) => setXrSupported(vr || ar))
       .catch(() => setXrSupported(false));
   }, []);
 
@@ -658,21 +657,34 @@ export function XRScenarioViewer({
         );
         return;
       }
-    } else if (xrSupported !== true) {
+    } else if (xrSupported === false) {
       window.alert("WebXR is not available in this browser. Use the 360° panning view instead.");
       return;
     }
     try {
-      const xr = (navigator as Navigator & { xr?: { requestSession?: (m: string) => Promise<unknown> } }).xr;
+      type XrApi = {
+        requestSession?: (m: string) => Promise<unknown>;
+        isSessionSupported?: (m: string) => Promise<boolean>;
+      };
+      const xr = (navigator as Navigator & { xr?: XrApi }).xr;
       if (!xr?.requestSession) {
         window.alert("WebXR session API not available. Use Mobile 360° Mode instead.");
         return;
       }
-      const mode = guidedPreview
-        ? supportsImmersiveVr
-          ? "immersive-vr"
-          : "immersive-ar"
-        : "immersive-vr";
+      let mode: "immersive-vr" | "immersive-ar" = "immersive-vr";
+      if (guidedPreview) {
+        mode = supportsImmersiveVr ? "immersive-vr" : "immersive-ar";
+      } else if (xr.isSessionSupported) {
+        const [vr, ar] = await Promise.all([
+          xr.isSessionSupported("immersive-vr"),
+          xr.isSessionSupported("immersive-ar"),
+        ]);
+        if (!vr && !ar) {
+          window.alert("No immersive-vr / immersive-ar session available. Use the 360° panning view instead.");
+          return;
+        }
+        mode = vr ? "immersive-vr" : "immersive-ar";
+      }
       await xr.requestSession(mode);
     } catch {
       window.alert(
@@ -715,8 +727,8 @@ export function XRScenarioViewer({
   };
 
   const isHero = variant === "hero";
-  /** Dark chrome is for the pocket-sized learner demo only; desktop/embed uses light UI (e.g. scenario analytics). */
-  const isDarkChrome = variant === "mobile";
+  /** Immersive dark chrome for learner-style mobile and embedded desktop (e.g. analytics) — matches ThingLink-style scene UI. */
+  const isDarkChrome = variant === "mobile" || variant === "desktop";
   const webxrOnly = Boolean(guidedPreview && variant === "mobile" && previewTab === "webxr");
   const teacherPanel = Boolean(guidedPreview && variant === "mobile" && previewTab === "teacher");
   const mobileGuidedLearner =
@@ -744,7 +756,7 @@ export function XRScenarioViewer({
       ? "min-h-[220px] sm:min-h-[260px]"
       : variant === "desktop"
         ? "min-h-[340px] lg:min-h-[420px]"
-        : "min-h-[48vh] sm:min-h-[52vh] lg:min-h-[min(520px,58vh)] xl:min-h-[min(580px,62vh)]";
+        : "min-h-[48vh] sm:min-h-[52vh]";
 
   const useMobileHotspotCoords = variant !== "desktop";
 
@@ -1405,12 +1417,19 @@ export function XRScenarioViewer({
         role="toolbar"
         aria-label="Scene controls"
       >
-        {variant === "desktop" && !guidedPreview && xrSupported === true ? (
+        {variant === "desktop" && !guidedPreview && xrSupported !== false ? (
           <button
             type="button"
             onClick={() => void enterXR()}
-            className="inline-flex min-h-[44px] items-center rounded-xl bg-indigo-600 px-3 py-2 text-[11px] font-bold text-white shadow-md"
-            title="Enter WebXR"
+            className={cn(
+              "inline-flex min-h-[44px] items-center rounded-xl px-3 py-2 text-[11px] font-bold text-white shadow-md",
+              xrSupported === null ? "bg-indigo-500 hover:bg-indigo-500" : "bg-indigo-600 hover:bg-indigo-500",
+            )}
+            title={
+              xrSupported === null
+                ? "WebXR support is being detected — tap to try an immersive session (headset when available)"
+                : "Enter WebXR (headset when available)"
+            }
           >
             XR
           </button>
@@ -1477,7 +1496,7 @@ export function XRScenarioViewer({
     <div
       className={cn(
         "relative overflow-hidden rounded-2xl ring-1",
-        isHero || variant === "desktop" ? "ring-slate-200" : "ring-white/10",
+        isHero ? "ring-slate-200" : "ring-white/10",
         immersiveUi && variant === "mobile" && "rounded-none ring-0 sm:rounded-2xl",
         cssFullscreen &&
           variant === "mobile" &&
@@ -1524,20 +1543,13 @@ export function XRScenarioViewer({
       <div
         className={cn(
           "flex flex-col gap-2 border-t px-3 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-4",
-          isHero || variant === "desktop"
-            ? "border-slate-200 bg-slate-50"
-            : "border-white/10 bg-slate-950/90",
+          isHero ? "border-slate-200 bg-slate-50" : "border-white/10 bg-slate-950/90",
         )}
       >
-        <p
-          className={cn(
-            "text-[10px] font-bold uppercase tracking-wide",
-            isHero || variant === "desktop" ? "text-slate-500" : "text-sky-200/90",
-          )}
-        >
+        <p className={cn("text-[10px] font-bold uppercase tracking-wide", isHero ? "text-slate-500" : "text-sky-200/90")}>
           Learner pathway
         </p>
-        <PathwayChips currentIndex={pathwayIndex} theme={isHero || variant === "desktop" ? "light" : "dark"} />
+        <PathwayChips currentIndex={pathwayIndex} theme={isHero ? "light" : "dark"} />
       </div>
     </div>
   );
@@ -1653,8 +1665,7 @@ export function XRScenarioViewer({
     <div
       className={cn(
         variant === "hero" && "rounded-3xl border border-slate-200/90 bg-white p-4 shadow-2xl ring-1 ring-slate-100 sm:p-5",
-        variant === "mobile" &&
-          "w-full max-w-lg lg:max-w-4xl xl:max-w-5xl mx-auto px-2 pb-28 pt-2 text-white md:px-3 lg:px-4 lg:pb-8",
+        variant === "mobile" && "w-full max-w-lg mx-auto px-2 pb-28 pt-2 text-white md:px-3",
         variant === "desktop" && "text-slate-900",
         className,
       )}
@@ -1684,7 +1695,7 @@ export function XRScenarioViewer({
 
       {variant === "mobile" ? (
         <nav
-          className="fixed bottom-0 left-0 right-0 z-50 flex items-stretch justify-around border-t border-white/10 bg-[#0b1220]/95 py-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] backdrop-blur-md lg:hidden"
+          className="fixed bottom-0 left-0 right-0 z-50 flex items-stretch justify-around border-t border-white/10 bg-[#0b1220]/95 py-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] backdrop-blur-md"
           aria-label="Learner navigation"
         >
           <Link href="/" className="flex min-h-[52px] min-w-[64px] flex-col items-center justify-center gap-0.5 text-[10px] font-semibold text-slate-300 hover:text-white">

@@ -16,6 +16,7 @@ import { InsightCard } from "@/components/dashboard/InsightCard";
 import { KPIStatCard } from "@/components/dashboard/KPIStatCard";
 import { ModelInfoCard } from "@/components/dashboard/ModelInfoCard";
 import { QuickActionCard } from "@/components/dashboard/QuickActionCard";
+import { TeacherDemoShortcutsStrip } from "@/components/dashboard/TeacherDemoShortcutsStrip";
 import { RiskDistributionChart } from "@/components/dashboard/RiskDistributionChart";
 import { TeacherActionQueue } from "@/components/dashboard/TeacherActionQueue";
 import { RecentLearnerActivity } from "@/components/dashboard/RecentLearnerActivity";
@@ -94,8 +95,8 @@ function WorkflowHelpPanel() {
     <div className="rounded-2xl border border-slate-200 bg-slate-50 p-5">
       <p className="text-sm font-semibold text-slate-900">How to get AI results in this demo</p>
       <ol className="mt-3 list-decimal space-y-1.5 pl-5 text-sm text-slate-600">
-        <li>Open Learner Scenario (layout adapts to screen size).</li>
-        <li>Tap or click the Hazard hotspot.</li>
+        <li>Open Learner 360° demo (<code className="rounded bg-slate-200 px-1">/preview</code>).</li>
+        <li>Tap the Hazard hotspot.</li>
         <li>Choose the safest action.</li>
         <li>Write a short justification and reflection.</li>
         <li>Submit for teacher review.</li>
@@ -349,14 +350,18 @@ export default function DashboardPage() {
             </div>
           </div>
 
-          <div className="grid gap-4 lg:grid-cols-2">
-            <InsightCard
-              title="Key insight"
-              body={sa.keyInsight}
-              href="/analytics"
-              linkLabel="Open scenario workspace"
-            />
-            <div className="grid grid-cols-2 gap-3">
+          <TeacherDemoShortcutsStrip />
+
+          <div className="grid gap-4 lg:grid-cols-3">
+            <div className="min-h-full lg:col-span-1">
+              <InsightCard
+                title="Key insight"
+                body={sa.keyInsight}
+                href="/analytics"
+                linkLabel="Open scenario workspace"
+              />
+            </div>
+            <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:col-span-2 lg:grid-cols-4">
               <QuickActionCard
                 title="Learning modules"
                 description="Create modules, synthetic cohort previews, link to scenarios."
@@ -394,8 +399,8 @@ export default function DashboardPage() {
                 icon={Sparkles}
               />
               <QuickActionCard
-                title="Learner scenario"
-                description="360° practice flow — wide layout on desktop, touch-first on phones."
+                title="Learner 360° demo"
+                description="Full scenario on /preview — not a dashboard mockup."
                 href="/preview"
                 icon={Smartphone}
               />

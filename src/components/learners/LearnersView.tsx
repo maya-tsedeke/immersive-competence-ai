@@ -153,7 +153,7 @@ export function LearnersView({
   }, [mergedLearners, query, filter, sort]);
 
   return (
-    <div className="mx-auto w-full max-w-6xl space-y-6 xl:max-w-7xl">
+    <div className="mx-auto max-w-6xl space-y-6">
       <div>
         <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted)]">Learners</p>
         <h1 className="mt-1 text-3xl font-semibold text-slate-900">Cohort performance</h1>

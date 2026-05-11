@@ -5,7 +5,6 @@ import type { EngagementLevel, Learner, LearnerStatus, ScenarioAnalyticsBundle }
 import { EngagementDistributionChart } from "@/components/analytics/EngagementDistributionChart";
 import { HotspotCompletionBar } from "@/components/analytics/HotspotCompletionBar";
 import { InteractionTimeline } from "@/components/analytics/InteractionTimeline";
-import { ScenarioHotspotMap } from "@/components/analytics/ScenarioHotspotMap";
 import { ModelInfoCard } from "@/components/dashboard/ModelInfoCard";
 import { XRScenarioViewer } from "@/components/xr/XRScenarioViewer";
 import { annotateHotspotCompletionWithPathway } from "@/lib/xr/scenarioHotspots";
@@ -110,15 +109,6 @@ export function ScenarioAnalyticsWorkspace({
       </div>
 
       <ModelInfoCard />
-
-      {/*
-        Compact static hotspot illustration: only on small/medium screens.
-        On lg+ the full XR block below is the canonical view — hiding this avoids a confusing “black card with three dots”
-        (especially if remote images fail) and removes duplicate storytelling.
-      */}
-      <div className="lg:hidden">
-        <ScenarioHotspotMap />
-      </div>
 
       <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-white shadow-[var(--shadow)]">
         <div className="border-b border-[var(--border)] bg-slate-50/90 px-5 py-4">

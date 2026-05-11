@@ -96,7 +96,7 @@ export default async function LearnerDetailPage({
   );
 
   return (
-    <div className="mx-auto max-w-5xl space-y-6 px-3 pb-6 sm:px-4 lg:max-w-6xl xl:max-w-7xl xl:px-6">
+    <div className="mx-auto max-w-5xl space-y-6 px-2 pb-6 sm:px-0">
       <Link
         href="/learners"
         className="inline-flex min-h-[44px] items-center text-sm font-semibold text-indigo-600 hover:underline"
