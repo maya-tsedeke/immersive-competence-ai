@@ -8,6 +8,7 @@ import {
   nextDemoLearnerId,
   setActivePreviewLearnerId,
 } from "@/lib/learnerDemo/demoLearnersStore";
+import { listModules, MODULES_CHANGE_EVENT } from "@/lib/modules/moduleStore";
 import { cn } from "@/lib/utils";
 
 const DEFAULT_SCENARIO = "Workplace Safety Simulation";
@@ -27,9 +28,18 @@ export function AddLearnerActivityModal({
   useEffect(() => {
     if (open) setLearnerId(nextDemoLearnerId());
   }, [open]);
+  const [modules, setModules] = useState(() => listModules());
+  useEffect(() => {
+    if (!open) return;
+    const refresh = () => setModules(listModules());
+    refresh();
+    window.addEventListener(MODULES_CHANGE_EVENT, refresh);
+    return () => window.removeEventListener(MODULES_CHANGE_EVENT, refresh);
+  }, [open]);
   const [name, setName] = useState("");
   const [scenario, setScenario] = useState(DEFAULT_SCENARIO);
   const [objective, setObjective] = useState(DEFAULT_OBJECTIVE);
+  const [moduleId, setModuleId] = useState<string>("");
   const [startMode, setStartMode] = useState<"learner_now" | "teacher_queue">("learner_now");
 
   const reset = useCallback(() => {
@@ -37,6 +47,7 @@ export function AddLearnerActivityModal({
     setName("");
     setScenario(DEFAULT_SCENARIO);
     setObjective(DEFAULT_OBJECTIVE);
+    setModuleId("");
     setStartMode("learner_now");
   }, []);
 
@@ -48,13 +59,16 @@ export function AddLearnerActivityModal({
       scenarioTitle: scenario.trim(),
       objective: objective.trim(),
       startMode,
+      moduleId: moduleId.trim() || undefined,
     });
     setActivePreviewLearnerId(row.id);
     window.dispatchEvent(new CustomEvent(DEMO_LEARNERS_CHANGE_EVENT));
     onClose();
     reset();
     if (startMode === "learner_now") {
-      router.push(`/preview?learner=${encodeURIComponent(row.id)}`);
+      const q = new URLSearchParams({ learner: row.id });
+      if (row.moduleId) q.set("module", row.moduleId);
+      router.push(`/preview?${q.toString()}`);
     } else {
       router.push("/dashboard");
     }
@@ -95,6 +109,24 @@ export function AddLearnerActivityModal({
               placeholder="Anonymous"
               className="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm text-slate-900"
             />
+          </label>
+          <label className="block text-xs font-bold uppercase tracking-wide text-slate-500">
+            Learning module (optional)
+            <select
+              value={moduleId}
+              onChange={(e) => setModuleId(e.target.value)}
+              className="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm text-slate-900"
+            >
+              <option value="">— None —</option>
+              {modules.map((m) => (
+                <option key={m.id} value={m.id}>
+                  {m.title}
+                </option>
+              ))}
+            </select>
+            <span className="mt-1 block text-[11px] font-normal normal-case text-slate-500">
+              Links this demo learner to a module for analytics filters and evidence metadata.
+            </span>
           </label>
           <label className="block text-xs font-bold uppercase tracking-wide text-slate-500">
             Scenario

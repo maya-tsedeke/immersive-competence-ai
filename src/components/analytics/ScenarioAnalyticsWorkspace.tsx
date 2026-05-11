@@ -111,7 +111,14 @@ export function ScenarioAnalyticsWorkspace({
 
       <ModelInfoCard />
 
-      <ScenarioHotspotMap />
+      {/*
+        Compact static hotspot illustration: only on small/medium screens.
+        On lg+ the full XR block below is the canonical view — hiding this avoids a confusing “black card with three dots”
+        (especially if remote images fail) and removes duplicate storytelling.
+      */}
+      <div className="lg:hidden">
+        <ScenarioHotspotMap />
+      </div>
 
       <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-white shadow-[var(--shadow)]">
         <div className="border-b border-[var(--border)] bg-slate-50/90 px-5 py-4">

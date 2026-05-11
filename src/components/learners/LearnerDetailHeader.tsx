@@ -1,15 +1,30 @@
+import Link from "next/link";
 import type { Learner } from "@/lib/types";
 import { StatusBadge } from "@/components/learners/StatusBadge";
 
 export function LearnerDetailHeader({ learner }: { learner: Learner }) {
+  const previewHref = `/preview?learner=${encodeURIComponent(learner.id)}`;
+
   return (
-    <div className="rounded-2xl border border-[var(--border)] bg-white p-6 shadow-[var(--shadow)]">
+    <div className="sticky top-0 z-20 rounded-2xl border border-[var(--border)] bg-white/95 p-4 shadow-[var(--shadow)] ring-1 ring-slate-100 backdrop-blur-sm sm:static sm:bg-white sm:p-6 sm:ring-0">
       <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
-        <div>
-          <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted)]">Learner profile</p>
-          <h1 className="mt-1 text-2xl font-semibold text-slate-900">
-            {learner.id} <span className="text-base font-normal text-[var(--muted)]">pseudonymous</span>
+        <div className="min-w-0">
+          <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted)]">You are viewing</p>
+          <h1 className="mt-1 break-words text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
+            {learner.id}{" "}
+            <span className="text-base font-normal text-[var(--muted)] sm:text-lg">(pseudonymous id)</span>
           </h1>
+          <p className="mt-2 text-sm text-slate-600">
+            Teacher snapshot: competence, risk, and dialogue heuristics below apply to{" "}
+            <strong className="font-mono text-slate-900">{learner.id}</strong> only.
+          </p>
+          <p className="mt-2 text-xs text-slate-500">
+            Learner mobile flow:{" "}
+            <Link href={previewHref} className="font-semibold text-indigo-600 underline-offset-2 hover:underline">
+              open scenario as {learner.id}
+            </Link>
+            .
+          </p>
           <div className="mt-3 flex flex-wrap gap-2">
             <StatusBadge status={learner.displayStatus ?? learner.status} />
             {learner.completedAt ? (

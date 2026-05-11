@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import type { DialogueInsight, InteractionLog, Learner, LearnerRiskPrediction } from "@/lib/types";
 import { LearnerDetailHeader } from "@/components/learners/LearnerDetailHeader";
@@ -18,6 +19,7 @@ export function LearnerDetailClientSection({
   log,
   usingGeneratedJson,
   teacherSuggestionFallback,
+  afterHeader,
 }: {
   id: string;
   initialLearner: Learner;
@@ -27,6 +29,8 @@ export function LearnerDetailClientSection({
   log: InteractionLog | null;
   usingGeneratedJson: boolean;
   teacherSuggestionFallback: string;
+  /** Renders after the profile header (e.g. disclaimer) so the learner id stays visible first on mobile. */
+  afterHeader?: ReactNode;
 }) {
   const [bump, setBump] = useState(0);
   const refresh = useCallback(() => setBump((n) => n + 1), []);
@@ -51,6 +55,7 @@ export function LearnerDetailClientSection({
   return (
     <>
       <LearnerDetailHeader learner={mergedLearner} />
+      {afterHeader}
       {mergedLearner.isLocalDemo ? <DemoAttemptHistory learnerId={id} /> : null}
       <LearnerAiPanel
         learner={mergedLearner}

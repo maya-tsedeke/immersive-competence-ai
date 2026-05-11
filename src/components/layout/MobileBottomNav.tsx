@@ -2,15 +2,21 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Brain, Home, Users, Shapes, Workflow } from "lucide-react";
+import {
+  BarChart3,
+  GraduationCap,
+  LayoutDashboard,
+  MoreHorizontal,
+  Workflow,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const items = [
-  { href: "/dashboard", label: "Home", icon: Home },
-  { href: "/preview", label: "Scenario", icon: Shapes },
-  { href: "/learners", label: "Learners", icon: Users },
-  { href: "/ai-workflow", label: "Flow", icon: Workflow },
-  { href: "/ai-insights", label: "AI", icon: Brain },
+  { href: "/dashboard", label: "Home", icon: LayoutDashboard },
+  { href: "/preview", label: "Learn", icon: GraduationCap },
+  { href: "/ai-workflow", label: "Workflow", icon: Workflow },
+  { href: "/analytics", label: "Analytics", icon: BarChart3 },
+  { href: "/nav/more", label: "More", icon: MoreHorizontal },
 ];
 
 export function MobileBottomNav() {
@@ -19,7 +25,7 @@ export function MobileBottomNav() {
   return (
     <nav
       className="fixed inset-x-0 bottom-0 z-40 border-t border-[var(--border)] bg-white/95 pb-[env(safe-area-inset-bottom)] backdrop-blur md:hidden"
-      aria-label="Primary"
+      aria-label="Primary navigation"
     >
       <div className="mx-auto flex max-w-lg items-center justify-between gap-1 px-2 py-2">
         {items.map((item) => {

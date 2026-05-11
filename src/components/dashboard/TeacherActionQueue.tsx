@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
-import { Brain, ClipboardCheck, FileSearch, Loader2, Send, UserRound } from "lucide-react";
+import { Brain, ClipboardCheck, FileSearch, Layers, Loader2, Send, UserRound } from "lucide-react";
 import type { LearnerStatus } from "@/lib/types";
 import {
   DEMO_LEARNERS_CHANGE_EVENT,
@@ -102,13 +102,22 @@ export function TeacherActionQueue({ cohort }: { cohort: TeacherQueueLearner[] }
             this session.
           </p>
         </div>
-        <Link
-          href="/ai-workflow"
-          className="inline-flex shrink-0 items-center gap-1 text-xs font-semibold text-indigo-700 underline"
-        >
-          <Brain className="h-3.5 w-3.5" aria-hidden />
-          AI workflow
-        </Link>
+        <div className="flex flex-wrap items-center gap-3">
+          <Link
+            href="/modules"
+            className="inline-flex shrink-0 items-center gap-1 text-xs font-semibold text-indigo-700 underline"
+          >
+            <Layers className="h-3.5 w-3.5" aria-hidden />
+            Learning modules
+          </Link>
+          <Link
+            href="/ai-workflow"
+            className="inline-flex shrink-0 items-center gap-1 text-xs font-semibold text-indigo-700 underline"
+          >
+            <Brain className="h-3.5 w-3.5" aria-hidden />
+            AI workflow
+          </Link>
+        </div>
       </div>
 
       <div className="mt-4 grid min-w-0 gap-3 sm:grid-cols-2 xl:grid-cols-4">
@@ -150,7 +159,7 @@ export function TeacherActionQueue({ cohort }: { cohort: TeacherQueueLearner[] }
                   </div>
                   <div className="flex flex-wrap gap-2">
                     <Link
-                      href={`/preview?learner=${encodeURIComponent(r.id)}`}
+                      href={`/preview?${new URLSearchParams({ learner: r.id, ...(r.moduleId ? { module: r.moduleId } : {}) }).toString()}`}
                       className="inline-flex min-h-[40px] items-center justify-center rounded-lg bg-white px-3 text-xs font-semibold text-slate-800 ring-1 ring-slate-200 hover:bg-slate-50"
                     >
                       Scenario

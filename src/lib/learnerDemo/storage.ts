@@ -12,6 +12,10 @@ export type LearnerDemoEvent = {
   selectedAnswer?: string;
   text?: string;
   at: string;
+  /** Learning module in browser storage (GitHub Pages demo). */
+  moduleId?: string;
+  /** Scenario / competence track identifier (e.g. module scenario type). */
+  scenarioId?: string;
 };
 
 export type LearnerDemoPersisted = {

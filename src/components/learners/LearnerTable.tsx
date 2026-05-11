@@ -38,6 +38,7 @@ export function LearnerTable({
         <thead className="bg-slate-50/80 text-xs font-semibold uppercase tracking-wide text-[var(--muted)]">
           <tr>
             <th className="px-4 py-3">Learner ID</th>
+            <th className="px-4 py-3">Module</th>
             <th className="px-4 py-3">Scenario</th>
             <th className="px-4 py-3">Learning status</th>
             <th className="px-4 py-3">Progress</th>
@@ -68,12 +69,17 @@ export function LearnerTable({
             const teacherD = row.demoTeacherDecisionLabel ?? "—";
             const action = row.demoActionRequired ?? "—";
 
+            const modLabel = row.demoModuleTitle ?? row.demoModuleId ?? "—";
+
             return (
               <tr key={row.id} className="transition hover:bg-slate-50/80">
                 <td className="px-4 py-3 font-semibold text-slate-900">
                   <Link href={`/learners/${row.id}`} className="font-mono hover:underline">
                     {row.id}
                   </Link>
+                </td>
+                <td className="max-w-[140px] px-4 py-3 text-xs text-slate-700">
+                  {isDemo ? modLabel : "—"}
                 </td>
                 <td className="max-w-[200px] px-4 py-3 text-slate-700">{scenario}</td>
                 <td className="px-4 py-3 text-slate-700">{learning}</td>

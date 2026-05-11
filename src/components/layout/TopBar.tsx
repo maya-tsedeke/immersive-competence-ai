@@ -4,6 +4,7 @@ import { Bell } from "lucide-react";
 import { DateRangeSelector } from "@/components/dashboard/DateRangeSelector";
 import { ScenarioSelector } from "@/components/dashboard/ScenarioSelector";
 import { PrototypeBadge } from "@/components/layout/PrototypeBadge";
+import { RoleSwitch } from "@/components/layout/RoleSwitch";
 import { cn } from "@/lib/utils";
 
 export function TopBar({
@@ -23,6 +24,7 @@ export function TopBar({
       <div className="flex w-full flex-col gap-3 md:max-w-none md:flex-row md:flex-wrap md:items-end md:gap-3">
         <div className="flex shrink-0 flex-col gap-2 self-start sm:flex-row sm:items-center md:order-first">
           <PrototypeBadge className="shrink-0" usesGeneratedData={showMlBaselineBadge} />
+          <RoleSwitch />
           <span
             className="inline-flex shrink-0 items-center rounded-full border border-indigo-100 bg-indigo-50/90 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-indigo-800 shadow-sm"
             title={

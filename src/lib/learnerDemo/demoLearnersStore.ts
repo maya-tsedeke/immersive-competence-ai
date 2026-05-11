@@ -43,6 +43,8 @@ export type DemoLearnerRecord = {
   id: string;
   displayName: string;
   scenarioTitle: string;
+  /** Optional link to a learning module in browser storage (`/modules`). */
+  moduleId?: string;
   objective: string;
   startMode: DemoStartMode;
   createdAt: string;
@@ -181,6 +183,7 @@ export function createDemoLearner(input: {
   scenarioTitle: string;
   objective: string;
   startMode: DemoStartMode;
+  moduleId?: string;
 }): DemoLearnerRecord {
   const s = readStore();
   const id = input.id?.trim() || nextDemoLearnerId();
@@ -188,6 +191,7 @@ export function createDemoLearner(input: {
     id,
     displayName: input.displayName.trim() || "Anonymous",
     scenarioTitle: input.scenarioTitle.trim(),
+    moduleId: input.moduleId?.trim() || undefined,
     objective: input.objective.trim(),
     startMode: input.startMode,
     createdAt: new Date().toISOString(),

@@ -41,6 +41,9 @@ export interface Learner {
   demoAiConfidence?: number;
   demoTeacherDecisionLabel?: string;
   demoActionRequired?: string;
+  /** Browser demo: optional learning module id/title from /modules */
+  demoModuleId?: string;
+  demoModuleTitle?: string;
 }
 
 export interface TimelineEvent {

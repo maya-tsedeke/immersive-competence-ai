@@ -2,6 +2,7 @@ import type { Learner } from "@/lib/types";
 import type { TeacherDecisionStatus } from "@/lib/types";
 import { getDemoLearner, listDemoLearnerRecords, type DemoLearnerRecord } from "@/lib/learnerDemo/demoLearnersStore";
 import { getLearnerWorkflowState } from "@/lib/workflow/teacherWorkflowStorage";
+import { getModule } from "@/lib/modules/moduleStore";
 
 function teacherDecisionLabel(td?: TeacherDecisionStatus): string {
   if (!td) return "Not reviewed";
@@ -82,6 +83,22 @@ function demoRecordToLearner(record: DemoLearnerRecord): Learner {
   const demoTeacherDecisionLabel = teacherDecisionLabel(wf.teacherDecision?.status);
   const demoActionRequired = computeDemoActionRequired(record, wf);
 
+  let riskScore: number;
+  if (bundle) {
+    /** Align header "risk" with heuristic demo output: higher prototype confidence → lower numeric risk. */
+    riskScore = Math.min(0.95, Math.max(0.08, Math.round((1 - bundle.prototypeConfidence) * 100) / 100));
+  } else if (!submitted) {
+    riskScore = 0.25;
+  } else if (last?.skippedSteps) {
+    riskScore = 0.62;
+  } else if (last?.wrongActionChoice) {
+    riskScore = 0.55;
+  } else if (last?.shortJustification) {
+    riskScore = 0.48;
+  } else {
+    riskScore = 0.35;
+  }
+
   const base: Learner = {
     id: record.id,
     score: submitted ? score : Math.round(record.progressPct * 0.72),
@@ -91,7 +108,7 @@ function demoRecordToLearner(record: DemoLearnerRecord): Learner {
     displayStatus,
     completedAt: last?.submittedAt ? new Date(last.submittedAt).toLocaleDateString() : undefined,
     timeSpentMin: last ? Math.round((last.timeSpentSec / 60) * 10) / 10 : undefined,
-    riskScore: submitted ? 0.48 : 0.25,
+    riskScore,
     isLocalDemo: true,
     scenarioTitle: record.scenarioTitle,
     demoDisplayName: record.displayName,
@@ -103,6 +120,8 @@ function demoRecordToLearner(record: DemoLearnerRecord): Learner {
     demoAiConfidence,
     demoTeacherDecisionLabel,
     demoActionRequired,
+    demoModuleId: record.moduleId,
+    demoModuleTitle: record.moduleId ? getModule(record.moduleId)?.title : undefined,
   };
   return base;
 }

@@ -35,7 +35,13 @@ import {
 import { cn } from "@/lib/utils";
 import { DEMO_MOBILE_LEARNER_ID } from "@/lib/learnerDemo/constants";
 import type { LearnerDemoEvent } from "@/lib/learnerDemo/storage";
-import { appendDemoActivity, getActivePreviewLearnerId, setActivePreviewLearnerId } from "@/lib/learnerDemo/demoLearnersStore";
+import {
+  appendDemoActivity,
+  getActivePreviewLearnerId,
+  getDemoLearner,
+  setActivePreviewLearnerId,
+} from "@/lib/learnerDemo/demoLearnersStore";
+import { getModule } from "@/lib/modules/moduleStore";
 import { saveLearnerDemoSubmission } from "@/lib/learnerDemo/storage";
 import { analyzeAttemptFlags } from "@/lib/ai/demoScenarioAi";
 
@@ -197,7 +203,14 @@ function HotspotMarker({
       ) : (
         <HotspotIcon className="mb-0.5 h-4 w-4 shrink-0 sm:h-3.5 sm:w-3.5" aria-hidden />
       )}
-      <span className="max-w-[3.5rem] truncate text-center leading-none">{hs.label}</span>
+      <span
+        className={cn(
+          "pointer-events-none max-w-[5.25rem] whitespace-normal text-center leading-[1.1] sm:max-w-[6rem]",
+          variant === "hero" ? "text-[9px] sm:text-[10px]" : "text-[8px] sm:text-[9px]",
+        )}
+      >
+        {hs.label}
+      </span>
     </button>
   );
 }
@@ -249,22 +262,29 @@ function InteractionTracePanel({ log, dark }: { log: XRInteractionLogEntry[]; da
   );
 }
 
+const XR_DEMO_SCENARIO_FALLBACK = "workplace-safety-xr-v1";
+
 export function XRScenarioViewer({
   variant,
   className,
   guidedPreview = false,
   scenarioLearnerId,
+  scenarioModuleId,
 }: {
   variant: XRViewerVariant;
   className?: string;
   guidedPreview?: boolean;
   /** When set, evidence is stored under this learner id (demo store). */
   scenarioLearnerId?: string;
+  /** Optional module from `/modules`; also inferred from demo learner record when omitted. */
+  scenarioModuleId?: string;
 }) {
   const titleId = useId();
   const viewportRef = useRef<HTMLDivElement>(null);
   /** Fullscreen / CSS-expand target: toolbar + scene (not pathway), so controls stay usable. */
   const viewerSceneShellRef = useRef<HTMLDivElement>(null);
+  /** Card below the scene: choices, text fields, Start Scenario. */
+  const guidedTaskRef = useRef<HTMLDivElement>(null);
   const [panPx, setPanPx] = useState(0);
   const drag = useRef<{ active: boolean; startX: number; startPan: number }>({
     active: false,
@@ -308,6 +328,18 @@ export function XRScenarioViewer({
     if (scenarioLearnerId) setActivePreviewLearnerId(scenarioLearnerId);
   }, [scenarioLearnerId]);
 
+  const effectiveModuleId = useMemo(() => {
+    const fromProp = scenarioModuleId?.trim();
+    if (fromProp) return fromProp;
+    const lid = scenarioLearnerId ?? activeLid;
+    return getDemoLearner(lid)?.moduleId;
+  }, [scenarioModuleId, scenarioLearnerId, activeLid]);
+
+  const eventScenarioId = useMemo(() => {
+    if (!effectiveModuleId) return XR_DEMO_SCENARIO_FALLBACK;
+    return getModule(effectiveModuleId)?.scenarioType ?? XR_DEMO_SCENARIO_FALLBACK;
+  }, [effectiveModuleId]);
+
   useEffect(() => {
     const onFs = () => {
       if (typeof document !== "undefined" && !document.fullscreenElement) {
@@ -333,10 +365,18 @@ export function XRScenarioViewer({
     setLog((prev) => [...prev.slice(-50), newLogEntry(entry)]);
   }, []);
 
-  const pushDemoEvent = useCallback((partial: Omit<LearnerDemoEvent, "at">) => {
-    const row: LearnerDemoEvent = { ...partial, at: new Date().toISOString() };
-    setDemoEvents((prev) => [...prev, row]);
-  }, []);
+  const pushDemoEvent = useCallback(
+    (partial: Omit<LearnerDemoEvent, "at">) => {
+      const row: LearnerDemoEvent = {
+        ...partial,
+        at: new Date().toISOString(),
+        scenarioId: partial.scenarioId ?? eventScenarioId,
+        ...(effectiveModuleId ? { moduleId: effectiveModuleId } : {}),
+      };
+      setDemoEvents((prev) => [...prev, row]);
+    },
+    [effectiveModuleId, eventScenarioId],
+  );
 
   const startGuidedScenario = useCallback(() => {
     setGuidedScenarioStarted(true);
@@ -675,7 +715,8 @@ export function XRScenarioViewer({
   };
 
   const isHero = variant === "hero";
-  const isDarkChrome = variant === "mobile" || variant === "desktop";
+  /** Dark chrome is for the pocket-sized learner demo only; desktop/embed uses light UI (e.g. scenario analytics). */
+  const isDarkChrome = variant === "mobile";
   const webxrOnly = Boolean(guidedPreview && variant === "mobile" && previewTab === "webxr");
   const teacherPanel = Boolean(guidedPreview && variant === "mobile" && previewTab === "teacher");
   const mobileGuidedLearner =
@@ -703,7 +744,7 @@ export function XRScenarioViewer({
       ? "min-h-[220px] sm:min-h-[260px]"
       : variant === "desktop"
         ? "min-h-[340px] lg:min-h-[420px]"
-        : "min-h-[48vh] sm:min-h-[52vh]";
+        : "min-h-[48vh] sm:min-h-[52vh] lg:min-h-[min(520px,58vh)] xl:min-h-[min(580px,62vh)]";
 
   const useMobileHotspotCoords = variant !== "desktop";
 
@@ -793,13 +834,62 @@ export function XRScenarioViewer({
                     ? "Summarize what you learned; teacher review interprets this evidence in context."
                     : "Continue the learning pathway."}
         </p>
-        <button
-          type="button"
-          className="mt-3 w-full min-h-[44px] rounded-xl bg-indigo-600 py-2.5 text-sm font-semibold text-white hover:bg-indigo-500"
-          onClick={() => setSelectedId(null)}
-        >
-          Close
-        </button>
+        {guidedMobile && variant === "mobile" ? (
+          <div className="mt-3 space-y-2 rounded-lg border border-sky-500/45 bg-sky-950/55 p-3 text-[11px] leading-snug text-sky-100">
+            {!guidedScenarioStarted ? (
+              <p>
+                <strong className="text-white">Next:</strong> Close this, then tap{" "}
+                <strong className="text-white">Start Scenario</strong> in the card <strong>under the picture</strong>.
+              </p>
+            ) : (
+              <>
+                <p>
+                  <strong className="text-white">This popup is only a short tip.</strong> Your multiple-choice answers
+                  and text boxes (including <strong className="text-white">Why?</strong> ) are in the{" "}
+                  <strong className="text-white">activity card below the warehouse</strong> — scroll down after you
+                  close this.
+                </p>
+                {selectedHotspot.id === "justify" && guidedStep === 3 && !justifyTapped ? (
+                  <p className="text-amber-100/95">
+                    You have not unlocked the text box yet. Tap <strong className="text-white">Unlock & scroll</strong>{" "}
+                    or tap <strong className="text-white">Why?</strong> on the scene again, then scroll down.
+                  </p>
+                ) : null}
+              </>
+            )}
+            <button
+              type="button"
+              className="w-full min-h-[44px] rounded-xl bg-sky-600 text-xs font-bold text-white hover:bg-sky-500"
+              onClick={() => {
+                if (selectedHotspot.id === "justify" && guidedStep === 3) setJustifyTapped(true);
+                if (selectedHotspot.id === "reflection" && guidedStep === 4) setReflectTapped(true);
+                setSelectedId(null);
+                window.requestAnimationFrame(() =>
+                  guidedTaskRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }),
+                );
+              }}
+            >
+              {guidedScenarioStarted ? "Close & scroll to activity below" : "Close & scroll to Start Scenario"}
+            </button>
+          </div>
+        ) : null}
+        {!(guidedMobile && variant === "mobile") ? (
+          <button
+            type="button"
+            className="mt-3 w-full min-h-[44px] rounded-xl bg-indigo-600 py-2.5 text-sm font-semibold text-white hover:bg-indigo-500"
+            onClick={() => setSelectedId(null)}
+          >
+            Close
+          </button>
+        ) : (
+          <button
+            type="button"
+            className="mt-3 w-full min-h-[44px] rounded-xl border border-white/25 bg-white/10 py-2.5 text-sm font-semibold text-white hover:bg-white/15"
+            onClick={() => setSelectedId(null)}
+          >
+            Close only (no scroll)
+          </button>
+        )}
       </div>
     ) : null;
 
@@ -873,7 +963,7 @@ export function XRScenarioViewer({
 
   const guidedLearnerTask =
     guidedMobile && !webxrOnly && !isHero ? (
-      <div className="mt-4 space-y-3">
+      <div ref={guidedTaskRef} className="mt-4 space-y-3 scroll-mt-4">
         {orderWarning ? (
           <div className="rounded-xl border border-amber-400/50 bg-amber-950/60 px-3 py-3 text-sm text-amber-50 shadow-md">
             {orderWarning}
@@ -1387,7 +1477,7 @@ export function XRScenarioViewer({
     <div
       className={cn(
         "relative overflow-hidden rounded-2xl ring-1",
-        isHero ? "ring-slate-200" : "ring-white/10",
+        isHero || variant === "desktop" ? "ring-slate-200" : "ring-white/10",
         immersiveUi && variant === "mobile" && "rounded-none ring-0 sm:rounded-2xl",
         cssFullscreen &&
           variant === "mobile" &&
@@ -1434,13 +1524,20 @@ export function XRScenarioViewer({
       <div
         className={cn(
           "flex flex-col gap-2 border-t px-3 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-4",
-          isHero ? "border-slate-200 bg-slate-50" : "border-white/10 bg-slate-950/90",
+          isHero || variant === "desktop"
+            ? "border-slate-200 bg-slate-50"
+            : "border-white/10 bg-slate-950/90",
         )}
       >
-        <p className={cn("text-[10px] font-bold uppercase tracking-wide", isHero ? "text-slate-500" : "text-sky-200/90")}>
+        <p
+          className={cn(
+            "text-[10px] font-bold uppercase tracking-wide",
+            isHero || variant === "desktop" ? "text-slate-500" : "text-sky-200/90",
+          )}
+        >
           Learner pathway
         </p>
-        <PathwayChips currentIndex={pathwayIndex} theme={isHero ? "light" : "dark"} />
+        <PathwayChips currentIndex={pathwayIndex} theme={isHero || variant === "desktop" ? "light" : "dark"} />
       </div>
     </div>
   );
@@ -1556,7 +1653,8 @@ export function XRScenarioViewer({
     <div
       className={cn(
         variant === "hero" && "rounded-3xl border border-slate-200/90 bg-white p-4 shadow-2xl ring-1 ring-slate-100 sm:p-5",
-        variant === "mobile" && "w-full max-w-lg mx-auto px-2 pb-28 pt-2 text-white md:px-3",
+        variant === "mobile" &&
+          "w-full max-w-lg lg:max-w-4xl xl:max-w-5xl mx-auto px-2 pb-28 pt-2 text-white md:px-3 lg:px-4 lg:pb-8",
         variant === "desktop" && "text-slate-900",
         className,
       )}
@@ -1586,7 +1684,7 @@ export function XRScenarioViewer({
 
       {variant === "mobile" ? (
         <nav
-          className="fixed bottom-0 left-0 right-0 z-50 flex items-stretch justify-around border-t border-white/10 bg-[#0b1220]/95 py-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] backdrop-blur-md"
+          className="fixed bottom-0 left-0 right-0 z-50 flex items-stretch justify-around border-t border-white/10 bg-[#0b1220]/95 py-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] backdrop-blur-md lg:hidden"
           aria-label="Learner navigation"
         >
           <Link href="/" className="flex min-h-[52px] min-w-[64px] flex-col items-center justify-center gap-0.5 text-[10px] font-semibold text-slate-300 hover:text-white">

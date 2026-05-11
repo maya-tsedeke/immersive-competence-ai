@@ -12,6 +12,13 @@ export function PreviewScenarioWithQuery() {
     const t = raw?.trim();
     return t || undefined;
   }, [searchParams]);
+  const moduleId = useMemo(() => {
+    const raw = searchParams.get("module");
+    const t = raw?.trim();
+    return t || undefined;
+  }, [searchParams]);
 
-  return <XRScenarioViewer variant="mobile" guidedPreview scenarioLearnerId={learnerId} />;
+  return (
+    <XRScenarioViewer variant="mobile" guidedPreview scenarioLearnerId={learnerId} scenarioModuleId={moduleId} />
+  );
 }

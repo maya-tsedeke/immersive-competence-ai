@@ -87,20 +87,22 @@ export default async function LearnerDetailPage({
       ? { learnerId: learner.id, events: log.events }
       : null;
 
+  const aiDisclaimer = (
+    <div className="rounded-2xl border border-indigo-100 bg-indigo-50/80 p-4 text-sm leading-relaxed text-indigo-950 shadow-sm">
+      <strong>AI-assisted insight, not final assessment.</strong> Signals combine public-dataset baselines and heuristic
+      dialogue labels. The teacher remains responsible for interpretation; this is not validated on live ThingLink
+      telemetry.
+    </div>
+  );
+
   return (
-    <div className="mx-auto max-w-5xl space-y-6">
+    <div className="mx-auto max-w-5xl space-y-6 px-3 pb-6 sm:px-4 lg:max-w-6xl xl:max-w-7xl xl:px-6">
       <Link
         href="/learners"
         className="inline-flex min-h-[44px] items-center text-sm font-semibold text-indigo-600 hover:underline"
       >
         ← Back to learners
       </Link>
-
-      <div className="rounded-2xl border border-indigo-100 bg-indigo-50/80 p-4 text-sm leading-relaxed text-indigo-950 shadow-sm">
-        <strong>AI-assisted insight, not final assessment.</strong> Signals combine public-dataset baselines and heuristic
-        dialogue labels. The teacher remains responsible for interpretation; this is not validated on live ThingLink
-        telemetry.
-      </div>
 
       <LearnerDetailClientSection
         id={id}
@@ -111,6 +113,7 @@ export default async function LearnerDetailPage({
         log={interactionLog}
         usingGeneratedJson={gen}
         teacherSuggestionFallback={teacherAiSuggestion}
+        afterHeader={aiDisclaimer}
       />
 
       {risk ? (
@@ -151,7 +154,7 @@ export default async function LearnerDetailPage({
       <div className="grid gap-4 lg:grid-cols-2">
         <InteractionTimeline events={log?.events ?? []} />
         <div className="space-y-4">
-          <AIReasoningSummaryCard body={aiBody} />
+          <AIReasoningSummaryCard learnerId={learner.id} body={aiBody} />
           <MisconceptionCard text={misconception} />
           <TeacherRecommendationCard
             items={

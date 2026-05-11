@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { demoAlert } from "@/lib/utils";
 import { ReportPreviewCard } from "@/components/reports/ReportPreviewCard";
+import { ResearchDemoExportPanel } from "@/components/research/ResearchDemoExportPanel";
 import { ProvenanceBadge } from "@/components/ai/ProvenanceBadge";
 import { DEMO_LEARNERS_CHANGE_EVENT, listDemoLearnerRecords } from "@/lib/learnerDemo/demoLearnersStore";
 import { WORKFLOW_CHANGE_EVENT, getLearnerWorkflowState } from "@/lib/workflow/teacherWorkflowStorage";
@@ -233,6 +234,8 @@ export function ReportsClient({
           Share
         </button>
       </div>
+
+      <ResearchDemoExportPanel />
     </div>
   );
 }

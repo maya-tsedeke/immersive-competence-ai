@@ -4,6 +4,7 @@ import {
   BarChart3,
   Brain,
   Clock,
+  Layers,
   MessageCircle,
   Smartphone,
   Sparkles,
@@ -14,7 +15,6 @@ import { CompetenceTrendChart } from "@/components/dashboard/CompetenceTrendChar
 import { InsightCard } from "@/components/dashboard/InsightCard";
 import { KPIStatCard } from "@/components/dashboard/KPIStatCard";
 import { ModelInfoCard } from "@/components/dashboard/ModelInfoCard";
-import { MobileScenarioPreview } from "@/components/dashboard/MobileScenarioPreview";
 import { QuickActionCard } from "@/components/dashboard/QuickActionCard";
 import { RiskDistributionChart } from "@/components/dashboard/RiskDistributionChart";
 import { TeacherActionQueue } from "@/components/dashboard/TeacherActionQueue";
@@ -94,8 +94,8 @@ function WorkflowHelpPanel() {
     <div className="rounded-2xl border border-slate-200 bg-slate-50 p-5">
       <p className="text-sm font-semibold text-slate-900">How to get AI results in this demo</p>
       <ol className="mt-3 list-decimal space-y-1.5 pl-5 text-sm text-slate-600">
-        <li>Open Mobile Learner Scenario.</li>
-        <li>Tap the Hazard hotspot.</li>
+        <li>Open Learner Scenario (layout adapts to screen size).</li>
+        <li>Tap or click the Hazard hotspot.</li>
         <li>Choose the safest action.</li>
         <li>Write a short justification and reflection.</li>
         <li>Submit for teacher review.</li>
@@ -222,8 +222,7 @@ export default function DashboardPage() {
 
       <AiObjectiveCard />
 
-      <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_320px] lg:items-start lg:gap-6">
-        <div className="space-y-6">
+      <div className="space-y-6">
           <div className="grid min-w-0 gap-4 md:grid-cols-2 xl:grid-cols-4">
             <KPIStatCard
               title="Average competence score"
@@ -359,10 +358,16 @@ export default function DashboardPage() {
             />
             <div className="grid grid-cols-2 gap-3">
               <QuickActionCard
-                title="AI Workflow"
-                description="Step-by-step from learner task to teacher review."
-                href="/ai-workflow"
-                icon={Brain}
+                title="Learning modules"
+                description="Create modules, synthetic cohort previews, link to scenarios."
+                href="/modules"
+                icon={Layers}
+              />
+              <QuickActionCard
+                title="Datasets"
+                description="Public dataset explorer and ThingLink-style mapping."
+                href="/datasets"
+                icon={BarChart3}
               />
               <QuickActionCard
                 title="Learner insights"
@@ -389,8 +394,8 @@ export default function DashboardPage() {
                 icon={Sparkles}
               />
               <QuickActionCard
-                title="Mobile learner scenario"
-                description="Generate local demo evidence for analysis."
+                title="Learner scenario"
+                description="360° practice flow — wide layout on desktop, touch-first on phones."
                 href="/preview"
                 icon={Smartphone}
               />
@@ -402,14 +407,6 @@ export default function DashboardPage() {
               />
             </div>
           </div>
-        </div>
-
-        <aside className="hidden lg:block">
-          <div className="sticky top-24 space-y-3">
-            <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted)]">Mobile learner preview</p>
-            <MobileScenarioPreview embedded />
-          </div>
-        </aside>
       </div>
     </div>
   );
