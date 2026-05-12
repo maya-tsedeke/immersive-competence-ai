@@ -179,6 +179,69 @@ export type DataProvenanceKind =
   | "heuristic_label"
   | "teacher_reviewed";
 
+export type ThingLinkPathStep = "Observe" | "Decide" | "Justify" | "Reflect" | "Review";
+
+export type ThingLinkPilotEventType =
+  | "session_start"
+  | "hotspot_click"
+  | "path_step"
+  | "branch_choice"
+  | "quiz_response"
+  | "reflection_submit"
+  | "teacher_label"
+  | "session_end";
+
+/** Anonymised ThingLink-style pilot event for future validation. No direct identifiers. */
+export interface ThingLinkPilotEvent {
+  sessionId: string;
+  learnerPseudonym: string;
+  scenarioId: string;
+  eventType: ThingLinkPilotEventType;
+  timestamp: string;
+  pathStep?: ThingLinkPathStep;
+  hotspotId?: string;
+  branchChoice?: string;
+  quizResponse?: string;
+  reflectionText?: string;
+  teacherLabel?: "feedbackNeeded" | "onTrack" | "strongEvidence" | string;
+  dwellMs?: number;
+  deviceMode?: "desktop" | "mobile" | "tablet" | "vr" | "immersive-room" | string;
+  xapiVerb?: string;
+  ltiContextId?: string;
+}
+
+export interface ThingLinkPilotImportSummary {
+  importedAt: string;
+  source: "thinglink_pilot_export" | "demo_template" | "manual_json";
+  acceptedEvents: number;
+  rejectedEvents: number;
+  errors: string[];
+}
+
+export interface LearningEnvironmentModelTarget {
+  id:
+    | "feedbackNeeded"
+    | "engagementPattern"
+    | "reflectionQuality"
+    | "reasoningDepth"
+    | "competenceEvidenceLevel"
+    | "suggestedTeacherAction";
+  label: string;
+  description: string;
+  evidenceInputs: string[];
+}
+
+export interface ModelEvaluationSummary {
+  dataSource: "public_baseline" | "thinglink_pilot" | "not_available";
+  sampleSize: number;
+  mode: "baseline" | "small_data_rule_based" | "trained_pilot_model";
+  macroF1?: number;
+  feedbackNeededRecall?: number;
+  calibrationBrier?: number;
+  teacherAgreement?: number;
+  limitation: string;
+}
+
 export interface AiAnalysisBundle {
   learnerId: string;
   riskIndicator: LearnerStatus;

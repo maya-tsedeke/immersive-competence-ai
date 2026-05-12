@@ -60,6 +60,7 @@ From the **repository root** (or run with `cwd=ml/`; scripts resolve paths from 
 |---------|---------|
 | `python ml/run_pipeline.py --inspect-only` | Path checklist + **raw** dataset inspection (ZIPs, extracts). Does not train. |
 | `python ml/run_pipeline.py --report-only` | Build `ml/reports/` (markdown, **PNG+PDF** figures at 300 DPI, CSV tables) from **existing** processed CSVs and outputs. |
+| `python ml/run_pipeline.py --pilot-only` | Evaluate anonymised ThingLink-style learning-environment events from `ml/data/raw/thinglink_pilot_events.json`; writes pilot metrics, predictions, feature table, and model card. |
 | `python ml/run_pipeline.py --full` | Same as default: extract → preprocess → train → dashboard JSON → evaluate → **report-only**. |
 | `python ml/run_pipeline.py` | Default = full pipeline (equivalent to `--full`). |
 
@@ -89,6 +90,7 @@ python src/evaluate_models.py
 | `train_dialogue_models.py` | `outputs/dialogue_model_metrics.json`, `outputs/dialogue_predictions.json`, dialogue `models/*.joblib` |
 | `generate_dashboard_outputs.py` | **Dashboard JSON** in `../src/lib/generated/` (capped cohort, default ~80 learners) |
 | `evaluate_models.py` | `outputs/evaluation_summary.json` |
+| `evaluate_pilot_events.py` | `outputs/pilot_feature_table.csv`, `outputs/pilot_model_metrics.json`, `outputs/pilot_predictions.json`, `outputs/pilot_model_card.md` when anonymised pilot events exist |
 
 **Full-size** risk predictions remain in `ml/outputs/learner_risk_predictions.json`. **`src/lib/generated/learnerRiskPredictions.json`** stays **small** for a fast Next.js bundle.
 
@@ -109,6 +111,9 @@ python ml/run_pipeline.py
 - **Dialogue labels:** **heuristic**; metrics are **not** claims about production dialogue understanding.
 - **Not ThingLink data** — real validation needs an **anonymised ThingLink export**.
 - **No paid APIs** and **no hidden network calls** in this pipeline.
+- **Pilot event path:** the optional pilot evaluator targets feedback need, engagement pattern, reflection quality,
+  reasoning depth, competence evidence level, and suggested teacher action from anonymised ThingLink-style events. It
+  reports small-data rule mode until there are enough teacher-labelled sessions for model claims.
 
 This is a **research prototype**, not a final validated AI assessment system. Use **AI-assisted insight**, **risk indicator**, and **suggested teacher action** language in the UI — avoid “diagnosis”, “guaranteed assessment”, or “final judgement”.
 

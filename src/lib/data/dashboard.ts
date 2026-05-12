@@ -23,7 +23,7 @@ export const engagementDistribution: EngagementSlice[] = [
 ];
 
 export const hotspotCompletion = [
-  { id: "h1", label: "Identify hazard", percent: 92 },
+  { id: "h1", label: "Observe evidence", percent: 92 },
   { id: "h2", label: "Choose action", percent: 68 },
   { id: "h3", label: "Explain decision", percent: 62 },
   { id: "h4", label: "Reflect", percent: 55 },

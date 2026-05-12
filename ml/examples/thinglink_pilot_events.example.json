@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "note": "Example anonymised ThingLink-style pilot events. Do not include names, emails, student numbers, patient data, or direct identifiers.",
+  "events": [
+    {
+      "sessionId": "sess-demo-001",
+      "learnerPseudonym": "learner-001",
+      "scenarioId": "learning-environment-demo",
+      "eventType": "session_start",
+      "timestamp": "2026-05-12T08:00:00.000Z",
+      "pathStep": "Observe",
+      "deviceMode": "mobile"
+    },
+    {
+      "sessionId": "sess-demo-001",
+      "learnerPseudonym": "learner-001",
+      "scenarioId": "learning-environment-demo",
+      "eventType": "hotspot_click",
+      "timestamp": "2026-05-12T08:00:20.000Z",
+      "pathStep": "Observe",
+      "hotspotId": "observe-evidence",
+      "dwellMs": 12000
+    },
+    {
+      "sessionId": "sess-demo-001",
+      "learnerPseudonym": "learner-001",
+      "scenarioId": "learning-environment-demo",
+      "eventType": "branch_choice",
+      "timestamp": "2026-05-12T08:01:10.000Z",
+      "pathStep": "Decide",
+      "branchChoice": "evidence-supported-action"
+    },
+    {
+      "sessionId": "sess-demo-001",
+      "learnerPseudonym": "learner-001",
+      "scenarioId": "learning-environment-demo",
+      "eventType": "reflection_submit",
+      "timestamp": "2026-05-12T08:02:30.000Z",
+      "pathStep": "Reflect",
+      "reflectionText": "I compared the scene evidence, selected the action that matched the objective, and explained why.",
+      "teacherLabel": "onTrack"
+    }
+  ]
+}

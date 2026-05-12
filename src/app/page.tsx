@@ -21,7 +21,7 @@ import { usingGeneratedData } from "@/lib/dataset";
 const pipelineSteps = [
   { title: "Public datasets", detail: "OULAD-style traces & open dialogue corpora" },
   { title: "Preprocessing", detail: "Alignment, featurisation, demo learner mapping" },
-  { title: "Baseline ML models", detail: "Risk & quality proxies — not live telemetry" },
+  { title: "Baseline ML models", detail: "Feedback need, reflection, and reasoning proxies - not live telemetry" },
   { title: "AI insights", detail: "Explainable narratives & heuristic dialogue layers" },
   { title: "Dashboard JSON", detail: "Teacher-ready bundles for this prototype" },
   { title: "Future ThingLink validation", detail: "Anonymised exports & governance review" },
@@ -45,7 +45,7 @@ const whyItems = [
   },
   {
     icon: GitBranch,
-    title: "Future ThingLink scenario data integration",
+    title: "Future ThingLink learning data integration",
     body: "A clear mapping from public baselines toward hotspot-rich, immersive telemetry when available.",
   },
 ];

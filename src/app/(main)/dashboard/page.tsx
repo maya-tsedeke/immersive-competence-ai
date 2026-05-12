@@ -60,9 +60,9 @@ function AiObjectiveCard() {
       <p className="text-sm font-semibold text-slate-900">AI objective (public dataset prototype)</p>
       <p className="mt-2 text-sm leading-relaxed text-slate-700">
         The AI objective is to transform learner interaction traces and reflection responses into teacher-facing
-        competence indicators. The prototype surfaces learner-risk signals, reflection quality, reasoning depth, a
-        possible learning difficulty signal, and a suggested teacher action. The teacher remains responsible for
-        interpretation.
+        competence indicators. The prototype surfaces feedback need, engagement pattern, reflection quality, reasoning
+        depth, competence evidence level, and a suggested teacher action. The teacher remains responsible for
+        interpretation and override.
       </p>
       <div className="mt-4 grid gap-3 text-sm text-slate-700 sm:grid-cols-2">
         <div className="rounded-xl bg-white/80 p-3 ring-1 ring-indigo-100">
@@ -72,16 +72,16 @@ function AiObjectiveCard() {
             <li>Pathway steps</li>
             <li>Response selection</li>
             <li>Written reflection</li>
-            <li>Public-dataset risk features</li>
+            <li>Public-dataset baseline features</li>
           </ul>
         </div>
         <div className="rounded-xl bg-white/80 p-3 ring-1 ring-indigo-100">
           <p className="text-[10px] font-bold uppercase text-indigo-800">Outputs</p>
           <ul className="mt-2 list-disc space-y-1 pl-4 text-xs leading-relaxed">
-            <li>Risk indicator</li>
+            <li>Feedback need</li>
             <li>Reflection quality</li>
             <li>Reasoning depth</li>
-            <li>Learning difficulty signal</li>
+            <li>Competence evidence level</li>
             <li>Suggested teacher action</li>
           </ul>
         </div>
@@ -96,8 +96,8 @@ function WorkflowHelpPanel() {
       <p className="text-sm font-semibold text-slate-900">How to get AI results in this demo</p>
       <ol className="mt-3 list-decimal space-y-1.5 pl-5 text-sm text-slate-600">
         <li>Open Learner 360° demo (<code className="rounded bg-slate-200 px-1">/preview</code>).</li>
-        <li>Tap the Hazard hotspot.</li>
-        <li>Choose the safest action.</li>
+        <li>Tap the Observe Evidence hotspot.</li>
+        <li>Choose the best supported action.</li>
         <li>Write a short justification and reflection.</li>
         <li>Submit for teacher review.</li>
         <li>Open AI Workflow or Learner Detail.</li>
@@ -154,7 +154,7 @@ export default function DashboardPage() {
     confidenceLine?: string;
   }> = [
     {
-      title: "Learner risk indicators",
+      title: "Feedback-need indicators",
       body: `Cohort indicators: ~${preds.atRisk || kpi.learnersAtRiskCount} at-risk style signals in prediction file vs. ${kpi.learnersAtRiskCount} flagged on this dashboard slice.`,
       badge: getDataProvenance("kpi_risk", { usingGeneratedJson: gen, isHeuristic: false }),
       href: "/learners",
@@ -179,7 +179,7 @@ export default function DashboardPage() {
     },
     {
       title: "Learning difficulty signal",
-      body: "Possible difficulty justifying why an action reduces risk — from dialogue heuristics + reflection text in demo.",
+      body: "Possible difficulty linking evidence, decision, and justification - from dialogue heuristics + reflection text in demo.",
       badge: "heuristic_label",
       href: "/ai-workflow",
       confidenceLine: exampleConfidence != null ? `Row confidence (example): ${exampleConfidence}` : undefined,
@@ -239,9 +239,9 @@ export default function DashboardPage() {
               <MiniScoreRing value={kpi.avgScorePct} />
             </KPIStatCard>
             <KPIStatCard
-              title="Learners flagged for review"
+              title="Learners needing review"
               value={String(kpi.learnersAtRiskCount)}
-              subtitle="AI-assisted risk indicator, not final assessment."
+              subtitle="AI-assisted feedback-need indicator, not final assessment."
               hint={
                 (gen && preds.total > 0 ? "Top-risk generated sample · " : "") + riskHintFullCohort
               }

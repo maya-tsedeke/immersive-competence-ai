@@ -12,7 +12,7 @@ import { cn } from "@/lib/utils";
 
 const scenarios = [
   { id: "default", label: "Immersive cohort (JSON / mock)" },
-  { id: "safety", label: "Workplace safety simulation (UX demo)" },
+  { id: "learning-environment", label: "Learning environment demo (UX prototype)" },
 ];
 
 export function ScenarioAnalyticsWorkspace({

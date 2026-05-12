@@ -92,6 +92,12 @@ export default async function LearnerDetailPage({
       <strong>AI-assisted insight, not final assessment.</strong> Signals combine public-dataset baselines and heuristic
       dialogue labels. The teacher remains responsible for interpretation; this is not validated on live ThingLink
       telemetry.
+      <span className="mt-2 block text-xs text-indigo-900/90">
+        <strong>Two layers:</strong> cohort learners (e.g. <code className="rounded bg-indigo-100/80 px-1">L-…</code>)
+        may show narrative text from the research JSON (OULAD-linked excerpts). The panoramic warehouse scenario is a
+        separate interactive surface for local demo learners; suggested actions should be read in the learner&apos;s
+        actual context.
+      </span>
     </div>
   );
 
@@ -156,6 +162,11 @@ export default async function LearnerDetailPage({
         <div className="space-y-4">
           <AIReasoningSummaryCard learnerId={learner.id} body={aiBody} />
           <MisconceptionCard text={misconception} />
+          <p className="text-xs leading-relaxed text-slate-600">
+            Recommended actions below combine model output with dialogue excerpts when present. For learners who only
+            used the immersive demo, prioritise their justification, reflection, and hotspot sequence over generic
+            dataset wording.
+          </p>
           <TeacherRecommendationCard
             items={
               uniqueActions.length

@@ -4,13 +4,13 @@ export const classAiInsights: ClassAiInsight[] = [
   {
     id: "1",
     title: "Class-level insight",
-    body: "Learners are confident in identifying hazards but weaker in explaining why specific actions are correct.",
+    body: "Learners often complete observation steps but need stronger evidence-based justification after decisions.",
     confidence: "High",
   },
   {
     id: "2",
-    title: "Common misconception",
-    body: "Many learners treat noticing a hazard as equivalent to solving it.",
+    title: "Common learning pattern",
+    body: "Many learners treat noticing evidence as equivalent to explaining what the evidence means.",
     confidence: "Medium",
   },
   {
@@ -22,7 +22,7 @@ export const classAiInsights: ClassAiInsight[] = [
   {
     id: "4",
     title: "Suggested next activity",
-    body: "Ask learners to compare two possible safety actions and justify which is better.",
+    body: "Ask learners to compare two possible actions and justify which is better supported by evidence.",
     confidence: "Medium",
   },
 ];

@@ -33,6 +33,15 @@ function riskToIndicator(learner: Learner, risk?: LearnerRiskPrediction | null):
   return learner.displayStatus ?? learner.status;
 }
 
+function learningEnvironmentSuggestion(text?: string | null): string {
+  const v = text?.trim();
+  if (!v) return "";
+  return v
+    .replace(/why the selected action reduces risk/gi, "why the selected action fits the observed evidence")
+    .replace(/risk reduction/gi, "evidence-based decision making")
+    .replace(/safe actions/gi, "well-supported actions");
+}
+
 export function buildAiAnalysisBundle(input: {
   learner: Learner;
   dialogue?: DialogueInsight | null;
@@ -69,12 +78,12 @@ export function buildAiAnalysisBundle(input: {
 
   const difficulty =
     dialogue?.misconception?.trim() ||
-    "The learner identified the hazard, but the justification does not clearly explain why the chosen action reduces risk.";
+    "The learner opened evidence, but the justification does not clearly explain why the chosen action fits that evidence.";
 
   const suggested =
-    dialogue?.teacherFeedbackSuggestion?.trim() ||
-    risk?.teacherRecommendation?.trim() ||
-    "Ask the learner to compare two possible safety actions and explain which one reduces risk more effectively.";
+    learningEnvironmentSuggestion(dialogue?.teacherFeedbackSuggestion) ||
+    learningEnvironmentSuggestion(risk?.teacherRecommendation) ||
+    "Ask the learner to compare two possible actions and explain which one is better supported by the evidence.";
 
   const confidence =
     dialogue?.confidence != null

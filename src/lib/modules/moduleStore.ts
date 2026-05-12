@@ -124,15 +124,15 @@ function seedTemplatesIfEmpty(s: ModuleStoreV1): ModuleStoreV1 {
   if (s.modules.length > 0) return s;
   const now = new Date().toISOString();
   const tpl = createLearningModuleInternal({
-    title: "Workplace Safety (template)",
-    scenarioType: "workplace_safety",
-    learningObjective: "Observe hazards, decide safe action, justify and reflect.",
-    competenceCriteria: "Observation, decision, justification quality, reflection.",
+    title: "Learning Environment Demo (template)",
+    scenarioType: "classroom_simulation",
+    learningObjective: "Observe evidence, decide, justify the choice, and reflect.",
+    competenceCriteria: "Observation, decision-making, justification quality, reflection.",
     datasetTemplate: "OULAD engagement + dialogue reflection pairing",
     datasetProfile: "combined",
     simulatedLearnerCount: 12,
     now,
-    fixedId: "tpl-workplace-safety",
+    fixedId: "tpl-learning-environment",
   });
   s.modules = [tpl];
   write(s);

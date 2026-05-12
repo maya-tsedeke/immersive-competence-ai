@@ -1,6 +1,6 @@
 # Immersive Competence AI
 
-Polished **Next.js** research prototype for **UEF + ThingLink-style** AI-assisted competence analytics in mobile immersive scenarios. The UI demonstrates how learner interactions, reflections, and rubric-aligned evidence can surface as explainable insights for teachers and researchers. Data defaults to built-in mocks; optional **generated JSON** from the **`ml/`** pipeline (OULAD + Education Dialogue Dataset) replaces key dashboard views when present **(no backend, no login, no ThingLink API)**.
+Polished **Next.js** research prototype for **UEF + ThingLink-style** AI-assisted competence analytics in immersive learning environments. The UI demonstrates how learner interactions, reflections, and rubric-aligned evidence can surface as explainable insights for teachers and researchers. Data defaults to built-in mocks; optional **generated JSON** from the **`ml/`** pipeline (OULAD + Education Dialogue Dataset) replaces key dashboard views when present **(no backend, no login, no live ThingLink API)**.
 
 ## ML pipeline (optional, local)
 
@@ -138,3 +138,12 @@ See [`.env.example`](.env.example) for variable names.
 - **Export Report**, **Generate Feedback Draft**, **PDF**, **CSV**, and **Share** trigger **demo `alert()` placeholders** â€” no files are generated.
 
 Built for research demonstration between UEF and partners such as ThingLink. Adapt copy and data modules freely for academic presentations.
+
+## ThingLink-style pilot events
+
+The app now includes an optional anonymised pilot-event path for learning-environment validation:
+
+- Use `/research` to download the pilot schema, import anonymised ThingLink-style event JSON, and export the full research demo bundle.
+- The pilot schema targets `sessionId`, `learnerPseudonym`, `scenarioId`, `eventType`, `timestamp`, `pathStep`, `hotspotId`, `branchChoice`, `quizResponse`, `reflectionText`, and `teacherLabel`.
+- The ML side can evaluate pilot events with `python ml/run_pipeline.py --pilot-only` after placing events at `ml/data/raw/thinglink_pilot_events.json`.
+- The scientific targets are feedback need, engagement pattern, reflection quality, reasoning depth, competence evidence level, and suggested teacher action.

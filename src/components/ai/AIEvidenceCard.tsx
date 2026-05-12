@@ -24,10 +24,10 @@ export function AIEvidenceCard({
         <section>
           <p className="text-xs font-bold uppercase tracking-wide text-[var(--muted)]">Source (prototype)</p>
           <ul className="mt-2 list-disc space-y-1 pl-5">
-            <li>OULAD learner-risk baseline → risk indicator</li>
-            <li>Education Dialogue heuristic model → reflection / reasoning / difficulty text</li>
+            <li>OULAD learning-analytics baseline - feedback-need indicator</li>
+            <li>Education Dialogue heuristic model - reflection / reasoning / difficulty text</li>
             <li>Generated dashboard JSON when present</li>
-            <li>Learner scenario interaction trace (demo or interactionLogs.json)</li>
+            <li>Learner scenario interaction trace or ThingLink-style pilot events</li>
           </ul>
         </section>
 
@@ -52,7 +52,7 @@ export function AIEvidenceCard({
           <p className="text-xs font-bold uppercase tracking-wide text-[var(--muted)]">Outputs (AI-assisted insight)</p>
           <dl className="mt-2 grid gap-2 sm:grid-cols-2">
             <div className="rounded-lg bg-indigo-50/80 px-3 py-2">
-              <dt className="text-[10px] font-bold uppercase text-indigo-800">Risk indicator</dt>
+              <dt className="text-[10px] font-bold uppercase text-indigo-800">Feedback need</dt>
               <dd className="font-semibold text-slate-900">{bundle.riskIndicator}</dd>
             </div>
             <div className="rounded-lg bg-indigo-50/80 px-3 py-2">
@@ -68,6 +68,11 @@ export function AIEvidenceCard({
               <dd className="font-semibold text-slate-900">{bundle.prototypeConfidence}</dd>
             </div>
           </dl>
+          <p className="mt-2 text-xs text-[var(--muted)]">
+            <strong className="text-slate-700">Note:</strong> Prototype confidence (0–1) estimates how much signal the
+            heuristic layer had from dialogue / risk / trace / demo events. It is{" "}
+            <strong className="text-slate-700">not</strong> the same number as the header competence %.
+          </p>
           <p className="mt-3 text-sm">
             <strong>Detected learning difficulty:</strong> {bundle.detectedLearningDifficulty}
           </p>

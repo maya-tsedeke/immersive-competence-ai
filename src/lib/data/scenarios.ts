@@ -2,10 +2,10 @@ import type { Scenario } from "@/lib/types";
 
 export const scenarios: Scenario[] = [
   {
-    id: "workplace-safety",
-    title: "Workplace Safety Simulation",
+    id: "learning-environment-demo",
+    title: "Learning Environment Demo",
     description:
-      "360° warehouse scenario teaching hazard observation, decision-making, and reflection.",
+      "360 learning scene for observation, decision-making, justification, and reflection evidence.",
   },
 ];
 

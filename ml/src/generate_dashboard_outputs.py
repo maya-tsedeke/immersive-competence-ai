@@ -180,7 +180,7 @@ def main() -> None:
                 "aiReasoningSummary": llm_placeholder_summarize(student_text)[:500],
                 "misconception": misconception,
                 "teacherFeedbackSuggestion": (
-                    "Ask the learner to explain why the selected action reduces risk "
+                    "Ask the learner to explain why the selected action fits the observed evidence "
                     "(AI-assisted suggestion — prototype)."
                 ),
                 "confidence": round(float(conf_f), 2),
@@ -306,8 +306,8 @@ def main() -> None:
             "id": "1",
             "title": "AI-assisted class insight (baseline)",
             "body": (
-                "Public OULAD + dialogue prototypes suggest reviewing justification depth relative to raw click volume "
-                "— use as a risk indicator for discussion with learners, not as a sole basis for high-stakes decisions."
+            "Public OULAD + dialogue prototypes suggest reviewing justification depth relative to interaction patterns "
+            "— use as a feedback-need indicator for discussion with learners, not as a sole basis for high-stakes decisions."
             ),
             "confidence": "Medium · prototype",
         },
@@ -323,7 +323,7 @@ def main() -> None:
         {
             "id": "3",
             "title": "Suggested teacher action",
-            "body": "Add structured rationale scaffolds after decision points; reinforce safe-to-fail reflection prompts.",
+            "body": "Add structured rationale scaffolds after decision points; reinforce evidence-based reflection prompts.",
             "confidence": "Pedagogical suggestion",
         },
     ]
@@ -343,7 +343,7 @@ def main() -> None:
         ],
         "recommendedActions": [
             "Review the Model information / limitations card with stakeholders",
-            "Plan anonymised ThingLink export for real-world validation",
+            "Plan anonymised ThingLink-style pilot export for learning-environment validation",
         ],
     }
 

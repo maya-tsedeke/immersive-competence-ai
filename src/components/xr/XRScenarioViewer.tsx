@@ -59,16 +59,16 @@ export interface XRInteractionLogEntry {
 }
 
 const MC_OPTIONS = [
-  "Clear the blocked aisle and tag the unstable pallets before moving through",
-  "Proceed quickly; dim lighting is normal in warehouses",
-  "Only report missing hard hats; aisle clutter is secondary",
-  "No action needed if the path is partially clear",
+  "Use the observed evidence to choose a careful, justified next action",
+  "Proceed quickly without checking the learning evidence",
+  "Focus only on one visible detail and ignore the wider context",
+  "No action needed if the pathway is partly complete",
 ];
 
 const GUIDED_STEPS = [
-  "Explore the warehouse scene below and find each learning hotspot in order.",
-  "Tap a hotspot — labels show Hazard, Action, AI Hint, and Reflection.",
-  "Answer the question: what is the safest action in this scene?",
+  "Explore the immersive scene below and find each learning hotspot in order.",
+  "Tap a hotspot - labels show Observe Evidence, Decision, Hint, Justify, and Reflect.",
+  "Answer the question: what is the best supported action in this scene?",
   "Write your reflection and submit for teacher review.",
   "Review AI-assisted feedback (prototype only; teacher review required).",
 ];
@@ -82,9 +82,9 @@ function reflectionQualityLabel(reflection: string, submitted: boolean): string 
 }
 
 function riskMeta(visited: Set<XRHotspotId>, submitted: boolean): { text: string; cls: string } {
-  if (!visited.has("hazard")) return { text: "Observation gap — hazard not opened", cls: "text-amber-200" };
-  if (!submitted) return { text: "Incomplete — no submission recorded", cls: "text-amber-200" };
-  return { text: "Demo flow completed (not a clinical score)", cls: "text-emerald-200" };
+  if (!visited.has("hazard")) return { text: "Observation evidence not opened", cls: "text-amber-200" };
+  if (!submitted) return { text: "Incomplete - no submission recorded", cls: "text-amber-200" };
+  return { text: "Demo flow completed (teacher review still required)", cls: "text-emerald-200" };
 }
 
 function newLogEntry(
@@ -487,7 +487,7 @@ export function XRScenarioViewer({
 
   const runSceneScan = useCallback(() => {
     setSceneScanActive(true);
-    setOrderWarning("Scanning learning hotspots…");
+    setOrderWarning("Guided tour: highlighting each learning marker on the panorama…");
     const seq = REQUIRED_HOTSPOT_ORDER;
     let i = 0;
     const tick = () => {
@@ -498,9 +498,11 @@ export function XRScenarioViewer({
       } else {
         setScanHighlightId(null);
         setSceneScanActive(false);
-        setOrderWarning("Scan complete. Start by tapping the Hazard hotspot.");
+        setOrderWarning(
+          "Tour complete. This was an on-screen cue sequence (not a camera scan of a building). Tap Observe Evidence when you are ready.",
+        );
         pushDemoEvent({ eventType: "scene_scan", step: "Observe", hotspot: "scan" });
-        appendDemoActivity(activeLid, `${activeLid} completed scene scan`);
+        appendDemoActivity(activeLid, `${activeLid} completed guided hotspot tour`);
         window.setTimeout(() => setOrderWarning(""), 7000);
       }
     };
@@ -517,7 +519,7 @@ export function XRScenarioViewer({
         return;
       }
       if (hs.id === "action" && !visited.has("hazard")) {
-        setOrderWarning("Before choosing an action, first identify the hazard.");
+        setOrderWarning("Before choosing an action, first open the observation evidence.");
         window.setTimeout(() => setOrderWarning(""), 6000);
         return;
       }
@@ -550,8 +552,8 @@ export function XRScenarioViewer({
       eventType: isGuidedHazardClick ? "hotspot_click" : "hotspot_select",
     });
     if (isGuidedHazardClick) {
-      pushDemoEvent({ eventType: "hotspot_click", step: "Observe", hotspot: "Hazard" });
-      appendDemoActivity(activeLid, `${activeLid} clicked Hazard`);
+      pushDemoEvent({ eventType: "hotspot_click", step: "Observe", hotspot: "Observe Evidence" });
+      appendDemoActivity(activeLid, `${activeLid} clicked Observe Evidence`);
       setGuidedStep(2);
     }
 
@@ -738,14 +740,15 @@ export function XRScenarioViewer({
   const nextStepInstruction = (() => {
     if (webxrOnly) return "Check device support below. Hotspots stay large and tappable in Mobile 360° mode.";
     if (guidedMobile && !guidedScenarioStarted) {
-      return "Tap Start Scenario, then open Hazard on the scene to identify the risk.";
+      return "Tap Start Scenario, then open Observe Evidence on the scene to record the first learning signal.";
     }
     if (!guidedMobile) {
-      return "Pan the scene, then follow the pathway: Hazard → Safe Action → Why? → Reflect.";
+      return "Pan the scene, then follow the pathway: Observe -> Decide -> Justify -> Reflect.";
     }
-    if (guidedStep === 1) return "Step 1: Tap Hazard on the scene to record your observation.";
-    if (guidedStep === 2) return "Step 2: Tap Safe Action, then choose the safest response in the card below.";
-    if (guidedStep === 3) return "Step 3: Tap Why? on the scene, then write your justification below.";
+    if (guidedStep === 1)
+      return "Step 1: Optional — tap Guided tour to flash each marker on the panorama (helps systematic looking). Then tap Observe Evidence.";
+    if (guidedStep === 2) return "Step 2: Tap Decision, then choose the best supported response in the card below.";
+    if (guidedStep === 3) return "Step 3: Tap Justify on the scene, then write your justification below.";
     if (guidedStep === 4) return "Step 4: Tap Reflect on the scene, then submit your reflection.";
     if (guidedStep === 5) return "Submitted — open the dashboard as a teacher to run AI analysis.";
     return "Use the scene hotspots together with the steps below.";
@@ -771,7 +774,7 @@ export function XRScenarioViewer({
       <div className="relative h-full w-full min-h-[200px]">
         <Image
           src={XR_PANORAMA_URL}
-          alt="Wide panoramic warehouse for 360° workplace safety training"
+          alt="Wide panoramic immersive learning scene"
           fill
           className="pointer-events-none object-cover object-center"
           sizes="200vw"
@@ -835,13 +838,13 @@ export function XRScenarioViewer({
         <p className="mt-1 text-sm font-bold">{selectedHotspot.label} hotspot</p>
         <p className="mt-2 text-xs leading-relaxed opacity-90 sm:text-slate-600">
           {selectedHotspot.id === "hazard"
-            ? "Scan the aisle for instability and blocked egress — observation anchors the scenario."
+            ? "Observe Evidence — this anchor is where you record what you noticed in the panoramic learning scene (still image). It is not a device scan of a real warehouse; it prompts structured observation before you decide."
             : selectedHotspot.id === "action"
-              ? "Choose the safest operational response; then use the Why? hotspot to justify it."
+              ? "Choose the best supported response; then use the Justify hotspot to explain it."
               : selectedHotspot.id === "justify"
-                ? "Explain why your action reduces risk — causal reasoning matters for competence evidence."
+                ? "Explain why your choice fits the evidence - reasoning matters for competence evidence."
                 : selectedHotspot.id === "ai-hint"
-                  ? "Hint (scaffold): first identify the risk, then explain how the action reduces that risk."
+                  ? "Hint (scaffold): first identify the evidence, then explain how the action follows from it."
                   : selectedHotspot.id === "reflection"
                     ? "Summarize what you learned; teacher review interprets this evidence in context."
                     : "Continue the learning pathway."}
@@ -857,14 +860,14 @@ export function XRScenarioViewer({
               <>
                 <p>
                   <strong className="text-white">This popup is only a short tip.</strong> Your multiple-choice answers
-                  and text boxes (including <strong className="text-white">Why?</strong> ) are in the{" "}
-                  <strong className="text-white">activity card below the warehouse</strong> — scroll down after you
+                  and text boxes (including <strong className="text-white">Justify</strong> ) are in the{" "}
+                  <strong className="text-white">activity card below the scene</strong> — scroll down after you
                   close this.
                 </p>
                 {selectedHotspot.id === "justify" && guidedStep === 3 && !justifyTapped ? (
                   <p className="text-amber-100/95">
                     You have not unlocked the text box yet. Tap <strong className="text-white">Unlock & scroll</strong>{" "}
-                    or tap <strong className="text-white">Why?</strong> on the scene again, then scroll down.
+                    or tap <strong className="text-white">Justify</strong> on the scene again, then scroll down.
                   </p>
                 ) : null}
               </>
@@ -946,7 +949,7 @@ export function XRScenarioViewer({
               ? "border-white/15 bg-black/30 text-white placeholder:text-slate-500"
               : "border-slate-200 bg-white text-slate-900",
           )}
-          placeholder="What would you tell a colleague about the risk?"
+          placeholder="What evidence supports your decision?"
         />
         <button
           type="button"
@@ -985,7 +988,7 @@ export function XRScenarioViewer({
           <div className="rounded-2xl border border-white/15 bg-slate-900/75 p-4 text-center text-white shadow-lg ring-1 ring-white/10">
             <p className="text-xs font-bold uppercase tracking-wide text-sky-200">Step 1 · Observe</p>
             <p className="mt-2 text-sm text-slate-200">
-              Start the task, then open the <strong className="text-white">Hazard</strong> hotspot on the 360° scene.
+              Start the task, then open the <strong className="text-white">Observe Evidence</strong> hotspot on the 360° scene.
             </p>
             <button
               type="button"
@@ -1001,7 +1004,7 @@ export function XRScenarioViewer({
           <div className="rounded-2xl border border-sky-500/35 bg-slate-900/80 p-4 text-sm text-white shadow-lg ring-1 ring-sky-500/20">
             <p className="text-xs font-bold uppercase tracking-wide text-sky-200">Step 1 · Observe</p>
             <p className="mt-2 leading-relaxed text-slate-200">
-              Pan the warehouse and tap the orange <strong className="text-white">Hazard</strong> hotspot to record
+              Pan the scene and tap the orange <strong className="text-white">Observe Evidence</strong> hotspot to record
               observation evidence.
             </p>
           </div>
@@ -1012,8 +1015,8 @@ export function XRScenarioViewer({
             <div>
               <p className="text-xs font-bold uppercase tracking-wide text-indigo-200">Step 2 · Decide</p>
               <p className="mt-2 leading-relaxed text-slate-200">
-                Tap the <strong className="text-white">Safe Action</strong> hotspot on the scene if you have not yet, then
-                choose the safest response below.
+                Tap the <strong className="text-white">Decision</strong> hotspot on the scene if you have not yet, then
+                choose the best supported response below.
               </p>
               <p className="mt-3 text-sm font-semibold">What is the safest action in this scene?</p>
             </div>
@@ -1053,7 +1056,7 @@ export function XRScenarioViewer({
           justifyTapped ? (
             <div className="space-y-3 rounded-2xl border border-emerald-500/25 bg-slate-900/85 p-4 text-white shadow-lg">
               <p className="text-xs font-bold uppercase tracking-wide text-emerald-200">Step 3 · Justify</p>
-              <p className="text-sm text-slate-200">Why does this action reduce risk?</p>
+              <p className="text-sm text-slate-200">Why does this action fit the evidence?</p>
               <textarea
                 value={justification}
                 onChange={(e) => setJustification(e.target.value)}
@@ -1080,7 +1083,7 @@ export function XRScenarioViewer({
             <div className="rounded-2xl border border-amber-500/30 bg-slate-900/80 p-4 text-sm text-white shadow-lg">
               <p className="text-xs font-bold uppercase tracking-wide text-amber-200">Step 3 · Justify</p>
               <p className="mt-2 leading-relaxed text-slate-200">
-                Tap the <strong className="text-white">Why?</strong> hotspot on the warehouse scene to unlock the
+                Tap the <strong className="text-white">Justify</strong> hotspot on the scene to unlock the
                 justification prompt.
               </p>
             </div>
@@ -1127,7 +1130,7 @@ export function XRScenarioViewer({
             <div className="rounded-xl border border-white/15 bg-black/25 px-3 py-3 text-left text-xs text-emerald-50/95">
               <p className="font-bold text-white">Evidence generated</p>
               <ul className="mt-2 list-disc space-y-1 pl-4">
-                <li>Hazard hotspot clicked</li>
+                <li>Observation hotspot clicked</li>
                 <li>Decision answer submitted</li>
                 <li>Justification written</li>
                 <li>Reflection submitted</li>
@@ -1172,7 +1175,7 @@ export function XRScenarioViewer({
     >
       <p className="text-xs font-bold uppercase tracking-wide text-violet-300 sm:text-violet-700">AI-assisted insight</p>
       <p className="mt-2">
-        AI-assisted insight: The learner identified the hazard but should justify why the selected action reduces risk.{" "}
+        AI-assisted insight: The learner opened evidence but should justify why the selected action fits that evidence.{" "}
         <strong>Teacher review required.</strong> Prototype only — not a final judgement.
       </p>
     </div>
@@ -1276,7 +1279,7 @@ export function XRScenarioViewer({
           <li className="flex gap-2 rounded-lg bg-black/25 px-3 py-2">
             <ShieldAlert className="mt-0.5 h-4 w-4 shrink-0 text-amber-300" aria-hidden />
             <span className={cn("font-medium", riskMeta(visited, submitted).cls)}>
-              <strong>Risk indicator:</strong> {riskMeta(visited, submitted).text}
+              <strong>Feedback need:</strong> {riskMeta(visited, submitted).text}
             </span>
           </li>
         </ul>
@@ -1342,8 +1345,8 @@ export function XRScenarioViewer({
           <p className="font-bold text-white">Quick help</p>
           <ul className="mt-2 list-disc space-y-1 pl-5 text-slate-200">
             <li>Swipe the scene</li>
-            <li>Tap Hazard</li>
-            <li>Choose safest action</li>
+            <li>Tap Observe Evidence</li>
+            <li>Choose the best supported action</li>
             <li>Explain your reasoning</li>
             <li>Submit for teacher review</li>
           </ul>
@@ -1363,7 +1366,7 @@ export function XRScenarioViewer({
       </div>
     ) : null;
 
-  /** Sits above the panning image (opaque strip), not on the warehouse scene. */
+  /** Sits above the panning image (opaque strip), not on the scene. */
   const workspaceTitleStrip =
     !isHero && !webxrOnly ? (
       <div
@@ -1387,7 +1390,7 @@ export function XRScenarioViewer({
             isDarkChrome ? "text-white" : "text-slate-900",
           )}
         >
-          Workplace Safety Simulation
+          Learning Environment Demo
         </h2>
         <p className={cn("mt-2 text-sm leading-snug", isDarkChrome ? "text-slate-300" : "text-slate-600")}>
           {nextStepInstruction}
@@ -1402,7 +1405,7 @@ export function XRScenarioViewer({
 
   const heroTitleSrOnly = isHero ? (
     <span id={titleId} className="sr-only">
-      Workplace Safety Simulation
+      Learning Environment Demo
     </span>
   ) : null;
 
@@ -1447,11 +1450,11 @@ export function XRScenarioViewer({
             type="button"
             onClick={runSceneScan}
             className="inline-flex min-h-[44px] items-center gap-2 rounded-xl bg-sky-600 px-3 py-2 text-xs font-bold text-white shadow-md"
-            title="Scan scene — highlights each hotspot in order"
-            aria-label="Scan scene for learning hotspots"
+            title="Guided tour — flashes each learning hotspot on the panorama in order (on-screen only, not a camera scan)"
+            aria-label="Start guided tour of learning hotspots on the panorama"
           >
             <ScanLine className="h-4 w-4 shrink-0" aria-hidden />
-            Scan scene
+            Guided tour
           </button>
         ) : null}
         {!webxrOnly ? (

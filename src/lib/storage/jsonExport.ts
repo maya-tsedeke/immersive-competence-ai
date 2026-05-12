@@ -7,6 +7,11 @@ import {
 } from "@/lib/learnerDemo/demoLearnersStore";
 import { readWorkflowStore, TEACHER_WORKFLOW_STORAGE_KEY, dispatchWorkflowChanged } from "@/lib/workflow/teacherWorkflowStorage";
 import { listModules, upsertModules } from "@/lib/modules/moduleStore";
+import {
+  getThingLinkPilotImportHistory,
+  importThingLinkPilotEvents,
+  listThingLinkPilotEvents,
+} from "@/lib/storage/thingLinkPilotStorage";
 
 function readDemoLearnersRaw(): Record<string, unknown> {
   if (typeof window === "undefined") return {};
@@ -35,6 +40,8 @@ export function buildResearchDemoExport(): ResearchDemoExportV1 {
       .reverse()
       .map((a) => ({ at: a.at, learnerId: a.learnerId, message: a.message })),
     teacherWorkflow: wf,
+    pilotEvents: listThingLinkPilotEvents(),
+    pilotImports: getThingLinkPilotImportHistory(),
   };
 }
 
@@ -84,6 +91,10 @@ export function importResearchDemoBundle(json: unknown): { ok: boolean; error?: 
     if (p.teacherWorkflow && typeof p.teacherWorkflow === "object") {
       const mergedWf = { ...readWorkflowStore(), ...p.teacherWorkflow };
       window.localStorage.setItem(TEACHER_WORKFLOW_STORAGE_KEY, JSON.stringify(mergedWf));
+    }
+
+    if (Array.isArray(p.pilotEvents) && p.pilotEvents.length > 0) {
+      importThingLinkPilotEvents({ pilotEvents: p.pilotEvents });
     }
 
     window.dispatchEvent(new CustomEvent("immersive-demo-bundle-imported"));

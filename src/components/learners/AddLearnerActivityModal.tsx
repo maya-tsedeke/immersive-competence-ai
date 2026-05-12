@@ -11,8 +11,9 @@ import {
 import { listModules, MODULES_CHANGE_EVENT } from "@/lib/modules/moduleStore";
 import { cn } from "@/lib/utils";
 
-const DEFAULT_SCENARIO = "Workplace Safety Simulation";
-const DEFAULT_OBJECTIVE = "Identify workplace hazards and justify safe actions";
+const DEFAULT_SCENARIO = "Warehouse safety panorama (learning demo)";
+const DEFAULT_OBJECTIVE =
+  "Observe evidence in the scene, decide, justify your choice, then reflect. Optional Guided tour flashes each marker on the panorama (on-screen only — not a camera scan of a real building).";
 
 export function AddLearnerActivityModal({
   open,

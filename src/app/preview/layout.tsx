@@ -3,7 +3,7 @@ import { PrototypeBadge } from "@/components/layout/PrototypeBadge";
 import { usingGeneratedData } from "@/lib/dataset";
 import { ArrowLeft } from "lucide-react";
 
-export default async function PreviewLayout({ children }: { children: React.ReactNode }) {
+export default function PreviewLayout({ children }: { children: React.ReactNode }) {
   const usesGenerated = usingGeneratedData();
 
   return (

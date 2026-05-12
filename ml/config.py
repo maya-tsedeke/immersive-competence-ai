@@ -21,6 +21,7 @@ DIALOGUE_EXTRACT_DIR = DATA_RAW / "dialogue_extracted"
 
 OULAD_ZIP = DATA_RAW / "anonymisedData.zip"
 DIALOGUE_ZIP = DATA_RAW / "Education-Dialogue-Dataset-main.zip"
+THINGLINK_PILOT_EVENTS_JSON = DATA_RAW / "thinglink_pilot_events.json"
 
 # Next.js app root (sibling of `ml/`)
 GENERATED_DIR = ML_ROOT.parent / "src" / "lib" / "generated"

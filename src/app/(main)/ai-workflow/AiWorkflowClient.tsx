@@ -57,7 +57,7 @@ function stubWorkflowLearner(id: string): Learner {
     status: "Needs feedback",
     displayStatus: "Needs feedback",
     isLocalDemo: true,
-    scenarioTitle: "Workplace Safety Simulation",
+    scenarioTitle: "Learning Environment Demo",
     demoProgressPct: 0,
   };
 }
@@ -101,7 +101,7 @@ export function AiWorkflowClient({ usingGeneratedJson }: { usingGeneratedJson: b
 
   const teacherSuggestion =
     wf.aiResultBundle?.suggestedTeacherAction ??
-    "Ask the learner to compare two possible safety actions and explain which one better reduces risk.";
+    "Ask the learner to compare two possible actions and explain which one better fits the learning evidence.";
 
   const stepDone = useMemo(
     () => [
@@ -119,7 +119,9 @@ export function AiWorkflowClient({ usingGeneratedJson }: { usingGeneratedJson: b
     <div className="mx-auto max-w-4xl min-w-0 space-y-8 overflow-x-hidden pb-8">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted)]">Public dataset prototype</p>
+          <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted)]">
+            Learning environment prototype
+          </p>
           <h1 className="mt-1 text-3xl font-semibold text-slate-900">AI Learning Workflow</h1>
           <p className="mt-2 text-sm text-slate-600">
             Follow how learner actions become AI-assisted teacher insights — learner evidence, analysis, review, and
@@ -297,8 +299,8 @@ export function AiWorkflowClient({ usingGeneratedJson }: { usingGeneratedJson: b
         </div>
         {!submittedOk ? (
           <p className="rounded-2xl border border-dashed border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-600">
-            Submit learner evidence from the scenario first — then run analysis to see risk indicator, prototype
-            confidence, reflection quality, reasoning depth, difficulty signal, and suggested teacher action.
+            Submit learner evidence from the scenario first — then run analysis to see feedback need, prototype
+            confidence, reflection quality, reasoning depth, competence evidence, and suggested teacher action.
           </p>
         ) : (
           <RunAiAnalysisButton

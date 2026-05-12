@@ -5,7 +5,12 @@
  */
 
 import type { DemoLearnerRecord } from "@/lib/learnerDemo/demoLearnersStore";
-import type { LearnerWorkflowPersisted } from "@/lib/types";
+import type {
+  LearnerWorkflowPersisted,
+  ModelEvaluationSummary,
+  ThingLinkPilotEvent,
+  ThingLinkPilotImportSummary,
+} from "@/lib/types";
 import type { LearningModule } from "@/lib/modules/learningModuleTypes";
 
 /** Full snapshot for “Export Demo JSON” (research evidence bundle). */
@@ -17,6 +22,12 @@ export type ResearchDemoExportV1 = {
   demoLearners: Record<string, DemoLearnerRecord>;
   demoActivity: { at: string; learnerId: string; message: string }[];
   teacherWorkflow: Record<string, LearnerWorkflowPersisted>;
+  /** Optional anonymised ThingLink-style pilot events for future validation. */
+  pilotEvents?: ThingLinkPilotEvent[];
+  /** Import history for governed pilot-event bundles. */
+  pilotImports?: ThingLinkPilotImportSummary[];
+  /** Optional latest model-evaluation snapshot when pilot modelling has run. */
+  modelEvaluation?: ModelEvaluationSummary;
   /** Optional raw scratch events if we extend global event log */
   learningEvents?: ResearchLearningEvent[];
 };

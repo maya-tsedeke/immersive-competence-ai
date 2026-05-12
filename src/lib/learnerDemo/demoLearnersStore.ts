@@ -130,8 +130,8 @@ function migrateLegacyIfNeeded(base: StoreV1): StoreV1 {
     base.learners[id] = {
       id,
       displayName: "Anonymous",
-      scenarioTitle: "Workplace Safety Simulation",
-      objective: "Identify workplace hazards and justify safe actions",
+      scenarioTitle: "Learning Environment Demo",
+      objective: "Observe evidence, make a decision, justify the choice, and reflect.",
       startMode: "learner_now",
       createdAt: parsed.submittedAt,
       learningStatus: "submitted",
@@ -229,8 +229,8 @@ export function recordDemoSubmission(
     prev = {
       id: learnerId,
       displayName: "Anonymous",
-      scenarioTitle: "Workplace Safety Simulation",
-      objective: "Identify workplace hazards and justify safe actions",
+      scenarioTitle: "Learning Environment Demo",
+      objective: "Observe evidence, make a decision, justify the choice, and reflect.",
       startMode: "learner_now",
       createdAt: new Date().toISOString(),
       learningStatus: "in_progress",

@@ -116,8 +116,8 @@ export function RunAiAnalysisButton({
         <div className="space-y-3">
           <AIEvidenceCard bundle={bundle} provenance={provenBy} />
           <div className="rounded-xl border border-slate-100 bg-slate-50 px-3 py-2 text-xs text-slate-600">
-            Prototype confidence: <strong>{bundle.prototypeConfidence}</strong> (scaled 0–1 · not a reliability
-            guarantee)
+            Prototype confidence: <strong>{bundle.prototypeConfidence}</strong> (0–1 · strength of heuristic signal, not
+            the header competence % and not a reliability guarantee).
           </div>
         </div>
       ) : null}

@@ -5,6 +5,7 @@ Run the ML pipeline from the repository root.
 Examples:
   python ml/run_pipeline.py --inspect-only
   python ml/run_pipeline.py --report-only
+  python ml/run_pipeline.py --pilot-only
   python ml/run_pipeline.py --full
   python ml/run_pipeline.py              (same as --full)
 
@@ -58,9 +59,18 @@ def main() -> None:
         action="store_true",
         help="Run extraction, preprocessing, training, dashboard JSON, evaluation, then full inspection report.",
     )
+    parser.add_argument(
+        "--pilot-only",
+        action="store_true",
+        help="Evaluate anonymised ThingLink-style pilot events from ml/data/raw/thinglink_pilot_events.json.",
+    )
     args = parser.parse_args()
 
-    full = args.full or (not args.inspect_only and not args.report_only)
+    full = args.full or (not args.inspect_only and not args.report_only and not args.pilot_only)
+
+    if args.pilot_only:
+        _run_script(SRC / "evaluate_pilot_events.py")
+        return
 
     if args.inspect_only:
         subprocess.check_call([sys.executable, str(INSPECT), "--inspect-only"], cwd=str(ML_DIR))

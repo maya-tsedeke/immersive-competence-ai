@@ -39,10 +39,15 @@ export function LearnerDetailHeader({ learner }: { learner: Learner }) {
             ) : null}
           </div>
         </div>
-        <div className="grid w-full max-w-lg grid-cols-2 gap-3 text-sm md:text-right">
+          <div className="grid w-full max-w-lg grid-cols-2 gap-3 text-sm md:text-right">
           <div className="rounded-xl bg-slate-50 p-3 ring-1 ring-slate-100">
             <p className="text-[var(--muted)]">Competence score</p>
             <p className="text-xl font-semibold text-slate-900">{learner.score}%</p>
+            <p className="mt-1 text-[11px] font-normal leading-snug text-slate-500">
+              {learner.isLocalDemo
+                ? "Demo % from last submit (pathway, choice, text rules). Not the same as “prototype confidence” in AI results."
+                : "From generated dashboard JSON for this cohort row. AI “prototype confidence” below is separate (model/evidence fit)."}
+            </p>
           </div>
           <div className="rounded-xl bg-slate-50 p-3 ring-1 ring-slate-100">
             <p className="text-[var(--muted)]">Time spent</p>

@@ -25,13 +25,13 @@ export interface XRHotspotDefinition {
 export const XR_PANORAMA_URL =
   "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=2800&q=80";
 
-/** Panorama width multiplier vs viewport (simulate 360° strip). */
+/** Panorama width multiplier vs viewport (simulate 360 scene strip). */
 export const XR_PANORAMA_WIDTH_MULT = 2.75;
 
 export const XR_HOTSPOTS: XRHotspotDefinition[] = [
   {
     id: "hazard",
-    label: "Hazard",
+    label: "Observe Evidence",
     pathwayStep: "Observe",
     pathwayIndex: 0,
     leftPct: 14,
@@ -43,7 +43,7 @@ export const XR_HOTSPOTS: XRHotspotDefinition[] = [
   },
   {
     id: "action",
-    label: "Safe Action",
+    label: "Decision",
     pathwayStep: "Decide",
     pathwayIndex: 1,
     leftPct: 34,
@@ -55,7 +55,7 @@ export const XR_HOTSPOTS: XRHotspotDefinition[] = [
   },
   {
     id: "justify",
-    label: "Why?",
+    label: "Justify",
     pathwayStep: "Justify",
     pathwayIndex: 2,
     leftPct: 50,
@@ -99,11 +99,11 @@ export function annotateHotspotCompletionWithPathway(
   items: HotspotBarItem[],
 ): Array<HotspotBarItem & { xrMapping: string }> {
   const labels = [
-    "Hazard → Observe",
-    "Safe Action → Decide",
-    "Why? → Justify",
-    "Hint → scaffold",
-    "Reflect → Reflect",
+    "Observe Evidence -> Observe",
+    "Decision -> Decide",
+    "Justify -> Justify",
+    "Hint -> scaffold",
+    "Reflect -> Reflect",
   ];
   return items.map((h, i) => ({
     ...h,
