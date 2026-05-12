@@ -2,34 +2,9 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  BarChart3,
-  Brain,
-  Database,
-  FileText,
-  LayoutDashboard,
-  Layers,
-  Map,
-  Settings,
-  Shapes,
-  Users,
-  Workflow,
-} from "lucide-react";
+import { Shapes } from "lucide-react";
+import { MAIN_NAV_ITEMS } from "@/components/layout/navConfig";
 import { cn } from "@/lib/utils";
-
-const items = [
-  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/ai-workflow", label: "AI Workflow", icon: Workflow },
-  { href: "/modules", label: "Learning Modules", icon: Layers },
-  { href: "/scenarios", label: "Scenario Analytics", icon: Shapes },
-  { href: "/learners", label: "Learners", icon: Users },
-  { href: "/analytics", label: "Analytics", icon: BarChart3 },
-  { href: "/ai-insights", label: "AI Insights", icon: Brain },
-  { href: "/datasets", label: "Datasets", icon: Database },
-  { href: "/reports", label: "Reports", icon: FileText },
-  { href: "/research", label: "Research Mapping", icon: Map },
-  { href: "/settings", label: "Settings", icon: Settings },
-];
 
 export function Sidebar() {
   const pathname = usePathname();
@@ -45,17 +20,14 @@ export function Sidebar() {
           <Shapes className="h-5 w-5" aria-hidden />
         </div>
         <div>
-          <div className="text-sm font-semibold leading-tight text-slate-900">
-            Immersive Competence AI
-          </div>
+          <div className="text-sm font-semibold leading-tight text-slate-900">Immersive Competence AI</div>
           <div className="text-xs text-[var(--muted)]">UEF · ThingLink style</div>
         </div>
       </Link>
 
-      <nav className="flex flex-1 flex-col gap-0.5 px-3 pb-4">
-        {items.map((item) => {
-          const active =
-            pathname === item.href || pathname.startsWith(`${item.href}/`);
+      <nav className="flex flex-1 flex-col gap-0.5 overflow-y-auto px-3 pb-4" aria-label="App sections">
+        {MAIN_NAV_ITEMS.map((item) => {
+          const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
           const Icon = item.icon;
           return (
             <Link
@@ -81,9 +53,7 @@ export function Sidebar() {
             UR
           </div>
           <div className="min-w-0">
-            <div className="truncate text-sm font-medium text-slate-900">
-              Dr. UEF Researcher
-            </div>
+            <div className="truncate text-sm font-medium text-slate-900">Dr. UEF Researcher</div>
             <div className="truncate text-xs text-[var(--muted)]">Teacher view</div>
           </div>
         </div>
