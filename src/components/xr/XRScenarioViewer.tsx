@@ -104,7 +104,7 @@ type HotspotVisualState = "inactive" | "current" | "completed" | "blocked" | "op
 
 function computeHotspotVisualState(
   hs: XRHotspotDefinition,
-  guidedMobile: boolean,
+  guidedFlow: boolean,
   guidedScenarioStarted: boolean,
   guidedStep: number,
   visited: Set<XRHotspotId>,
@@ -112,7 +112,7 @@ function computeHotspotVisualState(
   if (hs.id === "ai-hint") {
     return visited.has(hs.id) ? "completed" : "optional";
   }
-  if (!guidedMobile || !guidedScenarioStarted) {
+  if (!guidedFlow || !guidedScenarioStarted) {
     return visited.has(hs.id) ? "completed" : "inactive";
   }
   if (visited.has(hs.id)) return "completed";
@@ -309,6 +309,7 @@ export function XRScenarioViewer({
   const [supportsImmersiveAr, setSupportsImmersiveAr] = useState(false);
 
   const guidedMobile = Boolean(guidedPreview && variant === "mobile" && previewTab === "mobile360");
+  const guidedLearnerFlow = Boolean(guidedPreview && (variant === "mobile" || variant === "desktop"));
   const [guidedScenarioStarted, setGuidedScenarioStarted] = useState(false);
   const [guidedStep, setGuidedStep] = useState<1 | 2 | 3 | 4 | 5>(1);
   const [justification, setJustification] = useState("");
@@ -510,7 +511,7 @@ export function XRScenarioViewer({
   }, [activeLid, pushDemoEvent]);
 
   const openHotspot = (hs: XRHotspotDefinition) => {
-    if (guidedMobile && guidedScenarioStarted) {
+    if (guidedLearnerFlow && guidedScenarioStarted) {
       if (hs.id === "ai-hint") {
         pushDemoEvent({ eventType: "ai_hint_viewed", step: "Justify", hotspot: "Hint" });
         appendDemoActivity(activeLid, `${activeLid} viewed hint scaffold`);
@@ -538,13 +539,13 @@ export function XRScenarioViewer({
     setSelectedId(hs.id);
     setVisited((prev) => new Set(prev).add(hs.id));
     setPathwayIndex((idx) => Math.max(idx, hs.pathwayIndex));
-    if (guidedMobile && guidedScenarioStarted) {
+    if (guidedLearnerFlow && guidedScenarioStarted) {
       if (hs.id === "justify") setJustifyTapped(true);
       if (hs.id === "reflection") setReflectTapped(true);
     }
 
     const isGuidedHazardClick =
-      guidedMobile && guidedScenarioStarted && guidedStep === 1 && hs.id === "hazard";
+      guidedLearnerFlow && guidedScenarioStarted && guidedStep === 1 && hs.id === "hazard";
     appendLog({
       hotspotId: hs.id,
       hotspotLabel: hs.label,
@@ -557,7 +558,7 @@ export function XRScenarioViewer({
       setGuidedStep(2);
     }
 
-    if (guidedMobile) {
+    if (guidedLearnerFlow) {
       if (variant === "hero") {
         setShowTask(false);
       } else {
@@ -733,16 +734,14 @@ export function XRScenarioViewer({
   const isDarkChrome = variant === "mobile" || variant === "desktop";
   const webxrOnly = Boolean(guidedPreview && variant === "mobile" && previewTab === "webxr");
   const teacherPanel = Boolean(guidedPreview && variant === "mobile" && previewTab === "teacher");
-  const mobileGuidedLearner =
-    Boolean(guidedPreview && variant === "mobile" && (previewTab === "mobile360" || previewTab === "teacher"));
   const immersiveMinimal = Boolean(variant === "mobile" && !webxrOnly && (immersiveUi || cssFullscreen));
 
   const nextStepInstruction = (() => {
     if (webxrOnly) return "Check device support below. Hotspots stay large and tappable in Mobile 360° mode.";
-    if (guidedMobile && !guidedScenarioStarted) {
+    if (guidedLearnerFlow && !guidedScenarioStarted) {
       return "Tap Start Scenario, then open Observe Evidence on the scene to record the first learning signal.";
     }
-    if (!guidedMobile) {
+    if (!guidedLearnerFlow) {
       return "Pan the scene, then follow the pathway: Observe -> Decide -> Justify -> Reflect.";
     }
     if (guidedStep === 1)
@@ -803,14 +802,14 @@ export function XRScenarioViewer({
               pulse={scanHighlightId === hs.id}
               visualState={computeHotspotVisualState(
                 hs,
-                guidedMobile,
+                guidedLearnerFlow,
                 guidedScenarioStarted,
                 guidedStep,
                 visited,
               )}
               useMobilePosition={useMobileHotspotCoords}
               onSelect={() => {
-                if (guidedMobile && !guidedScenarioStarted) return;
+                if (guidedLearnerFlow && !guidedScenarioStarted) return;
                 openHotspot(hs);
               }}
             />
@@ -909,7 +908,7 @@ export function XRScenarioViewer({
     ) : null;
 
   const questionBlock =
-    showTask && !isHero && !submitted && !webxrOnly && !guidedMobile ? (
+    showTask && !isHero && !submitted && !webxrOnly && !guidedLearnerFlow ? (
       <div
         className={cn(
           "mt-4 space-y-3 rounded-2xl border p-4",
@@ -970,25 +969,40 @@ export function XRScenarioViewer({
     ) : null;
 
   const postSubmit =
-    submitted && !isHero && !webxrOnly && !guidedMobile ? (
+    submitted && !isHero && !webxrOnly && !guidedLearnerFlow ? (
       <div className="mt-4 rounded-2xl border border-emerald-400/40 bg-emerald-950/40 p-4 text-center text-sm font-medium text-emerald-100">
         Your response has been saved for teacher review.
       </div>
     ) : null;
 
+  const gtk = variant === "mobile";
+
   const guidedLearnerTask =
-    guidedMobile && !webxrOnly && !isHero ? (
+    guidedLearnerFlow && !webxrOnly && !isHero ? (
       <div ref={guidedTaskRef} className="mt-4 space-y-3 scroll-mt-4">
         {orderWarning ? (
-          <div className="rounded-xl border border-amber-400/50 bg-amber-950/60 px-3 py-3 text-sm text-amber-50 shadow-md">
+          <div className="rounded-xl border border-amber-400/50 bg-amber-950/60 px-3 py-3 text-sm text-amber-50 shadow-md md:border-amber-200 md:bg-amber-50 md:text-amber-950">
             {orderWarning}
           </div>
         ) : null}
         {!guidedScenarioStarted ? (
-          <div className="rounded-2xl border border-white/15 bg-slate-900/75 p-4 text-center text-white shadow-lg ring-1 ring-white/10">
-            <p className="text-xs font-bold uppercase tracking-wide text-sky-200">Step 1 · Observe</p>
-            <p className="mt-2 text-sm text-slate-200">
-              Start the task, then open the <strong className="text-white">Observe Evidence</strong> hotspot on the 360° scene.
+          <div
+            className={cn(
+              "rounded-2xl border p-4 text-center shadow-lg",
+              gtk
+                ? "border-white/15 bg-slate-900/75 text-white ring-1 ring-white/10"
+                : "border-slate-200 bg-white text-slate-900 shadow-sm",
+            )}
+          >
+            <p
+              className={cn("text-xs font-bold uppercase tracking-wide", gtk ? "text-sky-200" : "text-sky-700")}
+            >
+              Step 1 · Observe
+            </p>
+            <p className={cn("mt-2 text-sm", gtk ? "text-slate-200" : "text-slate-600")}>
+              Start the task, then open the{" "}
+              <strong className={gtk ? "text-white" : "text-slate-900"}>Observe Evidence</strong> hotspot on the 360°
+              scene.
             </p>
             <button
               type="button"
@@ -1001,22 +1015,43 @@ export function XRScenarioViewer({
         ) : null}
 
         {guidedScenarioStarted && guidedStep === 1 && !submitted ? (
-          <div className="rounded-2xl border border-sky-500/35 bg-slate-900/80 p-4 text-sm text-white shadow-lg ring-1 ring-sky-500/20">
-            <p className="text-xs font-bold uppercase tracking-wide text-sky-200">Step 1 · Observe</p>
-            <p className="mt-2 leading-relaxed text-slate-200">
-              Pan the scene and tap the orange <strong className="text-white">Observe Evidence</strong> hotspot to record
+          <div
+            className={cn(
+              "rounded-2xl border p-4 text-sm shadow-lg",
+              gtk
+                ? "border-sky-500/35 bg-slate-900/80 text-white ring-1 ring-sky-500/20"
+                : "border-sky-200 bg-sky-50/90 text-slate-900",
+            )}
+          >
+            <p
+              className={cn("text-xs font-bold uppercase tracking-wide", gtk ? "text-sky-200" : "text-sky-800")}
+            >
+              Step 1 · Observe
+            </p>
+            <p className={cn("mt-2 leading-relaxed", gtk ? "text-slate-200" : "text-slate-700")}>
+              Pan the scene and tap the orange{" "}
+              <strong className={gtk ? "text-white" : "text-slate-900"}>Observe Evidence</strong> hotspot to record
               observation evidence.
             </p>
           </div>
         ) : null}
 
         {guidedScenarioStarted && guidedStep === 2 && !submitted ? (
-          <div className="space-y-3 rounded-2xl border border-white/10 bg-slate-900/85 p-4 text-white shadow-lg">
+          <div
+            className={cn(
+              "space-y-3 rounded-2xl border p-4 shadow-lg",
+              gtk ? "border-white/10 bg-slate-900/85 text-white" : "border-slate-200 bg-white text-slate-900 shadow-sm",
+            )}
+          >
             <div>
-              <p className="text-xs font-bold uppercase tracking-wide text-indigo-200">Step 2 · Decide</p>
-              <p className="mt-2 leading-relaxed text-slate-200">
-                Tap the <strong className="text-white">Decision</strong> hotspot on the scene if you have not yet, then
-                choose the best supported response below.
+              <p
+                className={cn("text-xs font-bold uppercase tracking-wide", gtk ? "text-indigo-200" : "text-indigo-700")}
+              >
+                Step 2 · Decide
+              </p>
+              <p className={cn("mt-2 leading-relaxed", gtk ? "text-slate-200" : "text-slate-600")}>
+                Tap the <strong className={gtk ? "text-white" : "text-slate-900"}>Decision</strong> hotspot on the scene
+                if you have not yet, then choose the best supported response below.
               </p>
               <p className="mt-3 text-sm font-semibold">What is the safest action in this scene?</p>
             </div>
@@ -1025,8 +1060,10 @@ export function XRScenarioViewer({
                 <li key={opt}>
                   <label
                     className={cn(
-                      "flex cursor-pointer gap-3 rounded-xl border px-3 py-3 text-sm has-[:checked]:border-indigo-400 has-[:checked]:bg-indigo-500/15",
-                      "border-white/10 bg-black/25 has-[:checked]:bg-indigo-500/10",
+                      "flex cursor-pointer gap-3 rounded-xl border px-3 py-3 text-sm has-[:checked]:border-indigo-400",
+                      gtk
+                        ? "border-white/10 bg-black/25 has-[:checked]:bg-indigo-500/15"
+                        : "border-slate-200 bg-slate-50 has-[:checked]:bg-indigo-50",
                     )}
                   >
                     <input
@@ -1045,7 +1082,7 @@ export function XRScenarioViewer({
               type="button"
               disabled={mcChoice == null}
               onClick={advanceGuidedDecide}
-              className="w-full min-h-[48px] rounded-xl bg-indigo-600 py-3 text-sm font-semibold text-white transition enabled:hover:bg-indigo-500 disabled:cursor-not-allowed disabled:bg-slate-600"
+              className="w-full min-h-[48px] rounded-xl bg-indigo-600 py-3 text-sm font-semibold text-white transition enabled:hover:bg-indigo-500 disabled:cursor-not-allowed disabled:bg-slate-400"
             >
               Continue
             </button>
@@ -1054,14 +1091,35 @@ export function XRScenarioViewer({
 
         {guidedScenarioStarted && guidedStep === 3 && !submitted ? (
           justifyTapped ? (
-            <div className="space-y-3 rounded-2xl border border-emerald-500/25 bg-slate-900/85 p-4 text-white shadow-lg">
-              <p className="text-xs font-bold uppercase tracking-wide text-emerald-200">Step 3 · Justify</p>
-              <p className="text-sm text-slate-200">Why does this action fit the evidence?</p>
+            <div
+              className={cn(
+                "space-y-3 rounded-2xl border p-4 shadow-lg",
+                gtk
+                  ? "border-emerald-500/25 bg-slate-900/85 text-white"
+                  : "border-emerald-200 bg-white text-slate-900 shadow-sm",
+              )}
+            >
+              <p
+                className={cn(
+                  "text-xs font-bold uppercase tracking-wide",
+                  gtk ? "text-emerald-200" : "text-emerald-800",
+                )}
+              >
+                Step 3 · Justify
+              </p>
+              <p className={cn("text-sm", gtk ? "text-slate-200" : "text-slate-600")}>
+                Why does this action fit the evidence?
+              </p>
               <textarea
                 value={justification}
                 onChange={(e) => setJustification(e.target.value)}
                 rows={4}
-                className="w-full resize-none rounded-xl border border-white/15 bg-black/30 px-3 py-2 text-sm text-white placeholder:text-slate-500"
+                className={cn(
+                  "w-full resize-none rounded-xl border px-3 py-2 text-sm",
+                  gtk
+                    ? "border-white/15 bg-black/30 text-white placeholder:text-slate-500"
+                    : "border-slate-200 bg-white text-slate-900 placeholder:text-slate-400",
+                )}
                 placeholder="Short written justification…"
               />
               <button
@@ -1074,17 +1132,31 @@ export function XRScenarioViewer({
                   setReflectTapped(false);
                   setGuidedStep(4);
                 }}
-                className="w-full min-h-[48px] rounded-xl bg-emerald-600 py-3 text-sm font-semibold text-white transition enabled:hover:bg-emerald-500 disabled:cursor-not-allowed disabled:bg-slate-600"
+                className="w-full min-h-[48px] rounded-xl bg-emerald-600 py-3 text-sm font-semibold text-white transition enabled:hover:bg-emerald-500 disabled:cursor-not-allowed disabled:bg-slate-400"
               >
                 Continue
               </button>
             </div>
           ) : (
-            <div className="rounded-2xl border border-amber-500/30 bg-slate-900/80 p-4 text-sm text-white shadow-lg">
-              <p className="text-xs font-bold uppercase tracking-wide text-amber-200">Step 3 · Justify</p>
-              <p className="mt-2 leading-relaxed text-slate-200">
-                Tap the <strong className="text-white">Justify</strong> hotspot on the scene to unlock the
-                justification prompt.
+            <div
+              className={cn(
+                "rounded-2xl border p-4 text-sm shadow-lg",
+                gtk
+                  ? "border-amber-500/30 bg-slate-900/80 text-white"
+                  : "border-amber-200 bg-amber-50 text-amber-950",
+              )}
+            >
+              <p
+                className={cn(
+                  "text-xs font-bold uppercase tracking-wide",
+                  gtk ? "text-amber-200" : "text-amber-800",
+                )}
+              >
+                Step 3 · Justify
+              </p>
+              <p className={cn("mt-2 leading-relaxed", gtk ? "text-slate-200" : "text-amber-900/90")}>
+                Tap the <strong className={gtk ? "text-white" : "text-amber-950"}>Justify</strong> hotspot on the scene to
+                unlock the justification prompt.
               </p>
             </div>
           )
@@ -1092,43 +1164,87 @@ export function XRScenarioViewer({
 
         {guidedScenarioStarted && guidedStep === 4 && !submitted ? (
           reflectTapped ? (
-            <div className="space-y-3 rounded-2xl border border-violet-500/25 bg-slate-900/85 p-4 text-white shadow-lg">
-              <p className="text-xs font-bold uppercase tracking-wide text-violet-200">Step 4 · Reflect</p>
-              <p className="text-sm text-slate-200">What did you learn from this scenario?</p>
+            <div
+              className={cn(
+                "space-y-3 rounded-2xl border p-4 shadow-lg",
+                gtk ? "border-violet-500/25 bg-slate-900/85 text-white" : "border-violet-200 bg-white text-slate-900 shadow-sm",
+              )}
+            >
+              <p
+                className={cn(
+                  "text-xs font-bold uppercase tracking-wide",
+                  gtk ? "text-violet-200" : "text-violet-800",
+                )}
+              >
+                Step 4 · Reflect
+              </p>
+              <p className={cn("text-sm", gtk ? "text-slate-200" : "text-slate-600")}>
+                What did you learn from this scenario?
+              </p>
               <textarea
                 value={reflection}
                 onChange={(e) => setReflection(e.target.value)}
                 rows={4}
-                className="w-full resize-none rounded-xl border border-white/15 bg-black/30 px-3 py-2 text-sm text-white placeholder:text-slate-500"
+                className={cn(
+                  "w-full resize-none rounded-xl border px-3 py-2 text-sm",
+                  gtk
+                    ? "border-white/15 bg-black/30 text-white placeholder:text-slate-500"
+                    : "border-slate-200 bg-white text-slate-900 placeholder:text-slate-400",
+                )}
                 placeholder="Reflection for your teacher…"
               />
               <button
                 type="button"
                 disabled={!reflection.trim()}
                 onClick={submitGuidedLearnerTask}
-                className="w-full min-h-[48px] rounded-xl bg-violet-600 py-3 text-sm font-semibold text-white transition enabled:hover:bg-violet-500 disabled:cursor-not-allowed disabled:bg-slate-600"
+                className="w-full min-h-[48px] rounded-xl bg-violet-600 py-3 text-sm font-semibold text-white transition enabled:hover:bg-violet-500 disabled:cursor-not-allowed disabled:bg-slate-400"
               >
                 Submit for Teacher Review
               </button>
             </div>
           ) : (
-            <div className="rounded-2xl border border-violet-500/30 bg-slate-900/80 p-4 text-sm text-white shadow-lg">
-              <p className="text-xs font-bold uppercase tracking-wide text-violet-200">Step 4 · Reflect</p>
-              <p className="mt-2 leading-relaxed text-slate-200">
-                Tap the <strong className="text-white">Reflect</strong> hotspot on the scene to unlock your reflection.
+            <div
+              className={cn(
+                "rounded-2xl border p-4 text-sm shadow-lg",
+                gtk ? "border-violet-500/30 bg-slate-900/80 text-white" : "border-violet-200 bg-violet-50 text-violet-950",
+              )}
+            >
+              <p
+                className={cn(
+                  "text-xs font-bold uppercase tracking-wide",
+                  gtk ? "text-violet-200" : "text-violet-800",
+                )}
+              >
+                Step 4 · Reflect
+              </p>
+              <p className={cn("mt-2 leading-relaxed", gtk ? "text-slate-200" : "text-violet-900/90")}>
+                Tap the <strong className={gtk ? "text-white" : "text-violet-950"}>Reflect</strong> hotspot on the scene
+                to unlock your reflection.
               </p>
             </div>
           )
         ) : null}
 
-        {guidedMobile && submitted ? (
-          <div className="space-y-3 rounded-2xl border border-emerald-400/35 bg-emerald-950/45 p-4 text-center text-sm text-emerald-50 shadow-lg">
-            <p className="font-semibold text-white">Submitted for teacher review</p>
-            <p className="leading-relaxed text-emerald-100">
+        {guidedLearnerFlow && submitted ? (
+          <div
+            className={cn(
+              "space-y-3 rounded-2xl border p-4 text-center text-sm shadow-lg",
+              gtk
+                ? "border-emerald-400/35 bg-emerald-950/45 text-emerald-50"
+                : "border-emerald-200 bg-emerald-50 text-emerald-950",
+            )}
+          >
+            <p className={cn("font-semibold", gtk ? "text-white" : "text-emerald-900")}>Submitted for teacher review</p>
+            <p className={cn("leading-relaxed", gtk ? "text-emerald-100" : "text-emerald-800")}>
               Your learning activity has been submitted. Teacher AI analysis can now be generated.
             </p>
-            <div className="rounded-xl border border-white/15 bg-black/25 px-3 py-3 text-left text-xs text-emerald-50/95">
-              <p className="font-bold text-white">Evidence generated</p>
+            <div
+              className={cn(
+                "rounded-xl border px-3 py-3 text-left text-xs",
+                gtk ? "border-white/15 bg-black/25 text-emerald-50/95" : "border-emerald-200 bg-white text-emerald-900",
+              )}
+            >
+              <p className={cn("font-bold", gtk ? "text-white" : "text-emerald-900")}>Evidence generated</p>
               <ul className="mt-2 list-disc space-y-1 pl-4">
                 <li>Observation hotspot clicked</li>
                 <li>Decision answer submitted</li>
@@ -1145,18 +1261,28 @@ export function XRScenarioViewer({
               </Link>
               <Link
                 href="/ai-workflow"
-                className="inline-flex min-h-[48px] items-center justify-center rounded-xl border border-white/30 bg-white/5 px-4 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
+                className={cn(
+                  "inline-flex min-h-[48px] items-center justify-center rounded-xl border px-4 py-3 text-sm font-semibold transition",
+                  gtk
+                    ? "border-white/30 bg-white/5 text-white hover:bg-white/10"
+                    : "border-slate-200 bg-white text-slate-800 hover:bg-slate-50",
+                )}
               >
                 Open AI Learning Workflow
               </Link>
               <Link
                 href={`/learners/${activeLid}`}
-                className="inline-flex min-h-[48px] items-center justify-center rounded-xl border border-white/30 bg-white/5 px-4 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
+                className={cn(
+                  "inline-flex min-h-[48px] items-center justify-center rounded-xl border px-4 py-3 text-sm font-semibold transition",
+                  gtk
+                    ? "border-white/30 bg-white/5 text-white hover:bg-white/10"
+                    : "border-slate-200 bg-white text-slate-800 hover:bg-slate-50",
+                )}
               >
                 View demo learner detail
               </Link>
             </div>
-            <p className="text-[11px] text-emerald-200/90">
+            <p className={cn("text-[11px]", gtk ? "text-emerald-200/90" : "text-emerald-700")}>
               Public dataset prototype · AI-assisted insight · teacher review required
             </p>
           </div>
@@ -1618,15 +1744,29 @@ export function XRScenarioViewer({
     ) : null;
 
   const selectedHotspotPanel =
-    guidedPreview && variant === "mobile" && mobileGuidedLearner && !webxrOnly ? (
-      <div className="rounded-2xl border border-white/15 bg-slate-900/75 p-4 text-white shadow-lg">
-        <p className="text-xs font-bold uppercase tracking-wide text-sky-200">Selected hotspot details</p>
+    guidedPreview && guidedLearnerFlow && !webxrOnly ? (
+      <div
+        className={cn(
+          "rounded-2xl border p-4 shadow-lg",
+          variant === "mobile"
+            ? "border-white/15 bg-slate-900/75 text-white"
+            : "border-slate-200 bg-white text-slate-900 shadow-sm",
+        )}
+      >
+        <p
+          className={cn(
+            "text-xs font-bold uppercase tracking-wide",
+            variant === "mobile" ? "text-sky-200" : "text-sky-700",
+          )}
+        >
+          Selected hotspot details
+        </p>
         <p className="mt-2 text-sm font-semibold">
           {selectedHotspot
             ? `${selectedHotspot.label} → pathway: ${selectedHotspot.pathwayStep}`
             : "None — tap a labeled hotspot on the scene."}
         </p>
-        <p className="mt-2 text-xs text-slate-400">
+        <p className={cn("mt-2 text-xs", variant === "mobile" ? "text-slate-400" : "text-slate-500")}>
           Markers stay visible on the 360° image. Visited hotspots show a softer ring (prototype UX).
         </p>
       </div>
@@ -1635,6 +1775,16 @@ export function XRScenarioViewer({
   const mainContent = (
     <div className={cn("flex flex-col gap-4", variant === "desktop" && "lg:col-span-3")}>
       {variant === "mobile" && guidedPreview ? guidedModeChrome : null}
+      {guidedPreview && variant === "desktop" && !webxrOnly ? (
+        <div className="rounded-2xl border border-slate-200 bg-white p-4 text-sm text-slate-700 shadow-sm">
+          <p className="text-xs font-bold uppercase tracking-wide text-slate-500">Desktop learner layout</p>
+          <p className="mt-2 leading-relaxed">
+            <strong className="text-slate-900">ThingLink-style</strong> split view: wide scene to the left, tags + AI
+            readout to the right. Work hotspots in order, then use the panels <strong className="text-slate-900">below the scene</strong>{" "}
+            for Decide, Justify, and Reflect (full text answers — same evidence model as mobile).
+          </p>
+        </div>
+      ) : null}
       {heroTitleSrOnly}
 
       {!webxrOnly ? (
@@ -1660,7 +1810,7 @@ export function XRScenarioViewer({
         </>
       ) : null}
 
-      {guidedPreview && variant === "mobile" && mobileGuidedLearner ? <InteractionTracePanel log={log} dark /> : null}
+      {guidedPreview && guidedLearnerFlow ? <InteractionTracePanel log={log} dark={variant === "mobile"} /> : null}
     </div>
   );
 
@@ -1669,7 +1819,7 @@ export function XRScenarioViewer({
       className={cn(
         variant === "hero" && "rounded-3xl border border-slate-200/90 bg-white p-4 shadow-2xl ring-1 ring-slate-100 sm:p-5",
         variant === "mobile" && "w-full max-w-lg mx-auto px-2 pb-28 pt-2 text-white md:px-3",
-        variant === "desktop" && "text-slate-900",
+        variant === "desktop" && "mx-auto w-full max-w-6xl px-2 pb-8 pt-2 text-slate-900 md:px-4",
         className,
       )}
     >

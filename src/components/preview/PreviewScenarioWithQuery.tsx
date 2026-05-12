@@ -3,9 +3,11 @@
 import { useSearchParams } from "next/navigation";
 import { useMemo } from "react";
 import { XRScenarioViewer } from "@/components/xr/XRScenarioViewer";
+import { usePreviewVariant } from "@/components/preview/usePreviewVariant";
 
 /** Reads `?learner=` on the client so `/preview` can be statically exported. */
 export function PreviewScenarioWithQuery() {
+  const variant = usePreviewVariant();
   const searchParams = useSearchParams();
   const learnerId = useMemo(() => {
     const raw = searchParams.get("learner");
@@ -19,6 +21,6 @@ export function PreviewScenarioWithQuery() {
   }, [searchParams]);
 
   return (
-    <XRScenarioViewer variant="mobile" guidedPreview scenarioLearnerId={learnerId} scenarioModuleId={moduleId} />
+    <XRScenarioViewer variant={variant} guidedPreview scenarioLearnerId={learnerId} scenarioModuleId={moduleId} />
   );
 }

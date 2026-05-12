@@ -8,7 +8,7 @@ export default function PreviewLayout({ children }: { children: React.ReactNode 
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#0b1220]">
-      <div className="mx-auto flex max-w-lg flex-wrap items-center justify-between gap-2 px-4 py-3 text-white">
+      <div className="mx-auto flex w-full max-w-lg flex-wrap items-center justify-between gap-2 px-4 py-3 text-white md:max-w-6xl">
         <div className="flex flex-wrap items-center gap-3">
           <Link
             href="/dashboard"
