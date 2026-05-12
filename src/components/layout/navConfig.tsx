@@ -9,6 +9,7 @@ import {
   Layers,
   Map,
   Settings,
+  Shapes,
   Users,
   Workflow,
 } from "lucide-react";
